@@ -8,8 +8,33 @@ body {
     font-family: roboto, sans-serif;
 }
 
+/* stupid border */
+.nav-bar,
+.body {
+    /* border:  solid 2px; */
+    padding: 1em 0 1em 1em;
+}
 
+.header {
+    text-align: center;
+}
 
 .nav-bar {
+    margin-bottom: 1em;
+}
 
+.nav-bar img {
+    max-height: 100px;
+    padding-right: 2em;
+}
+
+.nav-bar ul {
+    display: flex;
+    align-items: center;
+    list-style: none;
+}
+
+.body button {
+    padding: 0.5em;
+    border: solid 1px;
 }
