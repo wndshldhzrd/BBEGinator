@@ -1,3 +1,4 @@
+from flask import after_this_request, jsonify
 from app import app
 
 @app.route('/')
@@ -7,9 +8,11 @@ def index():
 
 @app.route('/getJSON')
 def getJSON(): 
-    print("happen")
-    return {
-        "username": "Bob Bobert",
-        "email": "Bob@Bobert.org",
-        "picture": "Bob's Tinder Profile",
-    }
+    @after_this_request
+    def add_header(response):
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response
+
+    jsonResp = {'jack': 4098, 'sape': 4139}
+    print(jsonResp)
+    return jsonify(jsonResp)
