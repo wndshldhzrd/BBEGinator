@@ -1,9 +1,9 @@
-from src import app
+from app import app
 
 @app.route('/')
 @app.route('/index')
 def index():
-    return "hello world"
+    return "Hello, World!"
 
 @app.route('/getJSON')
 def getJSON(): 
