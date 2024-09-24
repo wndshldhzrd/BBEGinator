@@ -1,0 +1,12 @@
+Enter Party
+
+
+enter difficulty
+enter number of enemies(optional)
+other (lair and shit)
+
+[GENERATE]
+
+
+if number of enemies is blank
+	random number it (4-16)
