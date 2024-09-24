@@ -1,14 +1,10 @@
 function getJSON() {
-    fetch("http://127.0.0.1:5000/getJSON", {mode: 'no-cors'})
-        .then(function(response) {
-            //checking if api returns successfully
-            if (!response.ok) console.log("json was not grabbed correctly!")
-            else return response.json();
-        })
-        .then(function(response) {
-            //printing out our json object to the console for easy reference
-            console.log(response);
-        });
+    const url = 'http://127.0.0.1:5000/getJSON'
+    fetch(url)
+    .then(response => response.json())  
+    .then(json => {
+        console.log(json);
+    })
 }
 function loadMonster (monsterFile) {
 
