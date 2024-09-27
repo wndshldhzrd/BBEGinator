@@ -1,0 +1,6 @@
+takes party -> spits out monsters
+	
+	offer choices
+		bosses
+		acolytes
+		minions

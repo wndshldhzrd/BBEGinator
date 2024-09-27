@@ -1,0 +1,25 @@
+NOTE: THIS IS WRITTEN IN THE FORM OF JSON TO MONSTER
+
+DIRECT TRANSLATION: name, size, type, alignment, cr (double to int), actions
+DOESN'T MATTER: slug, desc, subtype, challenge_rating, environments, page_no, spell_list
+NEW INFO: blindsight, blind, darkvision, tremorsense, truesight, telepathy, customCr ["14 (11,500 XP)"], customHP, customSpeed, customProf, hover, shieldBonus, natArmorBonus, isLegendary, isLair, lairDescription, lairDescriptionEnd, isMythic, mythicDescription, isRegional, regionalDescription, regionalDescriptionEnd, properties, mythics, lairs, regionals, specialdamage []
+CHANGE IN PRESENTATION / NAME:
+armor_class (19) only seems brought up in otherarmordesc (19 (natural armor))
+speed {"walk": 40, "fly": 80, "swim: 40"} => speedDesc: "40 ft., fly 80 ft., swim 40 ft.," and speed: 40 burrowSpeed: 0 climbSpeed: 0 flySpeed: 80 swimSpeed: 40
+hit_dice 17d12+85 => hitdice 17
+saving throws are all thrown in sthrows via {"name":"dex","order":1},{"name":"con","order":2}, etc.
+perception not a separate thing - thrown into skills
+skills formatting: {"perception": 11, "stealth: 7"} to [{"name":"perception","stat":"wis","note":" (ex)"}, etc
+"senses" : "blindsight 60 ft., darkvision 120 ft., passive Perception 21" -> "blindsight":"60", "darkvision":"120", all other senses given a 0 [PASSIVE PERCEPTION NOT LISTED??]
+languages: "languages": "Common, Draconic" -> [{"name":"Common","speaks":true}, etc
+trength/intelligence/wisdom => strpoints/intpoints/wispoints
+armor_desc => armorName
+hit_points => hpText "195 (17d12 + 85)" [the 17d12+85 is from hit_dice]
+special_abilities -> abilities 
+damage_vulnerabilities?, damage_resistances?, damage_immunities all thrown into "damageTypes":[{"name":"acid","note":"(Immune)","type":"i"}] 
+condition_immunities -> conditions?
+attack_bonus, damage_dice, and damage_bonus in actions are all kept to the action description rather than being separate things
+"bonus_actions": null -> "bonusActions": [] 
+"reactions": null -> "reactions":[]
+legendary_actions -> legendaries
+legendary_desc -> legendariesDescription
