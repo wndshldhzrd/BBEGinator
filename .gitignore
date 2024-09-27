@@ -1,1 +1,4 @@
+/backend/venv
+/backend/app/__pycache__
+*.pyc
 backend/data.json
