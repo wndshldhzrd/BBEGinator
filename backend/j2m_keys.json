@@ -1,0 +1,3 @@
+{"name": "name", "size": "size", "type": "type", "alignment": "alignment", "cr": "cr", "actions": "actions", "blindsight": "senses", "blind": "senses", "darkvision": "senses", "tremorsense": "senses", "truesight": "senses", "telepathy": "languages", "customCR": "cr", "customHP": "hit_points", "customSpeed": "speed", "customProf": "cr", "hover": "speed", "shieldBonus": "armor_desc", "isLegendary": "legendary_desc", "properties": }
+
+I have skipped the lair and mythic variables as they are add-ons. When looking at the statblocks of monsters updated to have mythic/lair actions, it's not on the statblock
