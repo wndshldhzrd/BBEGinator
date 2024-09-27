@@ -10,21 +10,29 @@ function getJSON() {
             console.log(response);
         });
 }
-function loadMonster (monsterFile) {
 
+function loadMonster (monsterName) {
+    const monster = getMonster(monsterName)
+    //  .then(data => JSON.parse(data))
+        .then(data => console.log(data));
+
+    monster = JSON.parse(monster);
+    // console.log(monster);
 }
 
-function fetchMonster (monsterName) {
-
+async function getMonster(monsterName) {
+    const response = await fetch(`data/${monsterName}.json`);
+    const data = await response.json();
+    return data;
 }
 
 const showMonsterDiv = document.querySelector(".show-monster");
-
 const createMonsterButton = document.querySelector("#create-monster");
 
 createMonsterButton.addEventListener("click", () => {
     showMonsterDiv.innerHTML = "";
     let text = document.createElement("p");
+    loadMonster("goat");
     text.innerText = "MOnster here";
     showMonsterDiv.appendChild(text);
 })
