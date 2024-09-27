@@ -35,4 +35,7 @@ export FLASK_APP=routes.py in the backend folder from the command line
 The above instructions are only for testing the python locally but do not 
 actually update the api we have running over at https://zevce.pythonanywhere.com/ .
 When we have python code thats ready to deploy live please talk to me (Zev/Vutsrq)
-and I will update the pythonanywhere code with the new Python code. 
+and I will update the pythonanywhere code with the new Python code. If you are having
+trouble making an api call either from the front end or the back end please also feel
+free to talk to me as I will probably have the best knowledge on how the two sides
+of our website talk to each other.
