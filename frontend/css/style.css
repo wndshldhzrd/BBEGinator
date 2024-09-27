@@ -9,17 +9,23 @@ body {
 }
 
 /* stupid border */
-.nav-bar,
+.header,
 .body {
     /* border:  solid 2px; */
-    padding: 1em 0 1em 1em;
+    padding: 0p 1em 1em;
 }
 
 .header {
-    text-align: center;
+    background-image: linear-gradient(red, darkred);
+    
 }
 
-.nav-bar {
+.nav-bar{
+    font: 500;
+    background-color: lightgoldenrodyellow;
+}
+
+.header {
     margin-bottom: 1em;
 }
 
@@ -28,7 +34,7 @@ body {
     padding-right: 2em;
 }
 
-.nav-bar ul {
+.header ul {
     display: flex;
     align-items: center;
     list-style: none;
