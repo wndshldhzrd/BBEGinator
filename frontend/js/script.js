@@ -7,28 +7,25 @@ function getJSON() {
     })
 }
 
-function loadMonster (monsterName) {
-    const monster = getMonster(monsterName)
-    //  .then(data => JSON.parse(data))
-        .then(data => console.log(data));
-
-    monster = JSON.parse(monster);
-    // console.log(monster);
+function loadMonster (monster) {
+    console.log(`${monster.speed}`);
 }
 
-async function getMonster(monsterName) {
-    const response = await fetch(`data/${monsterName}.json`);
-    const data = await response.json();
-    return data;
+// TODO: Catch invalid json/timeouts so we don't have errors on loadMonster
+async function fetchMonster(monsterName) {
+    // Currently local only, need to change this for backend fetch calls when set up
+    const response = await fetch(`data/${monsterName}.monster`)
+    .then (response => response.json())
+    .then (monster => loadMonster(monster));
 }
 
-const showMonsterDiv = document.querySelector(".show-monster");
+const showMonsterDiv = document.querySelector(".monster-display");
 const createMonsterButton = document.querySelector("#create-monster");
 
 createMonsterButton.addEventListener("click", () => {
     showMonsterDiv.innerHTML = "";
     let text = document.createElement("p");
-    loadMonster("goat");
+    fetchMonster("goat");
     text.innerText = "MOnster here";
     showMonsterDiv.appendChild(text);
 })
