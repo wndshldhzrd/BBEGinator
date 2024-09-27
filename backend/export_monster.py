@@ -1,5 +1,5 @@
 """
-parser.py
+export_monster.py
 
 The parser function will call on mgetter.py to get monster 
 data in a json file, and export a monster to a .monster file
@@ -12,6 +12,7 @@ from mgetter import mgetter #retrieves desired json data
 def export(monster):
 	#dictionary to contain input data from json file
 	jsonData = {}
+
 
 	#to do: fill this dictionary with json data, ideally we can get json.loads
 	#to work and edit from there
@@ -72,12 +73,15 @@ if __name__ == "__main__":
 	#with the goal of converting that data to .monster format in our code
 	monsters = open("data.json").read()
 	mon = ""
-	start = monsters.find('"' + monSlug + '"')
+	start = monsters.find('{"slug": "' + monSlug + '"')
 	end = monsters.find('}, {"slug"', start)
 
+	if (end != -1):
+		end = end + 1	#include "}" for the sake of json.loads
+	
 	mon = monsters[start:end]
 	if (start == -1):
 		print("Failed to find monster by that slug")
 		mon = ""
 
-	export(mon)
+	export(json.loads(mon))
