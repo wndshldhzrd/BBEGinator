@@ -11,6 +11,7 @@ https://stackoverflow.com/questions/57891275/simple-fetch-get-request-in-javascr
 3) Run from the terminal python3 -m venv venv (try py or python instead of python3 if you get an error)
 4) Run from the terminal venv\Scripts\activate (use source venv/bin/activate if on linux)
 5) Run from the terminal pip install -r requirements.txt
+6) if that does not work instead run pip install flask and then pip install python-dotenv
 6) You are now done!
 
 # To Run
@@ -21,3 +22,6 @@ https://stackoverflow.com/questions/57891275/simple-fetch-get-request-in-javascr
 ## Linux:
 1) source venv/bin/activate
 2) flask run [--port \<number\>] 
+
+If the console complains about MY_APP not being defined then run
+export FLASK_APP=routes.py in the backend folder from the command line
