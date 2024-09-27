@@ -1,5 +1,5 @@
 function getJSON() {
-    const url = 'http://127.0.0.1:5000/getJSON'
+    const url = 'https://zevce.pythonanywhere.com/getJSON'
     fetch(url)
     .then(response => response.json())  
     .then(json => {
