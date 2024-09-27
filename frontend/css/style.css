@@ -8,6 +8,12 @@ body {
     font-family: roboto, sans-serif;
 }
 
+hr {
+    height: 2px;
+    width: 100%;
+    background-color: black;
+}
+
 /* stupid border */
 .header,
 .body {
@@ -43,4 +49,8 @@ body {
 .body button {
     padding: 0.5em;
     border: solid 1px;
+}
+
+.monster-display {
+    max-width: 500px;
 }

@@ -7,8 +7,29 @@ function getJSON() {
     })
 }
 
+// Button that creates a monster (TEMP)
+const createMonsterButton = document.querySelector("#create-monster");
+
 function loadMonster (monster) {
-    console.log(`${monster.speed}`);
+    // Div where we will display monsters
+    const showMonsterDiv = document.querySelector(".monster-display");
+    showMonsterDiv.innerHTML = "";
+
+    // Adding name to first line
+    const name = document.createElement("p");
+    name.textContent = monster.name;
+
+    // Adding size, type, and alignment
+    const description = document.createElement("p");
+    description.textContent = monster.size + " " + monster.type + ", " + monster.alignment;
+
+    // Line break
+    const lbreak = document.createElement("hr");
+    // lbreak.textContent = "-------";
+
+    showMonsterDiv.appendChild(name);
+    showMonsterDiv.appendChild(description);
+    showMonsterDiv.appendChild(lbreak);
 }
 
 // TODO: Catch invalid json/timeouts so we don't have errors on loadMonster
@@ -19,13 +40,6 @@ async function fetchMonster(monsterName) {
     .then (monster => loadMonster(monster));
 }
 
-const showMonsterDiv = document.querySelector(".monster-display");
-const createMonsterButton = document.querySelector("#create-monster");
-
 createMonsterButton.addEventListener("click", () => {
-    showMonsterDiv.innerHTML = "";
-    let text = document.createElement("p");
     fetchMonster("goat");
-    text.innerText = "MOnster here";
-    showMonsterDiv.appendChild(text);
 })
