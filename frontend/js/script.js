@@ -1,12 +1,3 @@
-function getJSON() {
-    const url = 'https://zevce.pythonanywhere.com/getJSON'
-    fetch(url)
-    .then(response => response.json())  
-    .then(json => {
-        console.log(json);
-    })
-}
-
 // Button that creates a monster (TEMP)
 const createMonsterButton = document.querySelector("#create-monster");
 
@@ -32,14 +23,23 @@ function loadMonster (monster) {
     showMonsterDiv.appendChild(lbreak);
 }
 
-// TODO: Catch invalid json/timeouts so we don't have errors on loadMonster
-async function fetchMonster(monsterName) {
-    // Currently local only, need to change this for backend fetch calls when set up
-    const response = await fetch(`data/${monsterName}.monster`)
-    .then (response => response.json())
-    .then (monster => loadMonster(monster));
-}
 
+//James this is terrible practice im going to kill you
 createMonsterButton.addEventListener("click", () => {
-    fetchMonster("goat");
+    monsterSizeNum = document.querySelector("#size-dropdown").value;
+    fetchMonster(monsterSizeNum)
 })
+
+
+// https://stackoverflow.com/questions/64934381/fetch-multiple-kind-of-data
+
+// semi functional fetch monster that sends data with its request
+// TODO: Catch invalid json/timeouts so we don't have errors on loadMonster
+function fetchMonster(monsterSizeNum) {
+    const url = 'https://zevce.pythonanywhere.com/getMonster/' + monsterSizeNum
+    fetch(url)
+    .then(response => response.json())  
+    .then(json => {
+        console.log(json);
+    })
+}
