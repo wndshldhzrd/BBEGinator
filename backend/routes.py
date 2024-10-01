@@ -2,21 +2,6 @@ from flask import Flask, after_this_request, jsonify
 
 app = Flask(__name__)
 
-@app.route('/')
-def hello_world():
-    return 'Hello from Flask!'
-
-@app.route('/getJSON')
-def getJSON():
-    @after_this_request
-    def add_header(response):
-         response.headers.add('Access-Control-Allow-Origin', '*')
-         return response
-
-    jsonResp = {'jack': 4098, 'sape': 4139}
-    print(jsonResp)
-    return jsonify(jsonResp)
-
 @app.route('/getMonster/<int:sizeNumber>')
 def getMonster(sizeNumber):
 
@@ -31,9 +16,6 @@ def getMonster(sizeNumber):
     if sizeNumber < 0 or sizeNumber >= len(sizes):
         return jsonify({})
 
-    monsterSize = sizes[sizeNumber]
-
-    jsonResp = {'jack': 4098, 'sape': 4139}
+    jsonResp = {'size': sizes[sizeNumber]}
     print(jsonResp)
     return jsonify(jsonResp)
-
