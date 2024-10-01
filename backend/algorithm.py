@@ -1,36 +1,58 @@
 from enum import Enum
 from classes import Monster
 from classes import PartyMember
+from random import randint
 
 # DATA
 party = []
-mgetter
+mgetter = "?"
 
-# ENCOUNTER THINGS
+# ENCOUNTER DIFFICULTY
 class EncounterType(Enum):
     EASY = 1
     MEDIUM = 2
     HARD = 3
     UNFAIR = 4
-    #BULLSHIT
+    # BULLSHIT
 
     #parses each monster from the mgetter and calulates its dmg/health ranges
-def Algorithm(Party, encounter, Mgetter, lair):
-    print("meanie")
+def Algorithm(party, difficulty, monsterList, lair, guys):
     
-    totalHealth = 0 #finds max health of the party
-    for x in Party:
-        totalHealth += Party.health
-    avgPartyMemberHealth = totalHealth//len(party)
+    points = 0
+    monsters = []
     
-    MonsterDmgAvg # = all the attacks used in the monsters multiattack in averaged amounts
-    MonsterDmgMax # = all the attacks used in the monsters multiattack in the maximum amount
-    MonsterCritMax # = all the attacks used in the monsters multiattack in the maximum, critical amount
+    totalHealth = 0 # finds max health of the party
+    totalDmg = 0
+    partyHealthAvg = 0
+    partyDmgAvg = 0
+    partyDmgMax = 0
+    partyTags = [] # important bits about party members which may be useful for calculation
+    
+    for p in party:
+        totalHealth += p.health
+        totalDmg += p.dmg
+        partyDmgMax += p.dmgMax
+    
+    partyHealthAvg = totalHealth // len(party)
+    partyDmgAvg = totalDmg // len(party)
+    
+    points = 100
+    
+    print(f"I have {points} points to spend")
+    for i in range(guys):
+        print(f"Generating monster {i + 1} of {guys}")
+        toSpend = 0
+        if(i < guys - 1):
+            toSpend = randint(int(points * 0.1), int(points * 0.67))
+            print(f"I want to spend {toSpend} points")
+            points -= toSpend
+        else:
+            print(f"This is the last monster, using my last {points} points")
+    
 
-    if (avgPartyMemberHealth >= (3*MonsterDmgAvg * (encounter/5)) :
-    #add as a boss monster
-    elif  (avgPartyMemberHealth > 3*MonsterDmgMax * (encounter/5)):
-    #add as a acolyte Monster
-    else (avgPartyMemberHealth > 3*MonsterCritMax * (encounter/5)):
-    #add as a minion Monster
+jimmy = PartyMember.PartyMember(65, "shmorbler", 30, 50)
+glorth = PartyMember.PartyMember(50, "glunkman", 40, 69)
+party = [jimmy, glorth]
 
+georgeBush = Monster.Monster("George W. Bush", "george", 45, 300, 5, 7)
+Algorithm(party, EncounterType.MEDIUM, [georgeBush], None, 6)
