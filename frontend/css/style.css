@@ -42,5 +42,12 @@ body {
 }
 
 .monster-display{
-    background-image: url('\\frontend\\img\\MonsterBackground.png');
+    background-image: url('.\\frontend\\img\\MonsterBackground.png');
+}
+
+#size-dropdown{
+    background-color: lightgray;
+    outline-width: 1px;
+    outline-style: solid;
+    outline-color: black;
 }
