@@ -6,7 +6,8 @@ data in a json file, and export a monster to a .monster file
 """
 
 import json
-from mgetter import mgetter #retrieves desired json data
+#from mgetter import mgetter #retrieves desired json data
+import mgetter #above statement was causing an error, commented out for now
 
 #export a monster's data to a .monster style format
 def export(monster):
@@ -34,11 +35,12 @@ def export(monster):
 	#fill in template
 	i = 0
 	while (i < len(output) and i != -1):
-		i = find('"', i)
-		end = find('"', i)
+		#note 2 vicky: had it as find(bleh, bleh) instead of string.find(bleh, bleh)
+		i = output.find('"', i)
+		end = output.find('"', i)
 
 		#this is the position in the template where we'll be adding in the new data
-		start = find(":", end)
+		start = output.find(":", end)
 		if output[start+1] == '"':
 			start = start+1
 
@@ -46,7 +48,7 @@ def export(monster):
 		if (category in jsonData):
 			output = output[0:start] + jsonData[category] + output[start:-1]
 
-		i = find(",", i)
+		i = output.find(",", i)
 
 	#.monster file, for now named test.monster
 	outfile = open('test.monster', 'w')
@@ -66,7 +68,7 @@ if __name__ == "__main__":
 	print("Current monster slug: " + monSlug)
 
 	#uses an api to get monster data and places it in a json file called data.json
-	mgetter()
+	#mgetter() [currently calls an error?]
 
 
 	#for testing purposes, we used the current mgetter to find a specific test monster,
