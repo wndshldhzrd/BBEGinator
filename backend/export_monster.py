@@ -11,23 +11,26 @@ import mgetter #above statement was causing an error, commented out for now
 
 #export a monster's data to a .monster style format
 def export(monster):
-	#dictionary to contain input data from json file
-	jsonData = {}
+	#monster is a dictionary containing input data from json file
+	jsonData = dict()
 
+	j2m = json.loads(open("j2m_keys.json").read())
 
-	#to do: fill this dictionary with json data, ideally we can get json.loads
-	#to work and edit from there
-	#Owen was working on noting similarities in the json to .monster template
+	#to do: edit monster json into jsonData
+	for category in j2m:
+		print(category + ":")
+		if (isinstance(j2m[category], list)):
+			jsonData[category] = ""
+			for c in j2m[category]:
+				print(c)
+				jsonData[category] = jsonData[category] + str(monster[c])
 
+		else:
+			jsonData[category] = monster[j2m[category]]
 
-	#note: we spent the rest of RCOS looking at the .monster format and creating
-	#a template for sample_monster.monster, so not much code got written
-
-	#.monster file has something known as "separationPoint", and that's the 
-	#one thing we're not sure what it's referring to, but we found the
-	#code to calculate it in their GitHub, so ideally we can figure that out
-	#on Friday
-
+	print("\nTHE UNEDITED CONVERSION OF DATA FROM JSON LOOKS LIKE THIS:")
+	print(jsonData)
+	print()
 
 	#.monster file template to be personalized
 	output = open('sample_monster.monster').read()
@@ -35,7 +38,7 @@ def export(monster):
 	#fill in template
 	i = 0
 	while (i < len(output) and i != -1):
-		#note 2 vicky: had it as find(bleh, bleh) instead of string.find(bleh, bleh)
+		#get the start and end quote positions for the category
 		i = output.find('"', i)
 		end = output.find('"', i)
 
@@ -55,7 +58,7 @@ def export(monster):
 	outfile.write(output)
 	outfile.close()
 
-	print("TEST PRINT STATEMENT: test.monster contains...")
+	print("\nTEST PRINT STATEMENT: test.monster contains...")
 	print(output)
 	return
 
@@ -65,7 +68,7 @@ if __name__ == "__main__":
 	monSlug = "adult-black-dragon"
 	print("This is a test to convert a monster from the JSON file " +
 	 "format we get from mgetter.py to a .monster file")
-	print("Current monster slug: " + monSlug)
+	print("Current monster slug: " + monSlug + "\n")
 
 	#uses an api to get monster data and places it in a json file called data.json
 	#mgetter() [currently calls an error?]
@@ -86,4 +89,5 @@ if __name__ == "__main__":
 		print("Failed to find monster by that slug")
 		mon = ""
 
+	#print(mon)
 	export(json.loads(mon))
