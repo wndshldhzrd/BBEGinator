@@ -1,0 +1,13 @@
+NOTES ON CHANGES TO CONVERSION:
+add all the blank things that we left out of conversion lol (stuff like customHP and separationPoint)
+convert CR to string
+Actions needs to be updated (put attack_bonus, damage_dice, and damage_bonus into desc, format it how .monster likes it w/ _Melee Spell Attack_: and stuff)
+for all the senses: remove everything but int value (ex: blindsight shouldn't be 'blindsight 60 ft.' and should just be 60). make sure it becomes int. if doesn't exist: make 0
+blind: parse out blind, see if it exists, make true/false
+telepathy: find in string, get int value
+hover: see if it exists in fly(?) category, make true/false
+shieldbonus: see what armor is and get it from there?? only exists if "shield" is specified under armor_desc?
+deal with nat armor bonus at some point probably
+speed stuff needs to be updated like senses (only the value taken, ex: 60 ft fly -> fly: 60)
+
+CHECK REST OF STUFF THAT COMES AFTER NAT ARMOR BONUS (DID NOT FINISH IN CLASS) [AGONY AND PAIN]
