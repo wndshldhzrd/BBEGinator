@@ -19,24 +19,61 @@
         </div>
     </div>
 
-    <label class = "dropdown" for="input-size">Monster Size:</label>
-    <select name="size" id="size-dropdown">     
-    <option value="tiny">Tiny</option>
-    <option value="small">Small</option>
-    <option value="medium">Medium</option>
-    <option value="large">Large</option>
-    <option value="huge">Huge</option>
-    <option value="gargantuan">Gargantuan</option>
+    <label for="input-size">Monster Size:</label>
+    <select class = "dropdown" name="size" id="size-dropdown">      
+    <option value="-1"></option>    
+    <option value="0">Tiny</option>
+    <option value="1">Small</option>
+    <option value="2">Medium</option>
+    <option value="3">Large</option>
+    <option value="4">Huge</option>
+    <option value="5">Gargantuan</option>
     </select>
 
     <label for="input-type">Monster Type:</label>
-    <select name="type" id="type-dropdown">     
-    <option value="tiny">Tiny</option>
-    <option value="small">Small</option>
-    <option value="medium">Medium</option>
-    <option value="large">Large</option>
-    <option value="huge">Huge</option>
-    <option value="gargantuan">Gargantuan</option>
+    <select class = "dropdown" name="type" id="type-dropdown">        
+    <option value="-1"></option>      
+    <option value="0">Aberration</option>
+    <option value="1">Beast</option>
+    <option value="2">Celestial</option>
+    <option value="3">Construct</option>
+    <option value="4">Dragon</option>
+    <option value="5">Elemental</option>
+    <option value="6">Fey</option>
+    <option value="7">Fiend</option>
+    <option value="8">Giant</option>
+    <option value="9">Humanoid</option>
+    <option value="10">Monstrosity</option>
+    <option value="11">Ooze</option>
+    <option value="12">Plant</option>
+    <option value="13">Undead</option>
     </select>
+
+    <label for="input-type">Monster alignment:</label>
+    <select class = "dropdown" name="alignment" id="type-dropdown">        
+    <option value="-1"></option>      
+    <option value="0">Lawful Good</option>
+    <option value="1">Nuetral Good</option>
+    <option value="2">Chaotic Good</option>
+    <option value="3">Lawful Nuetral</option>
+    <option value="4">True Nuetral</option>
+    <option value="5">Chaotic Nuetral</option>
+    <option value="6">Lawful Evil</option>
+    <option value="7">Nuetral Evil</option>
+    <option value="8">Chaotic Evil</option>
+    </select>
+
+    <br></n>Str &nbsp max: <input class = "stat-Input" name = "strMin" type = "number" min = "0" max = "20"> 
+            &nbsp min: <input class = "stat-Input" name = "strMax"  type = "number" min = "-1" max = "20">
+    <br>Dex &nbsp max: <input class = "stat-Input" name = "strMin"  type = "number" min = "-1" max = "20"> 
+            &nbsp min: <input class = "stat-Input" name = "strMax"  type = "number" min = "-1" max = "20">
+    <br>Con  &nbsp max: <input class = "stat-Input" name = "strMin"  type = "number" min = "-1" max = "20"> 
+            &nbsp min: <input class = "stat-Input" name = "strMax"  type = "number" min = "-1" max = "20">
+    <br>Int &nbsp max: <input class = "stat-Input" name = "strMin"  type = "number" min = "-1" max = "20"> 
+            &nbsp min: <input class = "stat-Input" name = "strMax"  type = "number" min = "-1" max = "20">
+    <br>Wis &nbsp max: <input class = "stat-Input" name = "strMin"  type = "number" min = "-1" max = "20"> 
+            &nbsp min: <input class = "stat-Input" name = "strMax"  type = "number" min = "-1" max = "20">
+    <br>Cha &nbsp max: <input class = "stat-Input" name = "strMin"  type = "number" min = "-1" max = "20"> 
+            &nbsp min: <input class = "stat-Input" name = "strMax"  type = "number" min = "-1" max = "20">
 </body>
 </html>
