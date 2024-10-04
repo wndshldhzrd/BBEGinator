@@ -1,5 +1,6 @@
 import json
 import requests
+import time
 
 '''
 this is most definitely not how this script will look in final form. its just existing here temporarily until
@@ -10,7 +11,22 @@ we'll just plug it in and then scoop out the json information
 
 
 
-payload = {
+
+
+
+def get_data(url, payload):
+    response = requests.get(url, payload)
+    return response.json()
+
+def write_to_json(data, filename):
+    with open(filename, 'a') as f:
+        json.dump(data, f)
+        f.write('\n')
+
+
+
+def main():
+    payload = {
     
     #slug also contains where the creature is from(document) so it isn't exactly the name btw sometimes(its complicated)
 
@@ -26,8 +42,8 @@ payload = {
     'desc__icontains': '', #unsure
     'cr': '', #exact cr
     'cr__range': '', #range for cr but annoying to do so i implement later
-    'cr__gt': '10', #number you want cr to be greater than
-    'cr__gte': '', #number u want cr to be greater than or equal to
+    'cr__gt': '', #number you want cr to be greater than
+    'cr__gte': '14', #number u want cr to be greater than or equal to
     'cr__lt': '', #number u want cr to be less than
     'cr__lte': '', #number u want cr to be less than or equal to
     'hit_points': '', #hit points of creature
@@ -62,20 +78,27 @@ payload = {
     'document__slug__in': '',
     'document__slug__not_in': ''
 }
-
-
-
-
-
-
-url = 'https://api.open5e.com/v1/monsters/'
-try:
-    response = requests.get(url, params=payload)
-    response.raise_for_status()  
-    data = response.json()
-    with open('data.json', 'w') as json_file:
-        json.dump(data, json_file)
-    print('Data has been written to data.json')
-except requests.exceptions.RequestException as e:
-    print(f'An error occurred: {e}')
+    url = 'https://api.open5e.com/v1/monsters/'
+    filename = "output.json"
+    while True:
+        try:
+            data = get_data(url, payload)
+            if data['next']:
+                write_to_json(data, filename)
+                print("kachow, waiting")
+                time.sleep(5)
+                url = data['next']
+                
+            else:
+                write_to_json(data, filename)
+                print("kachow, waiting")
+                time.sleep(5)
+                break
+        except Exception as e:
+            print(f"An error occurred: {e}")
+            break
+        
+if __name__ == "__main__":
+    main()
+                
     
