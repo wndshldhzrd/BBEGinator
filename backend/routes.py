@@ -1,4 +1,4 @@
-from flask import Flask, after_this_request, jsonify
+from flask import Flask, after_this_request, jsonify, request
 
 app = Flask(__name__)
 
@@ -19,3 +19,8 @@ def getMonster(sizeNumber):
     jsonResp = {'size': sizes[sizeNumber]}
     print(jsonResp)
     return jsonify(jsonResp)
+
+@app.route('/postmethod', methods = ['POST'])
+def get_post_javascript_data():
+    jsdata = request.form['javascript_data']
+    return jsdata
