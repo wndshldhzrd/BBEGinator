@@ -71,7 +71,6 @@ payload = {
 url = 'https://api.open5e.com/v1/monsters/'
 try:
     response = requests.get(url, params=payload)
-    print(response.url)
     response.raise_for_status()  
     data = response.json()
     with open('data.json', 'w') as json_file:

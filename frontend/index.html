@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script defer src="js/script.js"></script>
     <title>BBEGinator</title>
 </head>
@@ -13,18 +14,17 @@
             <li><img src="img/BBEG_1-modified.png"></li>
         </ul>
         <div class = "nav-bar">
-            <a href="#">Home</a>
+            <a>Home</a>
+            <a href="\frontend\search.html">Search Monsters</a>
         </div>
     </div>
 
     <div class="body">
-        <div class="body-buttons">
-            <button onclick="getJSON();">Try to grab a JSON file!</button>
-            <button id="create-monster">Create a monster</button>
-        </div>
+        <button id="create-monster">Create a monster</button>
         <div class="monster-display">
             
         </div>
     </div>
+
 </body>
 </html>

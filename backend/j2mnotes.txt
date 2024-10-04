@@ -1,0 +1,22 @@
+NOTES ON CHANGES TO CONVERSION:
+add all the blank things that we left out of conversion lol (stuff like customHP and separationPoint)
+convert CR to string
+Actions needs to be updated (put attack_bonus, damage_dice, and damage_bonus into desc, format it how .monster likes it w/ _Melee Spell Attack_: and stuff)
+for all the senses: remove everything but int value (ex: blindsight shouldn't be 'blindsight 60 ft.' and should just be 60). make sure it becomes int. if doesn't exist: make 0
+blind: parse out blind, see if it exists, make true/false
+telepathy: find in string, get int value
+hover: see if it exists in fly(?) category, make true/false
+shieldbonus: see what armor is and get it from there?? only exists if "shield" is specified under armor_desc?
+deal with nat armor bonus at some point probably
+speed stuff needs to be updated like senses (only the value taken, ex: 60 ft fly -> fly: 60)
+make isLegendary just a true/false
+specialdamage formatting is wrong (example of what something looks like: [{"name":"amogus","note":" (Immune)","type":"i"}. not just 'specialdamage': 'acid'.) [have to figure out if it's resistant/immune/vulnerable]   (also acid might be a damagetype rather than specialdamage)
+otherArmorDesc should remove the 'natural armor' part - just needs the '19'
+hitDice is just the first val (ex: 17), d12+85 not included.
+sthrows 100% needs fixing, it should not be "None710None68". correct thing would be [{"name":"con","order":2}, etc. for remaining stats]
+
+skills should be "skills":[{"name":"history","stat":"int","note":" (ex)"}, ] currently 'skills': {'perception': 11, 'stealth': 7}
+languages should be [{"name":"Deep Speech","speaks":true}] rather than just 'languages': 'Common, Draconic'
+hptext should just be the '195', not '19517d12+85'
+bonusactions should be blank [] rather than 'None'
+reactions should be blank [] rather than 'None'

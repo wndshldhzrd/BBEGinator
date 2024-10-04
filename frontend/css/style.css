@@ -8,34 +8,13 @@ body {
     font-family: roboto, sans-serif;
 }
 
-hr {
-    height: 2px;
-    width: 100%;
-    background-color: black;
-}
-
-/* stupid border */
-.header, .body, .monster-display {
-    border:  solid 2px;
-    padding: 0p 1em 1em;
-}
-
 .header {
-    background-image: linear-gradient(red, darkred);
-    
-}
-
-.nav-bar{
-    font: 500;
-    background-color: lightgoldenrodyellow;
-}
-
-.header {
+    background-image: linear-gradient(to right, red, darkred, darkred, darkred);
     margin-bottom: 1em;
 }
 
-.nav-bar img {
-    max-height: 200px;
+.header img {
+    max-height: 100px;
     padding-right: 2em;
 }
 
@@ -45,12 +24,30 @@ hr {
     list-style: none;
 }
 
+/* stupid border */
+.header,
+.body {
+    /* border:  solid 2px; */
+    padding: 0p 1em 1em;
+}
+
+.nav-bar{
+    font: 500;
+    background-color: lightgoldenrodyellow;
+}
+
 .body button {
     padding: 0.5em;
     border: solid 1px;
 }
 
-.monster-display {
-    margin: 35px;
-    max-width: 500px;
+.monster-display{
+    background-image: url('\\frontend\\img\\MonsterBackground.png');
+}
+
+#size-dropdown{
+    background-color: lightgray;
+    outline-width: 1px;
+    outline-style: solid;
+    outline-color: black;
 }

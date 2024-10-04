@@ -1,12 +1,3 @@
-function getJSON() {
-    const url = 'http://127.0.0.1:5000/getJSON'
-    fetch(url)
-    .then(response => response.json())  
-    .then(json => {
-        console.log(json);
-    })
-}
-
 // Button that creates a monster (TEMP)
 const createMonsterButton = document.querySelector("#create-monster");
 
@@ -64,14 +55,39 @@ function loadMonster (monster) {
     // Speed
 }
 
+
+//James this is terrible practice im going to kill you
+createMonsterButton.addEventListener("click", () => {
+    monsterSizeNum = document.querySelector("#size-dropdown").value;
+    getMonster(monsterSizeNum)
+})
+
+
+// SO post that explains how to send data back and forth I think?
+// https://stackoverflow.com/questions/29987323/how-do-i-send-data-from-js-to-python-with-flask
+// This one in case ajax isnt compatible with Jekyll?
+// https://stackoverflow.com/questions/6396101/pure-javascript-send-post-data-without-a-form 
+
+// semi functional fetch monster that sends data with its request
 // TODO: Catch invalid json/timeouts so we don't have errors on loadMonster
-async function fetchMonster(monsterName) {
-    // Currently local only, need to change this for backend fetch calls when set up
-    const response = await fetch(`data/${monsterName}.monster`)
-    .then (response => response.json())
-    .then (monster => loadMonster(monster));
+function getMonster(monsterSizeNum) {
+    const url = 'https://zevce.pythonanywhere.com/getMonster/' + monsterSizeNum
+    fetch(url)
+    .then(response => response.json())  
+    .then(json => {
+        console.log(json);
+    })
 }
 
-createMonsterButton.addEventListener("click", () => {
-    fetchMonster("goat");
-})
+$.ajax({
+    url: '/testRoute',
+    data: {'hello':'world'},
+    type: 'POST',
+dataType: 'json',
+    success: function(response){
+        console.log(response);
+    },
+    error: function(error){
+        console.log(error);
+    }
+});
