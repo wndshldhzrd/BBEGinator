@@ -27,15 +27,18 @@ function loadMonster (monster) {
 //James this is terrible practice im going to kill you
 createMonsterButton.addEventListener("click", () => {
     monsterSizeNum = document.querySelector("#size-dropdown").value;
-    fetchMonster(monsterSizeNum)
+    getMonster(monsterSizeNum)
 })
 
 
-// https://stackoverflow.com/questions/64934381/fetch-multiple-kind-of-data
+// SO post that explains how to send data back and forth I think?
+// https://stackoverflow.com/questions/29987323/how-do-i-send-data-from-js-to-python-with-flask
+// This one in case ajax isnt compatible with Jekyll?
+// https://stackoverflow.com/questions/6396101/pure-javascript-send-post-data-without-a-form 
 
 // semi functional fetch monster that sends data with its request
 // TODO: Catch invalid json/timeouts so we don't have errors on loadMonster
-function fetchMonster(monsterSizeNum) {
+function getMonster(monsterSizeNum) {
     const url = 'https://zevce.pythonanywhere.com/getMonster/' + monsterSizeNum
     fetch(url)
     .then(response => response.json())  
@@ -43,3 +46,8 @@ function fetchMonster(monsterSizeNum) {
         console.log(json);
     })
 }
+
+//lets hope this works lol
+$.post( "/postmethod", {
+    "hello": "world" 
+});
