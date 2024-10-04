@@ -62,13 +62,8 @@ createMonsterButton.addEventListener("click", () => {
     getMonster(monsterSizeNum)
 })
 
-
-// SO post that explains how to send data back and forth I think?
-// https://stackoverflow.com/questions/29987323/how-do-i-send-data-from-js-to-python-with-flask
-// This one in case ajax isnt compatible with Jekyll?
-// https://stackoverflow.com/questions/6396101/pure-javascript-send-post-data-without-a-form 
-
-// semi functional fetch monster that sends data with its request
+// function for grabbing monsters from the website based on various search criteria
+// currently the only paramter we have is the size of the monster
 // TODO: Catch invalid json/timeouts so we don't have errors on loadMonster
 function getMonster(monsterSizeNum) {
     const url = 'https://zevce.pythonanywhere.com/getMonster/' + monsterSizeNum
@@ -79,15 +74,36 @@ function getMonster(monsterSizeNum) {
     })
 }
 
-$.ajax({
-    url: '/testRoute',
-    data: {'hello':'world'},
-    type: 'POST',
-dataType: 'json',
-    success: function(response){
-        console.log(response);
+//testing sending data to our flask server
+//will eventually send a json which contains info about all players in the party
+//any html file that uses this method will need to have
+//<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+//above its script.js source
+function sendData() {
+    /*
+    $.ajax({
+        type: 'POST',
+        //contentType: 'application/json',
+        data: {"hello" : "world"},
+        dataType: 'json',
+        url: 'https://zevce.pythonanywhere.com/testRoute',
+        success: function (e) {
+            console.log(e);
+        },
+        error: function(error) {
+            console.log(error);
+        }
+   });
+   */
+
+   $.post("https://zevce.pythonanywhere.com/testRoute",
+    {
+      hello: "world",
     },
-    error: function(error){
-        console.log(error);
-    }
-});
+    function(e){
+      console.log(e);
+    });
+
+}
+
+

@@ -2,6 +2,11 @@ from flask import Flask, after_this_request, jsonify, request
 
 app = Flask(__name__)
 
+@app.route('/')
+@app.route('/index')
+def landing():
+    return "hello"
+
 @app.route('/getMonster/<int:sizeNumber>')
 def getMonster(sizeNumber):
 
@@ -21,7 +26,14 @@ def getMonster(sizeNumber):
     return jsonify(jsonResp)
 
 @app.route("/testRoute", methods=['POST', 'GET'])
-def conf_services():
-    if request.method == "POST":
-        app.logger.warning(request.values.get('new_freq'))
-    return {"goodbye":"world"}
+def testRoute():
+
+    #boilerplate code, dont touch this
+    @after_this_request
+    def add_header(response):
+         response.headers.add('Access-Control-Allow-Origin', '*')
+         return response
+    
+    if request.method == 'POST':
+        return request.json
+    return jsonify({'goodbye':'world'})
