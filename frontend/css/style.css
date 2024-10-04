@@ -15,9 +15,8 @@ hr {
 }
 
 /* stupid border */
-.header,
-.body {
-    /* border:  solid 2px; */
+.header, .body, .monster-display {
+    border:  solid 2px;
     padding: 0p 1em 1em;
 }
 
@@ -52,5 +51,6 @@ hr {
 }
 
 .monster-display {
+    margin: 35px;
     max-width: 500px;
 }
