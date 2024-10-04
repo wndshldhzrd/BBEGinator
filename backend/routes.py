@@ -20,7 +20,8 @@ def getMonster(sizeNumber):
     print(jsonResp)
     return jsonify(jsonResp)
 
-@app.route('/postmethod', methods = ['POST'])
-def get_post_javascript_data():
-    jsdata = request.form['javascript_data']
-    return jsdata
+@app.route("/testRoute", methods=['POST', 'GET'])
+def conf_services():
+    if request.method == "POST":
+        app.logger.warning(request.values.get('new_freq'))
+    return {"goodbye":"world"}

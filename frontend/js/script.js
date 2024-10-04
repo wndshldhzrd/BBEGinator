@@ -47,7 +47,15 @@ function getMonster(monsterSizeNum) {
     })
 }
 
-//lets hope this works lol
-$.post( "/postmethod", {
-    "hello": "world" 
+$.ajax({
+    url: '/testRoute',
+    data: {'hello':'world'},
+    type: 'POST',
+dataType: 'json',
+    success: function(response){
+        console.log(response);
+    },
+    error: function(error){
+        console.log(error);
+    }
 });
