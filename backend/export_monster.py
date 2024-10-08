@@ -40,23 +40,27 @@ def export(monster):
 	while (i < len(output) and i != -1):
 		#get the start and end quote positions for the category
 		i = output.find('"', i)
-		end = output.find('"', i)
+		end = output.find('"', i+1)
 
-		#this is the position in the template where we'll be adding in the new data
-		start = output.find(":", end)
-		if output[start+1] == '"':
-			start = start+1
+		#these are the positions in the sample template where we'll be adding in the new data
+		start_data = output.find(":", end)
+		start_data = start_data+2 if output[start_data + 1] == '"' else start_data+1
+		end_data = output.find(",", start_data+1)
+		end_data = end_data - 1 if end_data > -1 and output[end_data - 1] == '"' else end_data
 
 		category = output[i+1:end]
+		print("CATEGORY:", category)
 		if (category in jsonData):
-			output = output[0:start] + jsonData[category] + output[start:-1]
+			print("\trewriting output here for category", category)
+			output = output[0:start_data] + jsonData[category] + output[end_data:-1]
 
-		i = output.find(",", i)
+		i = output.find(",", end_data)
+		print("current output:", output[0:i])
 
 	#.monster file, for now named test.monster
-	outfile = open('test.monster', 'w')
-	outfile.write(output)
-	outfile.close()
+	#outfile = open('test.monster', 'w')
+	#outfile.write(output)
+	#outfile.close()
 
 	print("\nTEST PRINT STATEMENT: test.monster contains...")
 	print(output)
