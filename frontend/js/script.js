@@ -7,7 +7,6 @@ function createPar (text) {
 
 // Calculates the modifier of a stat
 function getModifier (score) {
-    console.log(`${Math.floor((score - 10) / 2)}`);
     return Math.floor((score - 10) / 2);
 }
 
@@ -36,6 +35,14 @@ function getHP (monsterSize, numDice, constMod) {
 function loadMonster (monster) {
     // Div where we will display monsters
     const showMonsterDiv = document.querySelector(".monster-display");
+
+    // Monster background information
+    const monsterBackground = new Image();
+    monsterBackground.src = "./img/MonsterBackground.png";
+    showMonsterDiv.style.backgroundImage = 'url("./img/MonsterBackground.png")';
+    showMonsterDiv.style.maxWidth = monsterBackground.width + "px";
+
+    // Resetting Div (Temp for now)
     showMonsterDiv.innerHTML = "";
 
     // Adding name to first line
@@ -44,9 +51,9 @@ function loadMonster (monster) {
     showMonsterDiv.appendChild(createPar(monster.size + " " + monster.type + ", " + monster.alignment));
     // Line break
     showMonsterDiv.appendChild(document.createElement("hr"));
-    // Armor class
+    // Adding Armor class
     showMonsterDiv.appendChild(createPar("Armor Class " + monster.otherArmorDesc));
-    // Hit Points
+    // Calculating and adding Hit Points
     const maybeHP = monster.hpText;
     const constMod = getModifier(monster.conPoints);
     if (/^\d+$/.test(maybeHP)) {
@@ -56,13 +63,6 @@ function loadMonster (monster) {
     }
     // Speed
 }
-
-
-//James this is terrible practice im going to kill you
-createMonsterButton.addEventListener("click", () => {
-    monsterSizeNum = document.querySelector("#size-dropdown").value;
-    getMonster(monsterSizeNum)
-})
 
 // function for grabbing monsters from the website based on various search criteria
 // currently the only paramter we have is the size of the monster
@@ -118,6 +118,12 @@ const createMonsterButton = document.querySelector("#create-monster");
 
 //James this is terrible practice im going to kill you
 createMonsterButton.addEventListener("click", () => {
-    monsterSizeNum = document.querySelector("#size-dropdown").value;
-    getMonster(monsterSizeNum)
+    fetchMonster("goat");
 });
+
+async function fetchMonster(monsterName) {
+    // Currently local only, need to change this for backend fetch calls when set up
+    const response = await fetch(`data/${monsterName}.monster`)
+    .then (response => response.json())
+    .then (monster => loadMonster(monster));
+}
