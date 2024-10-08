@@ -77,6 +77,17 @@ def export(monster):
 	#convert cr from double to string of an int
 	jsonData["cr"] = str(int(jsonData["cr"]))
 
+	#sthrows
+	jsonData["sthrows"] = []
+	throws = ["str", "dex", "con", "int", "wis", "cha"]
+	throws_actual = j2m["sthrows"]
+	for i in range(0, len(throws)):
+		t = throws[i]
+		t_actual = throws_actual[i]
+		if monster[t_actual] != None:
+			jsonData["sthrows"].append({"name":t, "order":i})
+
+
 	#isLegendary
 	jsonData["isLegendary"] = jsonData["isLegendary"] == "" or jsonData["isLegendary"] == None
 
