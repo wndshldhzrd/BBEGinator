@@ -7,8 +7,37 @@ function createPar (text) {
 
 // Calculates the modifier of a stat
 function getModifier (score) {
-    console.log(`${Math.floor((score - 10) / 2)}`);
     return Math.floor((score - 10) / 2);
+}
+
+function createStatDiv (name, value) {
+    const statDiv = document.createElement("div");
+    statDiv.appendChild(createPar(name));
+    statDiv.appendChild(createPar(value));
+    return statDiv;
+}
+
+// Creates the monster stats
+// Returns a div containing the monsters stats that can be immediately used
+// in the monster display
+function createStats (monster) {
+    const statsDiv = document.createElement("div");
+    statsDiv.setAttribute("id", "stats");
+
+    // STR
+    statsDiv.appendChild(createStatDiv("STR", monster.strPoints));
+    // DEX
+    statsDiv.appendChild(createStatDiv("DEX", monster.dexPoints));
+    // CON
+    statsDiv.appendChild(createStatDiv("CON", monster.conPoints));
+    // INT
+    statsDiv.appendChild(createStatDiv("INT", monster.intPoints));
+    // WIS
+    statsDiv.appendChild(createStatDiv("WIS", monster.wisPoints));
+    // CHA
+    statsDiv.appendChild(createStatDiv("CHA", monster.chaPoints));
+
+    return statsDiv;
 }
 
 // Returns the average HP of a monster using the formula
@@ -36,6 +65,14 @@ function getHP (monsterSize, numDice, constMod) {
 function loadMonster (monster) {
     // Div where we will display monsters
     const showMonsterDiv = document.querySelector(".monster-display");
+
+    // Monster background information
+    const monsterBackground = new Image();
+    monsterBackground.src = "./img/MonsterBackground.png";
+    showMonsterDiv.style.backgroundImage = 'url("./img/MonsterBackground.png")';
+    showMonsterDiv.style.maxWidth = monsterBackground.width + "px";
+
+    // Resetting Div (Temp for now)
     showMonsterDiv.innerHTML = "";
 
     // Adding name to first line
@@ -44,25 +81,24 @@ function loadMonster (monster) {
     showMonsterDiv.appendChild(createPar(monster.size + " " + monster.type + ", " + monster.alignment));
     // Line break
     showMonsterDiv.appendChild(document.createElement("hr"));
-    // Armor class
+    // Adding Armor class
     showMonsterDiv.appendChild(createPar("Armor Class " + monster.otherArmorDesc));
-    // Hit Points
+    // Calculating and adding Hit Points
     const maybeHP = monster.hpText;
     const constMod = getModifier(monster.conPoints);
-    if (/^\d+$/.test(maybeHP)) {
+    if (/^\d+$/.test(maybeHP)) { // Checks if maybeHP is only digits
         showMonsterDiv.appendChild(createPar("Hit Points " + getHP(monster.size, maybeHP, constMod)));
     } else {
         showMonsterDiv.appendChild(createPar("Hit Points " + monster.hpText));
     }
-    // Speed
+    // Adding Speed
+    showMonsterDiv.appendChild(createPar("Speed " + monster.speed + " ft."));
+    // Line break
+    showMonsterDiv.appendChild(document.createElement("hr"));
+    
+    // Creating stats block
+    showMonsterDiv.appendChild(createStats(monster));
 }
-
-
-//James this is terrible practice im going to kill you
-createMonsterButton.addEventListener("click", () => {
-    monsterSizeNum = document.querySelector("#size-dropdown").value;
-    getMonster(monsterSizeNum)
-})
 
 // function for grabbing monsters from the website based on various search criteria
 // currently the only paramter we have is the size of the monster
@@ -118,6 +154,12 @@ const createMonsterButton = document.querySelector("#create-monster");
 
 //James this is terrible practice im going to kill you
 createMonsterButton.addEventListener("click", () => {
-    monsterSizeNum = document.querySelector("#size-dropdown").value;
-    getMonster(monsterSizeNum)
+    fetchMonster("goat");
 });
+
+async function fetchMonster(monsterName) {
+    // Currently local only, need to change this for backend fetch calls when set up
+    const response = await fetch(`data/${monsterName}.monster`)
+    .then (response => response.json())
+    .then (monster => loadMonster(monster));
+}

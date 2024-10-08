@@ -6,6 +6,17 @@
 
 body {
     font-family: roboto, sans-serif;
+    background-color: lightgoldenrodyellow;
+}
+
+.monster-display{
+    border:  solid 2px;
+    padding: 0p 1em 1em;
+}
+
+hr {
+    margin: 2px 0;
+    border: solid 1px;
 }
 
 .header {
@@ -23,11 +34,6 @@ body {
     display: flex;
     align-items: center;
     list-style: none;
-}
-
-/* stupid border */
-body {
-    background-color: lightgoldenrodyellow;
 }
 
 .nav-bar{

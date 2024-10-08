@@ -85,14 +85,10 @@ def main():
             data = get_data(url, payload)
             if data['next']:
                 write_to_json(data, filename)
-                print("sleep")
-                time.sleep(5)
                 url = data['next']
                 
             else:
                 write_to_json(data, filename)
-                print("sleep")
-                time.sleep(5)
                 break
         except Exception as e:
             print(f"An error occurred: {e}")

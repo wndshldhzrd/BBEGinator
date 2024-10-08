@@ -46,12 +46,41 @@ def export(monster):
 	#CONVERT jsonData to .monster format:
 	senses = ["darkvision", "tremorsense", "blindsight", "telepathy", "truesight"]
 	for s in senses:
-		print(s)
-		print(jsonData[s])
 		jsonData[s] = get_sense(s, jsonData[s])
 
+	#blind boolean
 	jsonData["blind"] = (jsonData["blind"].find("blind ") != -1)
 
+	#hitdice fix
+	jsonData["hitDice"] = (jsonData["hitDice"][:jsonData["hitDice"].find("d")])
+	
+	#walk speed
+	jsonData["speed"] = jsonData["speed"]["walk"]
+
+	#other speeds
+	speeds = ["flySpeed", "swimSpeed", "climbSpeed", "burrowSpeed"] #note: speed = walk
+	speedsActual = ["fly", "swim", "climb", "burrow"]
+	for i in range(0, len(speeds)): #dear vicky: climb does not work please help :(
+		s = speeds[i]
+		s_actual = speedsActual[i]
+		print(s)
+		print(jsonData[s])
+
+		if(s_actual in jsonData[s]):
+			jsonData[s] = jsonData[s][s_actual]
+		else:
+			jsonData[s] = 0
+
+	#hover boolean
+	jsonData["hover"] = "hover" in jsonData["hover"]
+
+	#convert cr from double to string of an int
+	jsonData["cr"] = str(int(jsonData["cr"]))
+
+	#isLegendary
+	jsonData["isLegendary"] = jsonData["isLegendary"] == "" or jsonData["isLegendary"] == None
+
+	#armor
 	armor_str = jsonData["otherArmorDesc"].strip()
 	print(armor_str)
 	a_index = armor_str.find(" ")
@@ -104,7 +133,7 @@ def export(monster):
 
 #for testing purposes
 if __name__ == "__main__":
-	monSlug = "accursed-guardian-naga-a5e"
+	monSlug = "aboleth-nihilith"
 	print("This is a test to convert a monster from the JSON file " +
 	 "format we get from mgetter.py to a .monster file")
 	print("Current monster slug: " + monSlug + "\n")
