@@ -10,12 +10,13 @@ body {
 
 .header {
     background-image: linear-gradient(to right, red, darkred, darkred, darkred);
-    margin-bottom: 1em;
+    border-bottom: 1px;
+    font-size: large;
+    border-style: solid;
 }
 
 .header img {
     max-height: 100px;
-    padding-right: 2em;
 }
 
 .header ul {
@@ -25,15 +26,19 @@ body {
 }
 
 /* stupid border */
-.header,
-.body {
-    /* border:  solid 2px; */
-    padding: 0p 1em 1em;
+body {
+    background-color: lightgoldenrodyellow;
 }
 
 .nav-bar{
     font: 500;
     background-color: lightgoldenrodyellow;
+}
+
+#inputs{
+    width: 50%;
+    height:100%;
+    float: left;
 }
 
 .body button {
@@ -45,9 +50,38 @@ body {
     background-image: url('\\frontend\\img\\MonsterBackground.png');
 }
 
-#size-dropdown{
-    background-color: lightgray;
+.dropdown{
+    background-color: rgb(230, 230, 230);
     outline-width: 1px;
     outline-style: solid;
     outline-color: black;
+}
+
+.stat-Input{
+    max-width: 40px;
+    outline-width: 1px;
+    outline-style: solid;
+    outline-color: black;
+}
+
+.statInputTable{
+    text-align: center;
+}
+
+#resultsBorder{
+    background-color: rgb(255, 80, 100);
+    width: 50%;
+    height: 100%;
+    float: left;
+}
+
+#results{
+    height: 500px;
+    background-color: rgb(255, 123, 143);
+    margin: 10px;
+    border-style: solid;
+    border-style: round;
+    border-color: black;
+    border-width: 1px;
+    border-radius: 5px;
 }
