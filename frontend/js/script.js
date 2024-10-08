@@ -10,6 +10,36 @@ function getModifier (score) {
     return Math.floor((score - 10) / 2);
 }
 
+function createStatDiv (name, value) {
+    const statDiv = document.createElement("div");
+    statDiv.appendChild(createPar(name));
+    statDiv.appendChild(createPar(value));
+    return statDiv;
+}
+
+// Creates the monster stats
+// Returns a div containing the monsters stats that can be immediately used
+// in the monster display
+function createStats (monster) {
+    const statsDiv = document.createElement("div");
+    statsDiv.setAttribute("id", "stats");
+
+    // STR
+    statsDiv.appendChild(createStatDiv("STR", monster.strPoints));
+    // DEX
+    statsDiv.appendChild(createStatDiv("DEX", monster.dexPoints));
+    // CON
+    statsDiv.appendChild(createStatDiv("CON", monster.conPoints));
+    // INT
+    statsDiv.appendChild(createStatDiv("INT", monster.intPoints));
+    // WIS
+    statsDiv.appendChild(createStatDiv("WIS", monster.wisPoints));
+    // CHA
+    statsDiv.appendChild(createStatDiv("CHA", monster.chaPoints));
+
+    return statsDiv;
+}
+
 // Returns the average HP of a monster using the formula
 // HP = Floor(<Size Modifier> * <Number of dice>) + modifier
 function getHP (monsterSize, numDice, constMod) {
@@ -56,12 +86,18 @@ function loadMonster (monster) {
     // Calculating and adding Hit Points
     const maybeHP = monster.hpText;
     const constMod = getModifier(monster.conPoints);
-    if (/^\d+$/.test(maybeHP)) {
+    if (/^\d+$/.test(maybeHP)) { // Checks if maybeHP is only digits
         showMonsterDiv.appendChild(createPar("Hit Points " + getHP(monster.size, maybeHP, constMod)));
     } else {
         showMonsterDiv.appendChild(createPar("Hit Points " + monster.hpText));
     }
-    // Speed
+    // Adding Speed
+    showMonsterDiv.appendChild(createPar("Speed " + monster.speed + " ft."));
+    // Line break
+    showMonsterDiv.appendChild(document.createElement("hr"));
+    
+    // Creating stats block
+    showMonsterDiv.appendChild(createStats(monster));
 }
 
 // function for grabbing monsters from the website based on various search criteria
