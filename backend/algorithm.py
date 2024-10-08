@@ -1,6 +1,6 @@
 from enum import Enum
-from classes import Monster
-from classes import PartyMember
+from classes.Monster import Monster
+from classes.PartyMember import PartyMember
 from random import randint
 
 # DATA
@@ -50,9 +50,9 @@ def Algorithm(party, difficulty, monsterList, lair, guys):
             print(f"This is the last monster, using my last {points} points")
     
 
-jimmy = PartyMember.PartyMember(65, "shmorbler", 30, 50)            #testing values
-glorth = PartyMember.PartyMember(50, "glunkman", 40, 69)
+jimmy = PartyMember(65, "shmorbler", 30)            #testing values
+glorth = PartyMember(50, "glunkman", 40)
 party = [jimmy, glorth]
 
-georgeBush = Monster.Monster("George W. Bush", "george", 45, 300, 5, 7)
+georgeBush = Monster("George W. Bush", "george", 45, 300, 5, 7)
 Algorithm(party, EncounterType.MEDIUM, [georgeBush], None, 6)
