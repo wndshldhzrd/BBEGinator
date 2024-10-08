@@ -51,6 +51,9 @@ def export(monster):
 	#blind boolean
 	jsonData["blind"] = (jsonData["blind"].find("blind ") != -1)
 
+	#hitdice fix
+	jsonData["hitDice"] = (jsonData["hitDice"][:jsonData["hitDice"].find("d")])
+	
 	#walk speed
 	jsonData["speed"] = jsonData["speed"]["walk"]
 
