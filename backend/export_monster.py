@@ -9,10 +9,22 @@ import json
 #from mgetter import mgetter #retrieves desired json data
 import mgetter #above statement was causing an error, commented out for now
 
+def get_sense(sense, description):
+	index = description.find(sense)
+	if (index == -1):
+		return 0
+
+	else:
+		index = index + len(sense) + 1
+
+		#numerical value following the sense
+		val = int(description[index : description.find(" ", index+1)])
+		return val
+
 #export a monster's data to a .monster style format
 def export(monster):
 	#monster is a dictionary containing input data from json file
-	jsonData = dict()
+	jsonData = json.loads(open('sample_monster.monster').read())
 
 	j2m = json.loads(open("j2m_keys.json").read())
 
@@ -23,32 +35,36 @@ def export(monster):
 			jsonData[category] = ""
 			for c in j2m[category]:
 				print(c)
-				jsonData[category] = jsonData[category] + str(monster[c])
+				jsonData[category] = jsonData[category] + " " + str(monster[c])
 
 		else:
 			jsonData[category] = monster[j2m[category]]
-	#test to see if this works for dealing w/ senses. 100% can be cleaned up and probably put somewhere else. 
-	#CURRENTLY ONLY HITS BLINDSIGHT AND DARKVISION. TREMORSENSE, TRUESIGHT, AND TELEPATHY (which is in languages and not senses) LEFT
-	#could maybe make it a function to take up less space?
-	blindsightIndex = jsonData["blindsight"].find("blindsight") + 11
-	if(blindsightIndex == 10): #-1 + 11 = 10
-		jsonData["blindsight"] = "0"
+
+
+	#CONVERT jsonData to .monster format:
+	senses = ["darkvision", "tremorsense", "blindsight", "telepathy", "truesight"]
+	for s in senses:
+		print(s)
+		print(jsonData[s])
+		jsonData[s] = get_sense(s, jsonData[s])
+
+	jsonData["blind"] = (jsonData["blind"].find("blind ") != -1)
+
+	armor_str = jsonData["otherArmorDesc"]
+	a_index = armor_str.find(" ", 1) + 1
+	if (len(armor_str[1:a_index]) + 1 < len(armor_str[1:])):
+		jsonData["otherArmorDesc"] = armor_str[1:a_index] + "(" + armor_str[a_index:] + ")"
 	else:
-		jsonData["blindsight"] = jsonData["blindsight"][blindsightIndex:jsonData["blindsight"].find(" ft")]
-	#if we put this somewhere above: maybe have it parse through senses first? 
-	#then it can just delete the blindsight chunk and stuff as it goes through
-	#instead of my horrific darkvision thing seen below (too many brackets!)
-	darksightIndex = jsonData["darkvision"].find("darkvision") + 11
-	if(darksightIndex == 10):
-		jsonData["darkvision"] = "0"
-	else:
-		jsonData["darkvision"] = jsonData["darkvision"][darksightIndex:jsonData["darkvision"][darksightIndex:].find(" ft") - darksightIndex]
-	print("\nTHE UNEDITED CONVERSION OF DATA FROM JSON LOOKS LIKE THIS:")
+		jsonData["otherArmorDesc"] = armor_str[1:a_index-1]
+
+	print("\nTHE PARTIALLY EDITED CONVERSION OF DATA FROM JSON LOOKS LIKE THIS:")
 	print(jsonData)
 	print()
 
 	#.monster file template to be personalized
-	output = open('sample_monster.monster').read()
+	#output = open('sample_monster.monster').read()
+
+
 
 	#fill in template
 	i = 0
@@ -74,18 +90,18 @@ def export(monster):
 		print("current output:", output[0:i])"""
 
 	#.monster file, for now named test.monster
-	#outfile = open('test.monster', 'w')
-	#outfile.write(output)
-	#outfile.close()
+	outfile = open('test.monster', 'w')
+	json.dump(jsonData, outfile)
+	outfile.close()
 
-	print("\nTEST PRINT STATEMENT: test.monster contains...")
-	print(output)
+	#print("\nTEST PRINT STATEMENT: test.monster contains...")
+	#print(output)
 	return
 
 
 #for testing purposes
 if __name__ == "__main__":
-	monSlug = "adult-black-dragon"
+	monSlug = "acolyte"
 	print("This is a test to convert a monster from the JSON file " +
 	 "format we get from mgetter.py to a .monster file")
 	print("Current monster slug: " + monSlug + "\n")
