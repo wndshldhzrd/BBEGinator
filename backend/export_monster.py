@@ -35,10 +35,12 @@ def export(monster):
 			jsonData[category] = ""
 			for c in j2m[category]:
 				print(c)
-				jsonData[category] = jsonData[category] + " " + str(monster[c])
+				if monster[c] != None:
+					jsonData[category] = jsonData[category] + " " + str(monster[c])
 
 		else:
-			jsonData[category] = monster[j2m[category]]
+			if monster[j2m[category]] != None:
+				jsonData[category] = monster[j2m[category]]
 
 
 	#CONVERT jsonData to .monster format:
@@ -50,12 +52,13 @@ def export(monster):
 
 	jsonData["blind"] = (jsonData["blind"].find("blind ") != -1)
 
-	armor_str = jsonData["otherArmorDesc"]
-	a_index = armor_str.find(" ", 1) + 1
-	if (len(armor_str[1:a_index]) + 1 < len(armor_str[1:])):
-		jsonData["otherArmorDesc"] = armor_str[1:a_index] + "(" + armor_str[a_index:] + ")"
+	armor_str = jsonData["otherArmorDesc"].strip()
+	print(armor_str)
+	a_index = armor_str.find(" ")
+	if (a_index != -1):
+		jsonData["otherArmorDesc"] = armor_str[0:a_index] + " (" + armor_str[a_index+1:] + ")"
 	else:
-		jsonData["otherArmorDesc"] = armor_str[1:a_index-1]
+		jsonData["otherArmorDesc"] = armor_str
 
 	print("\nTHE PARTIALLY EDITED CONVERSION OF DATA FROM JSON LOOKS LIKE THIS:")
 	print(jsonData)
@@ -101,7 +104,7 @@ def export(monster):
 
 #for testing purposes
 if __name__ == "__main__":
-	monSlug = "acolyte"
+	monSlug = "accursed-guardian-naga-a5e"
 	print("This is a test to convert a monster from the JSON file " +
 	 "format we get from mgetter.py to a .monster file")
 	print("Current monster slug: " + monSlug + "\n")
@@ -123,6 +126,7 @@ if __name__ == "__main__":
 	mon = monsters[start:end]
 	if (start == -1):
 		print("Failed to find monster by that slug")
+		print(mon)
 		mon = ""
 
 	#print(mon)
