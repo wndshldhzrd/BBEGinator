@@ -66,12 +66,6 @@ createMonsterButton.addEventListener("click", () => {
 
 // function for grabbing monsters from the website based on various search criteria
 // currently the only paramter we have is the size of the monster
-// SO post that explains how to send data back and forth I think?
-// https://stackoverflow.com/questions/29987323/how-do-i-send-data-from-js-to-python-with-flask
-// This one in case ajax isnt compatible with Jekyll?
-// https://stackoverflow.com/questions/6396101/pure-javascript-send-post-data-without-a-form 
-
-// semi functional fetch monster that sends data with its request
 // TODO: Catch invalid json/timeouts so we don't have errors on loadMonster
 function getMonster(monsterSizeNum) {
     const url = 'https://zevce.pythonanywhere.com/getMonster/' + monsterSizeNum
@@ -113,12 +107,6 @@ function sendData() {
     });
 
 }
-
-
-    error: function(error){
-        console.log(error);
-    }
-});
 
 
 /****************************
