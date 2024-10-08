@@ -20,7 +20,7 @@ def get_data(url, payload):
 
 def write_to_json(data, filename):
     with open(filename, 'a') as f:
-        json.dump(data, f)
+        json.dump(data['results'], f)
         f.write('\n')
 
 
@@ -85,13 +85,13 @@ def main():
             data = get_data(url, payload)
             if data['next']:
                 write_to_json(data, filename)
-                print("kachow, waiting")
+                print("sleep")
                 time.sleep(5)
                 url = data['next']
                 
             else:
                 write_to_json(data, filename)
-                print("kachow, waiting")
+                print("sleep")
                 time.sleep(5)
                 break
         except Exception as e:

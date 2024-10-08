@@ -1,17 +1,18 @@
-// Button that creates a monster (TEMP)
-const createMonsterButton = document.querySelector("#create-monster");
-
+// Easier way to create a paragraph when loading moster
 function createPar (text) {
     const par = document.createElement("p");
     par.textContent = text;
     return par;
 }
 
+// Calculates the modifier of a stat
 function getModifier (score) {
     console.log(`${Math.floor((score - 10) / 2)}`);
     return Math.floor((score - 10) / 2);
 }
 
+// Returns the average HP of a monster using the formula
+// HP = Floor(<Size Modifier> * <Number of dice>) + modifier
 function getHP (monsterSize, numDice, constMod) {
     switch (monsterSize) {
         case "tiny":
@@ -31,6 +32,7 @@ function getHP (monsterSize, numDice, constMod) {
     }
 }
 
+// Creates a div containing moster information and adds it to the monster display div
 function loadMonster (monster) {
     // Div where we will display monsters
     const showMonsterDiv = document.querySelector(".monster-display");
@@ -64,6 +66,12 @@ createMonsterButton.addEventListener("click", () => {
 
 // function for grabbing monsters from the website based on various search criteria
 // currently the only paramter we have is the size of the monster
+// SO post that explains how to send data back and forth I think?
+// https://stackoverflow.com/questions/29987323/how-do-i-send-data-from-js-to-python-with-flask
+// This one in case ajax isnt compatible with Jekyll?
+// https://stackoverflow.com/questions/6396101/pure-javascript-send-post-data-without-a-form 
+
+// semi functional fetch monster that sends data with its request
 // TODO: Catch invalid json/timeouts so we don't have errors on loadMonster
 function getMonster(monsterSizeNum) {
     const url = 'https://zevce.pythonanywhere.com/getMonster/' + monsterSizeNum
@@ -107,3 +115,21 @@ function sendData() {
 }
 
 
+    error: function(error){
+        console.log(error);
+    }
+});
+
+
+/****************************
+** TESTING STUFF GOES HERE **
+****************************/
+
+// Button that creates a monster (TEMP)
+const createMonsterButton = document.querySelector("#create-monster");
+
+//James this is terrible practice im going to kill you
+createMonsterButton.addEventListener("click", () => {
+    monsterSizeNum = document.querySelector("#size-dropdown").value;
+    getMonster(monsterSizeNum)
+});

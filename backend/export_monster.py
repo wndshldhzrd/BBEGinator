@@ -27,7 +27,22 @@ def export(monster):
 
 		else:
 			jsonData[category] = monster[j2m[category]]
-
+	#test to see if this works for dealing w/ senses. 100% can be cleaned up and probably put somewhere else. 
+	#CURRENTLY ONLY HITS BLINDSIGHT AND DARKVISION. TREMORSENSE, TRUESIGHT, AND TELEPATHY (which is in languages and not senses) LEFT
+	#could maybe make it a function to take up less space?
+	blindsightIndex = jsonData["blindsight"].find("blindsight") + 11
+	if(blindsightIndex == 10): #-1 + 11 = 10
+		jsonData["blindsight"] = "0"
+	else:
+		jsonData["blindsight"] = jsonData["blindsight"][blindsightIndex:jsonData["blindsight"].find(" ft")]
+	#if we put this somewhere above: maybe have it parse through senses first? 
+	#then it can just delete the blindsight chunk and stuff as it goes through
+	#instead of my horrific darkvision thing seen below (too many brackets!)
+	darksightIndex = jsonData["darkvision"].find("darkvision") + 11
+	if(darksightIndex == 10):
+		jsonData["darkvision"] = "0"
+	else:
+		jsonData["darkvision"] = jsonData["darkvision"][darksightIndex:jsonData["darkvision"][darksightIndex:].find(" ft") - darksightIndex]
 	print("\nTHE UNEDITED CONVERSION OF DATA FROM JSON LOOKS LIKE THIS:")
 	print(jsonData)
 	print()
@@ -37,26 +52,31 @@ def export(monster):
 
 	#fill in template
 	i = 0
-	while (i < len(output) and i != -1):
+	#THIS WHOLE SECTION IS CURRENTLY CAUSING AN ERROR [can only contacenate str (not "dict" to str)]
+	"""while (i < len(output) and i != -1): 
 		#get the start and end quote positions for the category
 		i = output.find('"', i)
-		end = output.find('"', i)
+		end = output.find('"', i+1)
 
-		#this is the position in the template where we'll be adding in the new data
-		start = output.find(":", end)
-		if output[start+1] == '"':
-			start = start+1
+		#these are the positions in the sample template where we'll be adding in the new data
+		start_data = output.find(":", end)
+		start_data = start_data+2 if output[start_data + 1] == '"' else start_data+1
+		end_data = output.find(",", start_data+1)
+		end_data = end_data - 1 if end_data > -1 and output[end_data - 1] == '"' else end_data
 
-		category = output[i+1:end]
+		category = output[i+1:end] 
+		print("CATEGORY:", category)
 		if (category in jsonData):
-			output = output[0:start] + jsonData[category] + output[start:-1]
+			print("\trewriting output here for category", category)
+			output = output[0:start_data] + jsonData[category] + output[end_data:-1]
 
-		i = output.find(",", i)
+		i = output.find(",", end_data)
+		print("current output:", output[0:i])"""
 
 	#.monster file, for now named test.monster
-	outfile = open('test.monster', 'w')
-	outfile.write(output)
-	outfile.close()
+	#outfile = open('test.monster', 'w')
+	#outfile.write(output)
+	#outfile.close()
 
 	print("\nTEST PRINT STATEMENT: test.monster contains...")
 	print(output)
