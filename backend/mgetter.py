@@ -20,7 +20,7 @@ def get_data(url, payload):
 
 def write_to_json(data, filename):
     with open(filename, 'a') as f:
-        json.dump(data, f)
+        json.dump(data['results'], f)
         f.write('\n')
 
 
