@@ -46,12 +46,24 @@ def export(monster):
 	#CONVERT jsonData to .monster format:
 	senses = ["darkvision", "tremorsense", "blindsight", "telepathy", "truesight"]
 	for s in senses:
-		print(s)
-		print(jsonData[s])
 		jsonData[s] = get_sense(s, jsonData[s])
 
 	jsonData["blind"] = (jsonData["blind"].find("blind ") != -1)
+	speeds = ["speed", "flySpeed", "swimSpeed", "climbSpeed", "burrowSpeed"] #note: speed = walk
+	speedsActual = ["walk, fly, swim, climb, burrow"]
+	for s in speeds: #dear vicky: climb does not work please help :(
+		print(s)
+		print(jsonData[s])
+		if(s == "speed"):
+			jsonData[s] = jsonData[s]["walk"]
+		else:
+			if(jsonData[s][s[:s.find("Speed")]] != 0):
+				jsonData[s] = 0;
+			else:
+				jsonData[s] = jsonData[s][s[:s.find("Speed")]]
 
+	jsonData["blind"] = (jsonData["blind"].find("blind ") != -1)
+	jsonData["isLegendary"] = len(jsonData["isLegendary"]) > 0
 	armor_str = jsonData["otherArmorDesc"].strip()
 	print(armor_str)
 	a_index = armor_str.find(" ")
