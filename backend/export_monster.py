@@ -176,51 +176,28 @@ def export(monster):
 		jsonData["languages"][i] = {"name": jsonData["languages"][i], "speaks": True}
 	print(jsonData["languages"])
 
+	#shieldbonus
+	if jsonData["shieldBonus"].find("shield") != -1:
+		jsonData["shieldBonus"] = 2
+	else:
+		jsonData["shieldBonus"] = 0
+	print(jsonData["shieldBonus"])
+
 	print("\nTHE PARTIALLY EDITED CONVERSION OF DATA FROM JSON LOOKS LIKE THIS:")
 	print(jsonData)
 	print()
-
-	#.monster file template to be personalized
-	#output = open('sample_monster.monster').read()
-
-
-
-	#fill in template
-	i = 0
-	#THIS WHOLE SECTION IS CURRENTLY CAUSING AN ERROR [can only contacenate str (not "dict" to str)]
-	"""while (i < len(output) and i != -1): 
-		#get the start and end quote positions for the category
-		i = output.find('"', i)
-		end = output.find('"', i+1)
-
-		#these are the positions in the sample template where we'll be adding in the new data
-		start_data = output.find(":", end)
-		start_data = start_data+2 if output[start_data + 1] == '"' else start_data+1
-		end_data = output.find(",", start_data+1)
-		end_data = end_data - 1 if end_data > -1 and output[end_data - 1] == '"' else end_data
-
-		category = output[i+1:end] 
-		print("CATEGORY:", category)
-		if (category in jsonData):
-			print("\trewriting output here for category", category)
-			output = output[0:start_data] + jsonData[category] + output[end_data:-1]
-
-		i = output.find(",", end_data)
-		print("current output:", output[0:i])"""
 
 	#.monster file, for now named test.monster
 	outfile = open('test.monster', 'w')
 	json.dump(jsonData, outfile)
 	outfile.close()
 
-	#print("\nTEST PRINT STATEMENT: test.monster contains...")
-	#print(output)
 	return
 
 
 #for testing purposes
 if __name__ == "__main__":
-	monSlug = "adult-red-dragon"
+	monSlug = "goblin"
 	print("This is a test to convert a monster from the JSON file " +
 	 "format we get from mgetter.py to a .monster file")
 	print("Current monster slug: " + monSlug + "\n")
