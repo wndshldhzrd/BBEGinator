@@ -35,9 +35,10 @@ def Algorithm(party, difficulty, monsterList, lair, guys):
     
     partyHealthAvg = totalHealth // len(party)
     partyDmgAvg = totalDmg // len(party)
+    partyDmgMaxAvg = partDmgMax // len(party)
     
-    points = totalDmg+totalHealth       #calculation for the point pool
-    
+    points = totalDmg+totalHealth+ (partyDmgMaxAvg/4)       #calculation for the point pool
+    print(points)
     print(f"I have {points} points to spend")
     for i in range(guys):
         print(f"Generating monster {i + 1} of {guys}")
@@ -50,8 +51,8 @@ def Algorithm(party, difficulty, monsterList, lair, guys):
             print(f"This is the last monster, using my last {points} points")
     
 
-jimmy = PartyMember(65, "shmorbler", 30)            #testing values
-glorth = PartyMember(50, "glunkman", 40)
+jimmy = PartyMember(65, "shmorbler", 7)            #testing values
+glorth = PartyMember(50, "glunkman", 13)
 party = [jimmy, glorth]
 
 georgeBush = Monster("George W. Bush", "george", 45, 300, 5, 7)

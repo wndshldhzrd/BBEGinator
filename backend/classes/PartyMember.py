@@ -25,6 +25,7 @@ class PartyMember():
                     self.dmg = 2*11
                 else:
                     self.dmg = 7
+
             elif(theClass == "monk"):
                 multiattack = 2
                 unarmedAverage = 3
@@ -38,11 +39,13 @@ class PartyMember():
                     multiattack = 3
                     unarmedAverage = 4
                 self.dmg = multiattack * (4 + unarmedAverage)       #unarmed multiattacks 
+
             elif(theClass == "paladin"):
                 multiattack = 1
                 if (level > 5):
                     multiattack = 2
                 self.dmg = multiattack * (4 + (((level+1)//3)*5))           #divine smite dmg calculations(number of attacks *(attack modifier + highest spell level * dmg dice averages))
+
             elif(theClass == "Ranger"):
                 multiattack = 1
                 hunterMark = 3
@@ -55,9 +58,11 @@ class PartyMember():
                     multiattack = 2
                     hunterMark += 1
                 self.dmg = multiattack * (4 + (((level+1)//3)*2)+hunterMark)    #dont know how to account for induvidual subclasses as the ranger is very heavily reliant on those
+
             elif(theClass == "rogue"):
                 sneakAttack = level//2
                 self.dmg = (sneakAttack*5) + 4 #also very heavily reliant on subclasses to determine max dmg output
+
             elif(theClass == "barbarian"):
                 rageDmg = 2
                 multiattack = 1
@@ -69,6 +74,7 @@ class PartyMember():
                     multiattack+= 1
                 self.dmg = multiattack * (rageDmg + 11)
             elif(theClass == "warlock"):            #how the hell? use base spell slots and then add after level 11, additionally, need to keep eldritch blast updated
+
                 eldtritchBeams = 1
                 spells = 1
                 if(level > 18) :
@@ -81,4 +87,9 @@ class PartyMember():
                 if(level > 1):
                     spells+= 1
                 self.dmg = (((level)//2)*spells)*10 + 7
-        self.dmgMax = self.dmg * 2    #double dmg
+
+        self.dmgMax = self.dmg * 2    
+        
+        if (theClass == "cleric" or theClass == "druid" or theClass == "paladin") {     #designated healer point calculations
+            self.health += (self.health//2)                 
+        }
