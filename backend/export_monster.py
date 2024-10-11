@@ -63,8 +63,6 @@ def export(monster):
 	for i in range(0, len(speeds)): #dear vicky: climb does not work please help :(
 		s = speeds[i]
 		s_actual = speedsActual[i]
-		print(s)
-		print(jsonData[s])
 
 		if(s_actual in jsonData[s]):
 			jsonData[s] = jsonData[s][s_actual]
@@ -87,18 +85,37 @@ def export(monster):
 		if monster[t_actual] != None:
 			jsonData["sthrows"].append({"name":t, "order":i})
 
-
 	#isLegendary
 	jsonData["isLegendary"] = jsonData["isLegendary"] == "" or jsonData["isLegendary"] == None
 
 	#armor
 	armor_str = jsonData["otherArmorDesc"].strip()
-	print(armor_str)
 	a_index = armor_str.find(" ")
 	if (a_index != -1):
 		jsonData["otherArmorDesc"] = armor_str[0:a_index] + " (" + armor_str[a_index+1:] + ")"
 	else:
 		jsonData["otherArmorDesc"] = armor_str
+
+	#actions
+	search_terms = ["Melee Weapon Attack:", "Hit:", "Ranged Weapon Attack:"]
+	new_actions = []
+	for i in range(len(jsonData["actions"])):
+		action = dict()
+		action["name"] = jsonData["actions"][i]["name"]
+
+		desc = jsonData["actions"][i]["desc"]
+		#add underscores
+		for s in search_terms:
+			s_index = desc.find(s)
+			if s_index != -1:
+				new_desc = desc[0:s_index] + "_" + desc[s_index:s_index + len(s)] + "_" + desc[s_index + len(s):]
+				desc = new_desc
+
+		action["desc"] = desc
+		new_actions.append(action)
+	jsonData["actions"] = new_actions
+
+	print(jsonData["actions"])
 
 	print("\nTHE PARTIALLY EDITED CONVERSION OF DATA FROM JSON LOOKS LIKE THIS:")
 	print(jsonData)
