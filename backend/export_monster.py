@@ -130,28 +130,62 @@ def export(monster):
 	#hptext
 	jsonData["hpText"] = jsonData["hpText"][1:jsonData["hpText"].find(jsonData["hitDice"]) - 1]
 	
-	#specialdamage/damagetypes
-	damagetypes = ["acid", "bludgeoning", "cold", "fire", "force", "lightning", "necrotic", "piercing", "poison", "psychic", "radiant", "slashing", "thunder"]
-	damagestring = jsonData["specialdamage"] #base string so it doesn't get altered
-	jsonData["specialdamage"] = []
+	#damagetypes and specialdamage
+	vulnerable = monster["damage_vulnerabilities"].split("; ")
+	d_vulnerable = vulnerable[0].split(", ")
+	s_vulnerable = ""
+	if (len(vulnerable) > 1):
+		s_vulnerable = vulnerable[1]
+
+	resists = monster["damage_resistances"].split("; ")
+	d_resists = resists[0].split(", ")
+	s_resists = ""
+	if (len(resists) > 1):
+		s_resists = resists[1]
+
+	immune = monster["damage_immunities"].split("; ")
+	d_immune = immune[0].split(", ")
+	s_immune = ""
+	if (len(immune) > 1):
+		s_immune = immune[1]
+
 	jsonData["damagetypes"] = []
-	for s in damagetypes:
-		damage_index = damagestring.find(s)
-		if damage_index != -1: 
-			remainingstring = damagestring[damage_index:]
-			if remainingstring.find("resistant") != -1:
-				str1 = "(Resistant)"
-				str2 = "r"
-				jsonData["damagetypes"].append({"name": s, "note": str1, "type": str2})
-			elif remainingstring.find("immune") != -1:
-				str1 = "(Immune)"
-				str2 = "i"
-				jsonData["damagetypes"].append({"name": s, "note": str1, "type": str2})
-			else: 
-				str1 = "(Vulnerable)"
-				str2 = "v"
-				jsonData["damagetypes"].append({"name": s, "note": str1, "type": str2})
+	for v in d_vulnerable:
+		if v == "":
+			break
+		vul = {"name": v, "note": " (Vulnerable)", "type": "v"}
+		jsonData["damagetypes"].append(vul)
+
+	for r in d_resists:
+		if r == "":
+			break
+		res = {"name": r, "note": " (Resistant)", "type": "r"}
+		jsonData["damagetypes"].append(res)
+
+	for i in d_immune:
+		if i == "":
+			break
+		im = {"name": i, "note": " (Immune)", "type": "i"}
+		jsonData["damagetypes"].append(im)
+
 	print(jsonData["damagetypes"])
+
+	jsonData["specialdamage"] = []
+	if s_vulnerable != "":
+		vul = {"name": s_vulnerable, "note": " (Vulnerable)", "type": "v"}
+		jsonData["specialdamage"].append(vul)
+
+	if s_resists != "":
+		res = {"name": s_resists, "note": " (Resistant)", "type": "r"}
+		jsonData["specialdamage"].append(res)
+
+	if s_immune != "":
+		im = {"name": s_immune, "note": " (Immune)", "type": "i"}
+		jsonData["specialdamage"].append(im)
+
+
+	print(jsonData["specialdamage"])
+
 	#specialdamagetypes = ["damage from nonmagical, non-silvered weapons", "bludgeoning, piercing, and slashing from nonmagical attacks", ""]
 	#bludgeoning, piercing, and slashing from nonmagical attacks not made with silvered weapons
 	#damage from nonmagical, non-silvered weapons
@@ -231,7 +265,7 @@ def export(monster):
 
 #for testing purposes
 if __name__ == "__main__":
-	monSlug = "goblin"
+	monSlug = "tarrasque"
 	print("This is a test to convert a monster from the JSON file " +
 	 "format we get from mgetter.py to a .monster file")
 	print("Current monster slug: " + monSlug + "\n")
