@@ -96,7 +96,9 @@ def export(monster):
 	else:
 		jsonData["otherArmorDesc"] = armor_str
 
-
+	#hptext
+	jsonData["hpText"] = jsonData["hpText"][1:jsonData["hpText"].find(jsonData["hitDice"]) - 1]
+	
 	#actions, bonus actions, legendary actions
 	action_types = ["actions", "bonusActions", "legendaries", "reactions"]
 	for a in action_types:

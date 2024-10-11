@@ -1,19 +1,8 @@
 REMAINING CHANGES LEFT:
 
-Actions needs to be updated (put attack_bonus, damage_dice, and damage_bonus into desc, format it how .monster likes it w/ _Melee Spell Attack_: and stuff)
-
 shieldbonus: see what armor is and get it from there?? only exists if "shield" is specified under armor_desc?
 deal with nat armor bonus at some point probably
 
 specialdamage formatting is wrong (example of what something looks like: [{"name":"amogus","note":" (Immune)","type":"i"}. not just 'specialdamage': 'acid'.) [have to figure out if it's resistant/immune/vulnerable]   (also acid might be a damagetype rather than specialdamage)
 
-sthrows 100% needs fixing, it should not be "None710None68". correct thing would be [{"name":"con","order":2}, etc. for remaining stats]
-note: order designates the order it goes in. should be [{"name":"str","order":0},{"name":"dex","order":1},{"name":"con","order":2},{"name":"int","order":3},{"name":"wis","order":4},{"name":"cha","order":5}]. DOESN'T APPEAR IF NOT A SAVING THROW USED BY MONSTER
-
 skills should be "skills":[{"name":"history","stat":"int","note":" (ex)"}, ] currently 'skills': {'perception': 11, 'stealth': 7}
-
-languages should be [{"name":"Deep Speech","speaks":true}] rather than just 'languages': 'Common, Draconic'
-
-hptext should just be the '195', not '19517d12+85' (WORK IN PROGRESS: REUSE jsonData["hpText"] = (jsonData["hpText"][1:jsonData["hpText"]]) )
-
-remove telepathy from languages (because monster has telepathy as its own thing.. that is then thrown in languages)
