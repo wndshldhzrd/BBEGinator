@@ -30,11 +30,9 @@ def export(monster):
 
 	#to do: edit monster json into jsonData
 	for category in j2m:
-		print(category + ":")
 		if (isinstance(j2m[category], list)):
 			jsonData[category] = ""
 			for c in j2m[category]:
-				print(c)
 				if monster[c] != None:
 					jsonData[category] = jsonData[category] + " " + str(monster[c])
 
@@ -60,7 +58,7 @@ def export(monster):
 	#other speeds
 	speeds = ["flySpeed", "swimSpeed", "climbSpeed", "burrowSpeed"] #note: speed = walk
 	speedsActual = ["fly", "swim", "climb", "burrow"]
-	for i in range(0, len(speeds)): #dear vicky: climb does not work please help :(
+	for i in range(0, len(speeds)):
 		s = speeds[i]
 		s_actual = speedsActual[i]
 
@@ -94,12 +92,12 @@ def export(monster):
 				break
 		expected_bonus = expected_bonus + ((jsonData[stat + "Points"] - 10) / 2)
 
+		#check for expertise
 		if bonus > expected_bonus:
 			new_s["note"] = " (ex)"
-
 		new_skills.append(new_s)
+		
 	jsonData["skills"] = new_skills
-	print(jsonData["skills"])
 
 	#convert cr from double to string
 	double_to_frac = {0: "0", 0.125: "1/8", 0.25: "1/4", 0.5: "1/2"}
@@ -153,8 +151,6 @@ def export(monster):
 			new_actions.append(action)
 		jsonData[a] = new_actions
 
-		#print(jsonData[a])
-
 	#remove telepathy from languages
 	t_index = jsonData["languages"].find("telepathy")
 	if t_index != -1:
@@ -174,14 +170,11 @@ def export(monster):
 	jsonData["languages"] = jsonData["languages"].split(", ")
 	for i in range(len(jsonData["languages"])):
 		jsonData["languages"][i] = {"name": jsonData["languages"][i], "speaks": True}
-	print(jsonData["languages"])
-
 	#shieldbonus
 	if jsonData["shieldBonus"].find("shield") != -1:
 		jsonData["shieldBonus"] = 2
 	else:
 		jsonData["shieldBonus"] = 0
-	print(jsonData["shieldBonus"])
 
 	print("\nTHE PARTIALLY EDITED CONVERSION OF DATA FROM JSON LOOKS LIKE THIS:")
 	print(jsonData)
