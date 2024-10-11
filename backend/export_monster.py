@@ -72,8 +72,41 @@ def export(monster):
 	#hover boolean
 	jsonData["hover"] = "hover" in jsonData["hover"]
 
-	#convert cr from double to string of an int
-	jsonData["cr"] = str(int(jsonData["cr"]))
+	#skills
+	cr = jsonData["cr"]
+	skills_dict = { "athletics": "str", "acrobatics": "dex", "sleight of hand": "dex", "stealth": "dex",
+	"arcana": "int", "history": "int", "investigation": "int", "nature": "int", "religion": "int", 
+	"animal handling": "wis", "insight": "wis", "medicine": "wis", "perception": "wis", "survival": "wis",
+	"deception": "cha", "intimidation": "cha", "performance": "cha", "persuasion": "cha"}
+	prof_caps = [(0, 2), (5, 3), (9, 4), (13, 5), (17, 6), (21, 7), (25, 8), (29, 9)]
+	new_skills = []
+	for skill in jsonData["skills"]:
+		stat = skills_dict[skill]
+		new_s = {"name": skill, "stat": stat}
+
+		#calculate expected bonus (proficiency + modifier) to check for expertise
+		bonus = jsonData["skills"][skill]
+		expected_bonus = 0
+		for prof in prof_caps:
+			if cr >= prof[0]:
+				expected_bonus = prof[1]
+			else:
+				break
+		expected_bonus = expected_bonus + ((jsonData[stat + "Points"] - 10) / 2)
+
+		if bonus > expected_bonus:
+			new_s["note"] = " (ex)"
+
+		new_skills.append(new_s)
+	jsonData["skills"] = new_skills
+	print(jsonData["skills"])
+
+	#convert cr from double to string
+	double_to_frac = {0: "0", 0.125: "1/8", 0.25: "1/4", 0.5: "1/2"}
+	if jsonData["cr"] < 1:
+		jsonData["cr"] = double_to_frac[jsonData["cr"]]
+	else:
+		jsonData["cr"] = str(int(jsonData["cr"]))
 
 	#sthrows
 	jsonData["sthrows"] = []
@@ -187,7 +220,7 @@ def export(monster):
 
 #for testing purposes
 if __name__ == "__main__":
-	monSlug = "aboleth-nihilith"
+	monSlug = "adult-red-dragon"
 	print("This is a test to convert a monster from the JSON file " +
 	 "format we get from mgetter.py to a .monster file")
 	print("Current monster slug: " + monSlug + "\n")
