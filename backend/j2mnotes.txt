@@ -3,6 +3,4 @@ REMAINING CHANGES LEFT:
 shieldbonus: see what armor is and get it from there?? only exists if "shield" is specified under armor_desc?
 deal with nat armor bonus at some point probably
 
-specialdamage formatting is wrong (example of what something looks like: [{"name":"amogus","note":" (Immune)","type":"i"}. not just 'specialdamage': 'acid'.) [have to figure out if it's resistant/immune/vulnerable]   (also acid might be a damagetype rather than specialdamage)
-
-skills should be "skills":[{"name":"history","stat":"int","note":" (ex)"}, ] currently 'skills': {'perception': 11, 'stealth': 7}
+SPECIALDAMAGE NEEDS TO BE HANDLED (necessary notes in code

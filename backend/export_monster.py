@@ -130,6 +130,47 @@ def export(monster):
 	#hptext
 	jsonData["hpText"] = jsonData["hpText"][1:jsonData["hpText"].find(jsonData["hitDice"]) - 1]
 	
+	#specialdamage/damagetypes
+	damagetypes = ["acid", "bludgeoning", "cold", "fire", "force", "lightning", "necrotic", "piercing", "poison", "psychic", "radiant", "slashing", "thunder"]
+	damagestring = jsonData["specialdamage"] #base string so it doesn't get altered
+	jsonData["specialdamage"] = []
+	jsonData["damagetypes"] = []
+	for s in damagetypes:
+		damage_index = damagestring.find(s)
+		if damage_index != -1: 
+			remainingstring = damagestring[damage_index:]
+			if remainingstring.find("resistant") != -1:
+				str1 = "(Resistant)"
+				str2 = "r"
+				jsonData["damagetypes"].append({"name": s, "note": str1, "type": str2})
+			elif remainingstring.find("immune") != -1:
+				str1 = "(Immune)"
+				str2 = "i"
+				jsonData["damagetypes"].append({"name": s, "note": str1, "type": str2})
+			else: 
+				str1 = "(Vulnerable)"
+				str2 = "v"
+				jsonData["damagetypes"].append({"name": s, "note": str1, "type": str2})
+	print(jsonData["damagetypes"])
+	#specialdamagetypes = ["damage from nonmagical, non-silvered weapons", "bludgeoning, piercing, and slashing from nonmagical attacks", ""]
+	#bludgeoning, piercing, and slashing from nonmagical attacks not made with silvered weapons
+	#damage from nonmagical, non-silvered weapons
+	#must become "bludgeoning, piercing, and slashing from nonmagical attacks not made with silvered weapons"
+	#just check for the word silvered?
+
+	#bludgeoning, piercing, and slashing from nonmagical attacks
+
+	#piercing and slashing damage from nonmagical, non-adamantine weapons
+	#bludgeoning, piercing, and slashing from nonmagical attacks not made with adamantine weapons
+	#just check for the word adamantine?
+	#must become "bludgeoning, piercing, and slashing from nonmagical attacks not made with adamantine weapons
+
+	#have the code parse it into lists/dicts: list of immune, list of vulnerable, list of resistant
+	#after that we can just have it go through each of those and be like 'for x blehblehbleh'
+	#do a quick check if the listed thing is one of the specialdamage ones [non-silver, nonmagical, non-adamantine, other]
+
+	#TLDR: STILL NEED TO HANDLE SPECIALDAMAGE
+
 	#actions, bonus actions, legendary actions
 	action_types = ["actions", "bonusActions", "legendaries", "reactions"]
 	for a in action_types:
