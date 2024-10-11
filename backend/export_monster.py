@@ -96,26 +96,29 @@ def export(monster):
 	else:
 		jsonData["otherArmorDesc"] = armor_str
 
-	#actions
-	search_terms = ["Melee Weapon Attack:", "Hit:", "Ranged Weapon Attack:"]
-	new_actions = []
-	for i in range(len(jsonData["actions"])):
-		action = dict()
-		action["name"] = jsonData["actions"][i]["name"]
 
-		desc = jsonData["actions"][i]["desc"]
-		#add underscores
-		for s in search_terms:
-			s_index = desc.find(s)
-			if s_index != -1:
-				new_desc = desc[0:s_index] + "_" + desc[s_index:s_index + len(s)] + "_" + desc[s_index + len(s):]
-				desc = new_desc
+	#actions, bonus actions, legendary actions
+	action_types = ["actions", "bonusActions", "legendaries", "reactions"]
+	for a in action_types:
+		search_terms = ["Melee Weapon Attack:", "Hit:", "Ranged Weapon Attack:"]
+		new_actions = []
+		for i in range(len(jsonData[a])):
+			action = dict()
+			action["name"] = jsonData[a][i]["name"]
 
-		action["desc"] = desc
-		new_actions.append(action)
-	jsonData["actions"] = new_actions
+			desc = jsonData[a][i]["desc"]
+			#add underscores
+			for s in search_terms:
+				s_index = desc.find(s)
+				if s_index != -1:
+					new_desc = desc[0:s_index] + "_" + desc[s_index:s_index + len(s)] + "_" + desc[s_index + len(s):]
+					desc = new_desc
 
-	print(jsonData["actions"])
+			action["desc"] = desc
+			new_actions.append(action)
+		jsonData[a] = new_actions
+
+		print(jsonData[a])
 
 	print("\nTHE PARTIALLY EDITED CONVERSION OF DATA FROM JSON LOOKS LIKE THIS:")
 	print(jsonData)
@@ -161,7 +164,7 @@ def export(monster):
 
 #for testing purposes
 if __name__ == "__main__":
-	monSlug = "aboleth-nihilith"
+	monSlug = "adult-black-dragon"
 	print("This is a test to convert a monster from the JSON file " +
 	 "format we get from mgetter.py to a .monster file")
 	print("Current monster slug: " + monSlug + "\n")
