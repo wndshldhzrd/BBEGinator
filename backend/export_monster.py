@@ -118,7 +118,28 @@ def export(monster):
 			new_actions.append(action)
 		jsonData[a] = new_actions
 
-		print(jsonData[a])
+		#print(jsonData[a])
+
+	#remove telepathy from languages
+	t_index = jsonData["languages"].find("telepathy")
+	if t_index != -1:
+		#account for comma after
+		post_t = jsonData["languages"].find(",", t_index)
+
+		#account for space and comma before
+		if t_index != 0:
+			t_index = t_index - 2
+
+		if post_t != -1:
+			jsonData["languages"] = jsonData["languages"][0:t_index] + jsonData["languages"][post_t+2:]
+		else:
+			jsonData["languages"] = jsonData["languages"][0:t_index]
+
+	#create list of languages as dictionaries
+	jsonData["languages"] = jsonData["languages"].split(", ")
+	for i in range(len(jsonData["languages"])):
+		jsonData["languages"][i] = {"name": jsonData["languages"][i], "speaks": True}
+	print(jsonData["languages"])
 
 	print("\nTHE PARTIALLY EDITED CONVERSION OF DATA FROM JSON LOOKS LIKE THIS:")
 	print(jsonData)
@@ -164,7 +185,7 @@ def export(monster):
 
 #for testing purposes
 if __name__ == "__main__":
-	monSlug = "adult-black-dragon"
+	monSlug = "aboleth-nihilith"
 	print("This is a test to convert a monster from the JSON file " +
 	 "format we get from mgetter.py to a .monster file")
 	print("Current monster slug: " + monSlug + "\n")
