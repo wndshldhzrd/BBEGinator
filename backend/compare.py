@@ -30,7 +30,7 @@ def compare(expected, actual):
 #for testing purposes
 if __name__ == "__main__":
 	expected = json.loads(open("red_dragon_expected.monster").read())
-	actual = json.loads(open("test2.monster").read())
+	actual = json.loads(open("test.monster").read())
 
 	print("\nCOMPARE.PY: COMPARING EXPECTED TO ACTUAL\n")
 	compare(expected, actual)
