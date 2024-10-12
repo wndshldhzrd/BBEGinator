@@ -51,7 +51,7 @@ def export(monster):
 
 	#hitdice fix
 	jsonData["hitDice"] = (jsonData["hitDice"][:jsonData["hitDice"].find("d")])
-	
+
 	#walk speed
 	jsonData["speed"] = jsonData["speed"]["walk"]
 
@@ -117,7 +117,7 @@ def export(monster):
 			jsonData["sthrows"].append({"name":t, "order":i})
 
 	#isLegendary
-	jsonData["isLegendary"] = jsonData["isLegendary"] == "" or jsonData["isLegendary"] == None
+	jsonData["isLegendary"] = jsonData["isLegendary"] != "" and jsonData["isLegendary"] != None
 
 	#armor
 	armor_str = jsonData["otherArmorDesc"].strip()
@@ -128,7 +128,7 @@ def export(monster):
 		jsonData["otherArmorDesc"] = armor_str
 
 	#hptext
-	jsonData["hpText"] = jsonData["hpText"][1:jsonData["hpText"].find(jsonData["hitDice"]) - 1]
+	jsonData["hpText"] = str(jsonData["hitDice"])
 	
 	#damagetypes and specialdamage
 	vulnerable = monster["damage_vulnerabilities"].split("; ")
@@ -149,6 +149,7 @@ def export(monster):
 	if (len(immune) > 1):
 		s_immune = immune[1]
 
+	#damagetypes
 	jsonData["damagetypes"] = []
 	for v in d_vulnerable:
 		if v == "":
@@ -168,8 +169,7 @@ def export(monster):
 		im = {"name": i, "note": " (Immune)", "type": "i"}
 		jsonData["damagetypes"].append(im)
 
-	print(jsonData["damagetypes"])
-
+	#specialdamage
 	jsonData["specialdamage"] = []
 	if s_vulnerable != "":
 		vul = {"name": s_vulnerable, "note": " (Vulnerable)", "type": "v"}
@@ -182,28 +182,6 @@ def export(monster):
 	if s_immune != "":
 		im = {"name": s_immune, "note": " (Immune)", "type": "i"}
 		jsonData["specialdamage"].append(im)
-
-
-	print(jsonData["specialdamage"])
-
-	#specialdamagetypes = ["damage from nonmagical, non-silvered weapons", "bludgeoning, piercing, and slashing from nonmagical attacks", ""]
-	#bludgeoning, piercing, and slashing from nonmagical attacks not made with silvered weapons
-	#damage from nonmagical, non-silvered weapons
-	#must become "bludgeoning, piercing, and slashing from nonmagical attacks not made with silvered weapons"
-	#just check for the word silvered?
-
-	#bludgeoning, piercing, and slashing from nonmagical attacks
-
-	#piercing and slashing damage from nonmagical, non-adamantine weapons
-	#bludgeoning, piercing, and slashing from nonmagical attacks not made with adamantine weapons
-	#just check for the word adamantine?
-	#must become "bludgeoning, piercing, and slashing from nonmagical attacks not made with adamantine weapons
-
-	#have the code parse it into lists/dicts: list of immune, list of vulnerable, list of resistant
-	#after that we can just have it go through each of those and be like 'for x blehblehbleh'
-	#do a quick check if the listed thing is one of the specialdamage ones [non-silver, nonmagical, non-adamantine, other]
-
-	#TLDR: STILL NEED TO HANDLE SPECIALDAMAGE
 
 	#actions, bonus actions, legendary actions
 	action_types = ["actions", "bonusActions", "legendaries", "reactions"]
@@ -251,7 +229,42 @@ def export(monster):
 	else:
 		jsonData["shieldBonus"] = 0
 
-	print("\nTHE PARTIALLY EDITED CONVERSION OF DATA FROM JSON LOOKS LIKE THIS:")
+	#check for null conditions
+	if jsonData["conditions"] == None:
+		jsonData["conditions"] = ""
+
+	#conditions
+	if jsonData["conditions"] == "":
+		jsonData["conditions"] = []
+	else:
+		jsonData["conditions"] = jsonData["conditions"].split(", ")
+		for i in range(len(jsonData["conditions"])):
+			jsonData["conditions"][i] = {"name": jsonData["conditions"][i]}
+
+	#lowercase size
+	jsonData["size"] = jsonData["size"].lower()
+
+	#update hitdice to an int
+	jsonData["hitDice"] = int(jsonData["hitDice"])
+
+	#update lair and mythic descriptions to contain monster name
+	name = jsonData["name"].lower()
+	replacement = ["lairDescription", "lairDescriptionEnd", "mythicDescription", "regionalDescription", "regionalDescriptionEnd"]
+	for r in replacement:
+		jsonData[r] = jsonData[r].replace("monster", name)
+
+	#natArmorBonus
+	#without this, the statblock won't load, so I added it
+	#NOTE: THIS NEEDS TESTING/POSSIBLE EXTRA IMPLEMENTATION FOR CREATURES WEARING ARMOR
+	jsonData["natArmorBonus"] = 0
+	dexBonus = (jsonData["dexPoints"] - 10) / 2
+	ac = monster["armor_class"]
+	natArmorBonusCheck = ac - (10 + dexBonus + jsonData["shieldBonus"])
+	if natArmorBonusCheck > 0:
+		jsonData["natArmorBonus"] = natArmorBonusCheck
+	jsonData["natArmorBonus"] = int(jsonData["natArmorBonus"])
+
+	print("THE FULLY(?) EDITED CONVERSION OF DATA FROM JSON LOOKS LIKE THIS:")
 	print(jsonData)
 	print()
 
@@ -265,7 +278,7 @@ def export(monster):
 
 #for testing purposes
 if __name__ == "__main__":
-	monSlug = "tarrasque"
+	monSlug = "adult-red-dragon"
 	print("This is a test to convert a monster from the JSON file " +
 	 "format we get from mgetter.py to a .monster file")
 	print("Current monster slug: " + monSlug + "\n")
@@ -290,5 +303,4 @@ if __name__ == "__main__":
 		print(mon)
 		mon = ""
 
-	#print(mon)
 	export(json.loads(mon))
