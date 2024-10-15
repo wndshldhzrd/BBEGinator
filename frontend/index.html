@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script type="module" src="monsterCard/js/stat-block.js"></script>
+    <script type="module" src="monsterCard/js/creature-heading.js"></script>
+    <script type="module" src="monsterCard/js/top-stats.js"></script>
+    <script type="module" src="monsterCard/js/abilities-block.js"></script>
+    <script type="module" src="monsterCard/js/property-line.js"></script>
+    <script type="module" src="monsterCard/js/property-block.js"></script>
     <script defer src="js/script.js"></script>
     <title>BBEGinator</title>
 </head>
@@ -13,24 +20,18 @@
             <li><img src="img/BBEG_1-modified.png"></li>
         </ul>
         <div class = "nav-bar">
-            <a href="#">Home</a>
+            <a>Home</a>
+            <a href="\frontend\search.html">Search Monsters</a>
         </div>
     </div>
 
     <div class="body">
         <button id="create-monster">Create a monster</button>
+        <button onclick="sendData();"></button>
         <div class="monster-display">
+            
         </div>
     </div>
 
-    <label for="input-size">Monster Size:</label>
-    <select name="size" id="size-dropdown">     
-    <option value="0">Tiny</option>
-    <option value="1">Small</option>
-    <option value="2">Medium</option>
-    <option value="3">Large</option>
-    <option value="4">Huge</option>
-    <option value="5">Gargantuan</option>
-    </select>
 </body>
 </html>

@@ -1,45 +1,165 @@
-// Button that creates a monster (TEMP)
-const createMonsterButton = document.querySelector("#create-monster");
+// Easier way to create a paragraph when loading moster
+function createPar (text) {
+    const par = document.createElement("p");
+    par.textContent = text;
+    return par;
+}
 
+// Calculates the modifier of a stat
+function getModifier (score) {
+    return Math.floor((score - 10) / 2);
+}
+
+function createStatDiv (name, value) {
+    const statDiv = document.createElement("div");
+    statDiv.appendChild(createPar(name));
+    statDiv.appendChild(createPar(value));
+    return statDiv;
+}
+
+// Creates the monster stats
+// Returns a div containing the monsters stats that can be immediately used
+// in the monster display
+function createStats (monster) {
+    const statsDiv = document.createElement("div");
+    statsDiv.setAttribute("id", "stats");
+
+    // STR
+    statsDiv.appendChild(createStatDiv("STR", monster.strPoints));
+    // DEX
+    statsDiv.appendChild(createStatDiv("DEX", monster.dexPoints));
+    // CON
+    statsDiv.appendChild(createStatDiv("CON", monster.conPoints));
+    // INT
+    statsDiv.appendChild(createStatDiv("INT", monster.intPoints));
+    // WIS
+    statsDiv.appendChild(createStatDiv("WIS", monster.wisPoints));
+    // CHA
+    statsDiv.appendChild(createStatDiv("CHA", monster.chaPoints));
+
+    return statsDiv;
+}
+
+// Returns the average HP of a monster using the formula
+// HP = Floor(<Size Modifier> * <Number of dice>) + modifier
+function getHP (monsterSize, numDice, constMod) {
+    switch (monsterSize) {
+        case "tiny":
+            return `${Math.floor(2.5 * numDice) + constMod} (${numDice}d4)`;
+        case "small":
+            return `${Math.floor(3.5 * numDice) + constMod} (${numDice}d6)`;
+        case "medium":
+            return `${Math.floor(4.5 * numDice) + constMod} (${numDice}d8)`;
+        case "large":
+            return `${Math.floor(5.5 * numDice) + constMod} (${numDice}d10)`;
+        case "huge":
+            return `${Math.floor(6.5 * numDice) + constMod} (${numDice}d12)`;
+        case "gargantuan":
+            return `${Math.floor(10.5 * numDice) + constMod} (${numDice}d20)`;
+        default:
+            return `Error`;
+    }
+}
+
+// Creates a div containing moster information and adds it to the monster display div
 function loadMonster (monster) {
     // Div where we will display monsters
     const showMonsterDiv = document.querySelector(".monster-display");
+
+    // Monster background information
+    const monsterBackground = new Image();
+    monsterBackground.src = "./img/MonsterBackground.png";
+    showMonsterDiv.style.backgroundImage = 'url("./img/MonsterBackground.png")';
+    showMonsterDiv.style.maxWidth = monsterBackground.width + "px";
+
+    // Resetting Div (Temp for now)
     showMonsterDiv.innerHTML = "";
 
     // Adding name to first line
-    const name = document.createElement("p");
-    name.textContent = monster.name;
-
+    showMonsterDiv.appendChild(createPar(monster.name));
     // Adding size, type, and alignment
-    const description = document.createElement("p");
-    description.textContent = monster.size + " " + monster.type + ", " + monster.alignment;
-
+    showMonsterDiv.appendChild(createPar(monster.size + " " + monster.type + ", " + monster.alignment));
     // Line break
-    const lbreak = document.createElement("hr");
-    // lbreak.textContent = "-------";
-
-    showMonsterDiv.appendChild(name);
-    showMonsterDiv.appendChild(description);
-    showMonsterDiv.appendChild(lbreak);
+    showMonsterDiv.appendChild(document.createElement("hr"));
+    // Adding Armor class
+    showMonsterDiv.appendChild(createPar("Armor Class " + monster.otherArmorDesc));
+    // Calculating and adding Hit Points
+    const maybeHP = monster.hpText;
+    const constMod = getModifier(monster.conPoints);
+    if (/^\d+$/.test(maybeHP)) { // Checks if maybeHP is only digits
+        showMonsterDiv.appendChild(createPar("Hit Points " + getHP(monster.size, maybeHP, constMod)));
+    } else {
+        showMonsterDiv.appendChild(createPar("Hit Points " + monster.hpText));
+    }
+    // Adding Speed
+    showMonsterDiv.appendChild(createPar("Speed " + monster.speed + " ft."));
+    // Line break
+    showMonsterDiv.appendChild(document.createElement("hr"));
+    
+    // Creating stats block
+    showMonsterDiv.appendChild(createStats(monster));
 }
 
-
-//James this is terrible practice im going to kill you
-createMonsterButton.addEventListener("click", () => {
-    monsterSizeNum = document.querySelector("#size-dropdown").value;
-    fetchMonster(monsterSizeNum)
-})
-
-
-// https://stackoverflow.com/questions/64934381/fetch-multiple-kind-of-data
-
-// semi functional fetch monster that sends data with its request
+// function for grabbing monsters from the website based on various search criteria
+// currently the only paramter we have is the size of the monster
 // TODO: Catch invalid json/timeouts so we don't have errors on loadMonster
-function fetchMonster(monsterSizeNum) {
+function getMonster(monsterSizeNum) {
     const url = 'https://zevce.pythonanywhere.com/getMonster/' + monsterSizeNum
     fetch(url)
     .then(response => response.json())  
     .then(json => {
         console.log(json);
     })
+}
+
+//testing sending data to our flask server
+//will eventually send a json which contains info about all players in the party
+//any html file that uses this method will need to have
+//<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+//above its script.js source
+function sendData() {
+    /*
+    $.ajax({
+        type: 'POST',
+        //contentType: 'application/json',
+        data: {"hello" : "world"},
+        dataType: 'json',
+        url: 'https://zevce.pythonanywhere.com/testRoute',
+        success: function (e) {
+            console.log(e);
+        },
+        error: function(error) {
+            console.log(error);
+        }
+   });
+   */
+
+   $.post("https://zevce.pythonanywhere.com/testRoute",
+    {
+      hello: "world",
+    },
+    function(e){
+      console.log(e);
+    });
+
+}
+
+
+/****************************
+** TESTING STUFF GOES HERE **
+****************************/
+
+// Button that creates a monster (TEMP)
+const createMonsterButton = document.querySelector("#create-monster");
+
+//James this is terrible practice im going to kill you
+createMonsterButton.addEventListener("click", () => {
+    fetchMonster("goat");
+});
+
+async function fetchMonster(monsterName) {
+    // Currently local only, need to change this for backend fetch calls when set up
+    const response = await fetch(`data/${monsterName}.monster`)
+    .then (response => response.json())
+    .then (monster => loadMonster(monster));
 }
