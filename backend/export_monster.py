@@ -283,9 +283,9 @@ def export(monster):
 	#armorName fix--remove mention of shield
 	jsonData["armorName"] = jsonData["armorName"].replace(", shield", "")
 
-	print("THE FULLY(?) EDITED CONVERSION OF DATA FROM JSON LOOKS LIKE THIS:")
-	print(jsonData)
-	print()
+	#print("THE FULLY(?) EDITED CONVERSION OF DATA FROM JSON LOOKS LIKE THIS:")
+	#print(jsonData)
+	#print()
 
 	#.monster file, for now named test.monster
 	outfile = open('test.monster', 'w')
@@ -300,7 +300,7 @@ if __name__ == "__main__":
 	monSlug = "exploding-toad"
 	print("This is a test to convert a monster from the JSON file " +
 	 "format we get from mgetter.py to a .monster file")
-	print("Current monster slug: " + monSlug + "\n")
+	print("\nCurrent monster slug: " + monSlug)
 
 	#uses an api to get monster data and places it in a json file called data.json
 	#mgetter() [currently calls an error?]
@@ -323,3 +323,5 @@ if __name__ == "__main__":
 		mon = ""
 
 	export(json.loads(mon))
+
+	print("\nFinished conversion")
