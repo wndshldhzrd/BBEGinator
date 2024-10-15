@@ -58,7 +58,7 @@ def Algorithm(party, difficulty, monsterList, lair, guys, mode):
         print(f"I want to buy {guys} different monsters with point values around {toSpend}")
     elif(mode == "boss"):
         print(f"This is a boss encounter, I will spend most of my points on a boss")
-        toSpend = randint(int(points * 0.67), int(points * 0.8))
+        toSpend = points if guys == 1 else randint(int(points * 0.67), int(points * 0.8))
         print(f"Generating monster 1 of {guys}")
         print(f"I want to spend {toSpend} points on the boss")
         points -= toSpend
@@ -77,4 +77,4 @@ glorth = PartyMember(50, "glunkman", 13)
 party = [jimmy, glorth]
 
 georgeBush = Monster("George W. Bush", "george", 45, 300, 5, 7)
-Algorithm(party, EncounterType.MEDIUM, [georgeBush], None, 4, "boss")
+Algorithm(party, EncounterType.MEDIUM, [georgeBush], None, 1, "boss")
