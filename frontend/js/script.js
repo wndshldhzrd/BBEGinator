@@ -99,33 +99,36 @@ function loadMonster (monster) {
 function searchMonster() {
 
     payload = {
-        'hit_points__gte': '', //number u want hp to be greater than or equal to
-        'hit_points__lte': '', //number u want hp to be less than or equal to
-        'armor_class__gte': '', //number u want ac to be greater than or equal to
-        'armor_class__lte': '', //number u want ac to be less than or equal to
-        'type__iexact': '', //creature type
-        'size__iexact': '', //exact size
-        'alignmnet': '',
-        'swim_speed_lte' : '',
-        'swim_speed_gte' : '',
-        'fly_speed_lte' : '',
-        'fly_speed_gte' : '',
-        'walk_speed_lte' : '',
-        'walk_speed_gte' : '',
-        'str_lte' : '',
-        'str_gte' : '',
-        'dex_lte' : '',
-        'dex_gte' : '',
-        'con_lte' : '',
-        'con_gte' : '',
-        'int_lte' : '',
-        'int_gte' : '',
-        'wis_lte' : '',
-        'wis_gte' : '',
-        'cha_lte' : '',
-        'cha_gte' : '',
-        'filter_by': ''
+        'hit_points__gte': document.getElementById("hpMax").value, //max hp
+        'hit_points__lte': document.getElementById("hpMin").value, //min hp
+        'armor_class__gte': document.getElementById("acMax").value, //max ac
+        'armor_class__lte': document.getElementById("acMin").value, //min ac
+        'type__iexact': document.getElementById("type-dropdown").value,  //creature type
+        'size__iexact': document.getElementById("size-dropdown").value, //creature size
+        'alignmnet': document.getElementById('alignmment-dropdown').value, //creature alignment
+        'swim_speed_lte' : '', //min swimspeed
+        'swim_speed_gte' : '', //max swimspeed
+        'fly_speed_lte' : '', //min flyspeed
+        'fly_speed_gte' : '', //max flyspeed
+        'walk_speed_lte' : '', //min walkspeed
+        'walk_speed_gte' : '', //max walkspeed
+        'str_lte' : document.getElementById("strMin").value, //min str
+        'str_gte' : document.getElementById("strMax").value, //max str
+        'dex_lte' : document.getElementById("dexMin").value, //min dex
+        'dex_gte' : document.getElementById("dexMax").value, //max dex
+        'con_lte' : document.getElementById("conMin").value, //min con
+        'con_gte' : document.getElementById("conMax").value, //max con
+        'int_lte' : document.getElementById("intMin").value, //min int
+        'int_gte' : document.getElementById("intMax").value, //max int
+        'wis_lte' : document.getElementById("wisMin").value, //min wis
+        'wis_gte' : document.getElementById("wisMax").value, //max wis
+        'cha_lte' : document.getElementById("chaMin").value, //min cha
+        'cha_gte' : document.getElementById("chaMax").value, //max cha
+        'sort_by': '' //metric which creatures should be ordered by
     }
+
+    //testing to ensure that parameters are being passed correctly
+    console.log(payload);
 
     const url = 'https://zevce.pythonanywhere.com/searchMonster/' + JSON.stringify(payload)
     fetch(url)
@@ -135,6 +138,8 @@ function searchMonster() {
     })
 
 }
+
+
 
 
 /****************************
