@@ -90,6 +90,5 @@ class PartyMember():
 
         self.dmgMax = self.dmg * 2    
         
-        if (theClass == "cleric" or theClass == "druid" or theClass == "paladin") {     #designated healer point calculations
-            self.health += (self.health//2)                 
-        }
+        if (theClass == "cleric" or theClass == "druid" or theClass == "paladin"):    #designated healer point calculations
+            self.health += (self.health//2)
