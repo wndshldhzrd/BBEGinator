@@ -9,7 +9,7 @@ import json
 
 #export a monster's data to a .monster style format
 def compare(expected, actual):
-	correct_categories = {"name", "size", "type", "tag", "alignment", "hitDice", "armorName", "shieldBonus",
+	correct_categories = {"name", "type", "size", "tag", "alignment", "hitDice", "armorName", "shieldBonus",
 	"otherArmorDesc", "speed", "burrowSpeed", "climbSpeed", "flySpeed", "hover", "swimSpeed", "customHP", 
 	"customSpeed", "strPoints", "conPoints", "dexPoints", "intPoints", "wisPoints", "chaPoints", "blindsight",
 	"blind", "darkvision", "tremorsense", "truesight", "telepathy", "cr", "isLegendary", "legendariesDescription",
