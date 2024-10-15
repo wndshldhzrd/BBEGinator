@@ -91,56 +91,48 @@ function loadMonster (monster) {
     } else {
         showMonsterDiv.appendChild(createPar("Hit Points " + monster.hpText));
     }
-    // Adding Speed
-    showMonsterDiv.appendChild(createPar("Speed " + monster.speed + " ft."));
-    // Line break
-    showMonsterDiv.appendChild(document.createElement("hr"));
-    
-    // Creating stats block
-    showMonsterDiv.appendChild(createStats(monster));
+    // Speed
 }
 
-// function for grabbing monsters from the website based on various search criteria
-// currently the only paramter we have is the size of the monster
-// TODO: Catch invalid json/timeouts so we don't have errors on loadMonster
-function getMonster(monsterSizeNum) {
-    const url = 'https://zevce.pythonanywhere.com/getMonster/' + monsterSizeNum
+//Function which takes in various parameters and then gets a json of all
+//monsters that match that criteria
+function searchMonster() {
+
+    payload = {
+        'hit_points__gte': '', //number u want hp to be greater than or equal to
+        'hit_points__lte': '', //number u want hp to be less than or equal to
+        'armor_class__gte': '', //number u want ac to be greater than or equal to
+        'armor_class__lte': '', //number u want ac to be less than or equal to
+        'type__iexact': '', //creature type
+        'size__iexact': '', //exact size
+        'alignmnet': '',
+        'swim_speed_lte' : '',
+        'swim_speed_gte' : '',
+        'fly_speed_lte' : '',
+        'fly_speed_gte' : '',
+        'walk_speed_lte' : '',
+        'walk_speed_gte' : '',
+        'str_lte' : '',
+        'str_gte' : '',
+        'dex_lte' : '',
+        'dex_gte' : '',
+        'con_lte' : '',
+        'con_gte' : '',
+        'int_lte' : '',
+        'int_gte' : '',
+        'wis_lte' : '',
+        'wis_gte' : '',
+        'cha_lte' : '',
+        'cha_gte' : '',
+        'filter_by': ''
+    }
+
+    const url = 'https://zevce.pythonanywhere.com/searchMonster/' + JSON.stringify(payload)
     fetch(url)
     .then(response => response.json())  
     .then(json => {
         console.log(json);
     })
-}
-
-//testing sending data to our flask server
-//will eventually send a json which contains info about all players in the party
-//any html file that uses this method will need to have
-//<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-//above its script.js source
-function sendData() {
-    /*
-    $.ajax({
-        type: 'POST',
-        //contentType: 'application/json',
-        data: {"hello" : "world"},
-        dataType: 'json',
-        url: 'https://zevce.pythonanywhere.com/testRoute',
-        success: function (e) {
-            console.log(e);
-        },
-        error: function(error) {
-            console.log(error);
-        }
-   });
-   */
-
-   $.post("https://zevce.pythonanywhere.com/testRoute",
-    {
-      hello: "world",
-    },
-    function(e){
-      console.log(e);
-    });
 
 }
 
@@ -154,12 +146,7 @@ const createMonsterButton = document.querySelector("#create-monster");
 
 //James this is terrible practice im going to kill you
 createMonsterButton.addEventListener("click", () => {
-    fetchMonster("goat");
+    monsterSizeNum = document.querySelector("#size-dropdown").value;
+    getMonster(monsterSizeNum)
 });
 
-async function fetchMonster(monsterName) {
-    // Currently local only, need to change this for backend fetch calls when set up
-    const response = await fetch(`data/${monsterName}.monster`)
-    .then (response => response.json())
-    .then (monster => loadMonster(monster));
-}
