@@ -71,10 +71,19 @@ def Algorithm(party, difficulty, monsterList, lair, guys, mode):
                 points -= toSpend
             else:
                 print(f"This is the last monster, using my last {points} points")
+    elif(mode == "bossBalanced"):
+        print(f"This is a boss encounter, I will spend most of my points on a boss")
+        toSpend = points if guys == 1 else randint(int(points * 0.67), int(points * 0.8))
+        print(f"I want to spend {toSpend} points on the boss")
+        points -= toSpend
+        if(guys > 1):
+            toSpend = points / (guys - 1)
+            print(f"As for minions, I want to buy {guys - 1} monsters with a point value around {toSpend}")
+
 
 jimmy = PartyMember(65, "shmorbler", 7)            #testing values
 glorth = PartyMember(50, "glunkman", 13)
 party = [jimmy, glorth]
 
 georgeBush = Monster("George W. Bush", "george", 45, 300, 5, 7)
-Algorithm(party, EncounterType.MEDIUM, [georgeBush], None, 1, "boss")
+Algorithm(party, EncounterType.MEDIUM, [georgeBush], None, 1, "bossBalanced")
