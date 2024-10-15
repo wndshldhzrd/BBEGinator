@@ -37,7 +37,7 @@ def Algorithm(party, difficulty, monsterList, lair, guys):
     partyDmgAvg = totalDmg // len(party)
     partyDmgMaxAvg = partyDmgMax // len(party)
     
-    points = totalDmg+totalHealth+ (partyDmgMaxAvg/4)       #calculation for the point pool
+    points = (totalDmg+totalHealth+ (partyDmgMaxAvg/4)) * (float(difficulty.value) * (3 / 2))      #calculation for the point pool
     print(points)
     print(f"I have {points} points to spend")
     for i in range(guys):
