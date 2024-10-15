@@ -1,6 +1,0 @@
-REMAINING CHANGES LEFT:
-
-shieldbonus: see what armor is and get it from there?? only exists if "shield" is specified under armor_desc?
-deal with nat armor bonus at some point probably
-
-SPECIALDAMAGE NEEDS TO BE HANDLED (necessary notes in code
