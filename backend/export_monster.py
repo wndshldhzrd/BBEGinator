@@ -18,7 +18,15 @@ def get_sense(sense, description):
 		index = index + len(sense) + 1
 
 		#numerical value following the sense
-		val = int(description[index : description.find(" ", index+1)])
+		#unfortunately, the api data has a typo for crab-razorback, and 
+		#this is the best way to avoid any similar errors when parsing data, 
+		#so my apologies for this awful code
+		end = index 
+		numbers = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"}
+		while end < len(description) and description[end] in numbers:
+			end = end+1
+
+		val = int(description[index : end])
 		return val
 
 #export a monster's data to a .monster style format
@@ -39,7 +47,6 @@ def export(monster):
 		else:
 			if monster[j2m[category]] != None:
 				jsonData[category] = monster[j2m[category]]
-
 
 	#CONVERT jsonData to .monster format:
 	senses = ["darkvision", "tremorsense", "blindsight", "telepathy", "truesight"]
@@ -223,11 +230,14 @@ def export(monster):
 	jsonData["languages"] = jsonData["languages"].split(", ")
 	for i in range(len(jsonData["languages"])):
 		jsonData["languages"][i] = {"name": jsonData["languages"][i], "speaks": True}
+	
 	#shieldbonus
-	if jsonData["shieldBonus"].find("shield") != -1:
-		jsonData["shieldBonus"] = 2
-	else:
-		jsonData["shieldBonus"] = 0
+	#null values leave shieldBonus as its default--0
+	if jsonData["shieldBonus"] != 0:
+		if jsonData["shieldBonus"].find("shield") != -1:
+			jsonData["shieldBonus"] = 2
+		else:
+			jsonData["shieldBonus"] = 0
 
 	#check for null conditions
 	if jsonData["conditions"] == None:
@@ -257,12 +267,21 @@ def export(monster):
 	#without this, the statblock won't load, so I added it
 	#NOTE: THIS NEEDS TESTING/POSSIBLE EXTRA IMPLEMENTATION FOR CREATURES WEARING ARMOR
 	jsonData["natArmorBonus"] = 0
-	dexBonus = (jsonData["dexPoints"] - 10) / 2
+
+	#I didn't want to import math just to round this one case, so if statement for rounding
+	dexBonus = jsonData["dexPoints"] - 10
+	if dexBonus % 2 == 1:
+		dexBonus = dexBonus - 1
+	dexBonus = dexBonus / 2
+
 	ac = monster["armor_class"]
 	natArmorBonusCheck = ac - (10 + dexBonus + jsonData["shieldBonus"])
 	if natArmorBonusCheck > 0:
 		jsonData["natArmorBonus"] = natArmorBonusCheck
 	jsonData["natArmorBonus"] = int(jsonData["natArmorBonus"])
+
+	#armorName fix--remove mention of shield
+	jsonData["armorName"] = jsonData["armorName"].replace(", shield", "")
 
 	print("THE FULLY(?) EDITED CONVERSION OF DATA FROM JSON LOOKS LIKE THIS:")
 	print(jsonData)
@@ -278,7 +297,7 @@ def export(monster):
 
 #for testing purposes
 if __name__ == "__main__":
-	monSlug = "adult-red-dragon"
+	monSlug = "exploding-toad"
 	print("This is a test to convert a monster from the JSON file " +
 	 "format we get from mgetter.py to a .monster file")
 	print("Current monster slug: " + monSlug + "\n")
