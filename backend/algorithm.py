@@ -55,7 +55,7 @@ def Algorithm(party, difficulty, monsterList, lair, guys, mode):
         print(f"I want to buy {guys} of the same monster with a point value around {toSpend}")
     elif(mode == "balanced"):
         toSpend = points / guys
-        print(f"I want to buy {guys} different monsters with point values around {toSpend}")
+        print(f"I want to buy {guys} monsters with point values around {toSpend}")
     elif(mode == "boss"):
         print(f"This is a boss encounter, I will spend most of my points on a boss")
         toSpend = points if guys == 1 else randint(int(points * 0.67), int(points * 0.8))

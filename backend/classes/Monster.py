@@ -1,12 +1,15 @@
 class Monster():
     
-    def __init__(self, name, desc, points, health, dmg, dmgMax):
-        self.name = name
-        self.desc = desc
-        self.health = health
-        self.dmg = dmg
-        self.dmgMax = dmgMax
-        self.points = self.health + self.dmgMax         #mjaybe 100*cr rating times the health to dmg ratio between monster and players?
-
-
-        #self.cr????????
+    def __init__(self, slug, ac, hp, speeds, stats, saves, vulnerabilities, resistances, immunities, actions, cr):
+        self.slug = slug
+        self.ac = ac
+        self.hp = hp
+        self.speeds = speeds
+        self.stats = stats
+        self.saves = saves
+        self.vulnerabilities = vulnerabilities
+        self.resistances = resistances
+        self.immunities = immunities
+        self.actions = actions
+        self.cr = cr
+        self.points = 100
