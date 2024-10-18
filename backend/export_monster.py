@@ -305,11 +305,10 @@ if __name__ == "__main__":
 	monSlug = "exploding-toad"
 	print("This is a test to convert a monster from the JSON file " +
 	 "format we get from mgetter.py to a .monster file")
+	print("This test depends on the monster data being stored in data.json, as we search " +
+		"for a specific slug. The actual function export_monster, however, simply requires " +
+		"a dictionary containing the json data for the desired monster")
 	print("\nCurrent monster slug: " + monSlug)
-
-	#uses an api to get monster data and places it in a json file called data.json
-	#mgetter() [currently calls an error?]
-
 
 	#for testing purposes, we used the current mgetter to find a specific test monster,
 	#with the goal of converting that data to .monster format in our code
@@ -320,12 +319,13 @@ if __name__ == "__main__":
 
 	if (end != -1):
 		end = end + 1	#include "}" for the sake of json.loads
+	else:
+		end = monsters.rfind('}') + 1
 	
 	mon = monsters[start:end]
 	if (start == -1):
 		print("Failed to find monster by that slug")
-		print(mon)
-		mon = ""
+		return
 
 	outfile = export(json.loads(mon))
 
