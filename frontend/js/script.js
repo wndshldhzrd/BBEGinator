@@ -124,7 +124,9 @@ function searchMonster() {
         'wis_gte' : document.getElementById("wisMax").value, //max wis
         'cha_lte' : document.getElementById("chaMin").value, //min cha
         'cha_gte' : document.getElementById("chaMax").value, //max cha
-        'sort_by': '' //metric which creatures should be ordered by
+        //metric which creatures should be ordered by
+        'sort_by': document.getElementById("Sort-dropdown").value + "-" 
+        + document.getElementById("Sort-style").value
     }
 
     //testing to ensure that parameters are being passed correctly
