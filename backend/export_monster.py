@@ -320,13 +320,13 @@ if __name__ == "__main__":
 	if (end != -1):
 		end = end + 1	#include "}" for the sake of json.loads
 	else:
-		end = monsters.rfind('}') + 1
+		if monsters[-1] == "]":
+			end = monsters.rfind('}') + 1
 	
 	mon = monsters[start:end]
 	if (start == -1):
 		print("Failed to find monster by that slug")
-		return
-
-	outfile = export(json.loads(mon))
-
-	print("\nFinished conversion, data stored in " + outfile)
+		
+	else:
+		outfile = export(json.loads(mon))
+		print("\nFinished conversion, data stored in " + outfile)
