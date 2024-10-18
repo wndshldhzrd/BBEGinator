@@ -18,11 +18,10 @@ def get_data(url, payload):
     response = requests.get(url, payload)
     return response.json()
 
-def write_to_json(data, filename):
+def write_to_json(data, filename="output.json"):
     with open(filename, 'w') as f:
         json.dump(data['results'], f)
         f.write('\n')
-
 
 
 def main():
