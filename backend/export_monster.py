@@ -30,13 +30,18 @@ def get_sense(sense, description):
 		return val
 
 #export a monster's data to a .monster style format
-def export(monster):
-	#monster is a dictionary containing input data from json file
+def export(monster, filename=""):
+	#jsonData starts as a .monster-style template to fill in
 	jsonData = json.loads(open('sample_monster.monster').read())
 
+	#keys in monster file and corresponding keys in json as values
 	j2m = json.loads(open("j2m_keys.json").read())
 
-	#to do: edit monster json into jsonData
+	#default filename is the monster slug
+	if filename == "":
+		filename = monster["slug"] + ".monster"
+
+	#insert data into our template
 	for category in j2m:
 		if (isinstance(j2m[category], list)):
 			jsonData[category] = ""
@@ -288,11 +293,11 @@ def export(monster):
 	#print()
 
 	#.monster file, for now named test.monster
-	outfile = open('test.monster', 'w')
+	outfile = open(filename, 'w')
 	json.dump(jsonData, outfile)
 	outfile.close()
 
-	return
+	return filename
 
 
 #for testing purposes
@@ -322,6 +327,6 @@ if __name__ == "__main__":
 		print(mon)
 		mon = ""
 
-	export(json.loads(mon))
+	outfile = export(json.loads(mon))
 
-	print("\nFinished conversion")
+	print("\nFinished conversion, data stored in " + outfile)
