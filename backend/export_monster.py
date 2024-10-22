@@ -18,6 +18,7 @@ def get_sense(sense, description):
 
 		#numerical value following the sense to avoid any api data typos
 		#after encountering one in crab-razorback
+		#sorry for the awful code it was the only way
 		end = index 
 		numbers = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"}
 		while end < len(description) and description[end] in numbers:
@@ -56,10 +57,10 @@ def export(monster, filename=""):
 	for s in senses:
 		jsonData[s] = get_sense(s, jsonData[s])
 
-	#blind boolean
+	#blind
 	jsonData["blind"] = (jsonData["blind"].find("blind ") != -1)
 
-	#hitdice fix
+	#hitdice
 	jsonData["hitDice"] = (jsonData["hitDice"][:jsonData["hitDice"].find("d")])
 
 	#walk speed
@@ -77,7 +78,7 @@ def export(monster, filename=""):
 		else:
 			jsonData[s] = 0
 
-	#hover boolean
+	#hover
 	jsonData["hover"] = "hover" in jsonData["hover"]
 
 	#skills
@@ -109,7 +110,7 @@ def export(monster, filename=""):
 		
 	jsonData["skills"] = new_skills
 
-	#convert cr from double to string
+	#cr double to string conversion
 	double_to_frac = {0: "0", 0.125: "1/8", 0.25: "1/4", 0.5: "1/2"}
 	if jsonData["cr"] < 1:
 		jsonData["cr"] = double_to_frac[jsonData["cr"]]
@@ -257,7 +258,7 @@ def export(monster, filename=""):
 	#lowercase size
 	jsonData["size"] = jsonData["size"].lower()
 
-	#update hitdice to an int
+	#hitdice int conversion (must stay at bottom)
 	jsonData["hitDice"] = int(jsonData["hitDice"])
 
 	#update lair and mythic descriptions to contain monster name
@@ -284,7 +285,7 @@ def export(monster, filename=""):
 	#armorName fix--remove mention of shield
 	jsonData["armorName"] = jsonData["armorName"].replace(", shield", "")
 
-	#.monster file (monstername.monster)
+	#.monster file (file called monSlug.monster)
 	outfile = open(filename, 'w')
 	json.dump(jsonData, outfile)
 	outfile.close()
