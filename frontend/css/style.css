@@ -1,8 +1,8 @@
-* {
+/* * {
     margin: 0;
     padding: 0;
     border: 0;
-}
+} */
 
 body {
     font-family: roboto, sans-serif;
@@ -50,10 +50,6 @@ hr {
 button {
     padding: 0.5em;
     border: solid 1px;
-}
-
-.monster-display{
-    background-image: url('\\frontend\\img\\MonsterBackground.png');
 }
 
 .dropdown{

@@ -1,5 +1,5 @@
-// Easier way to create a paragraph when loading moster
-function getElement (type, text) {
+// Easier way to create an element when loading a monster
+function createElement (type, text) {
     const newEle = document.createElement(type);
     newEle.textContent = text;
     return newEle;
@@ -61,20 +61,24 @@ function getHP (monsterSize, numDice, constMod) {
     }
 }
 
+function createCreatureHeading(monster) {
+    const creatureHeading = document.createElement("creature-heading");
+    const name = createElement("h1", monster.name);
+    const sizeType = createElement("h2", `${monster.size} ${monster.type}, ${monster.alignment}`);
+    creatureHeading.appendChild(name);
+    creatureHeading.appendChild(sizeType);
+
+    return creatureHeading
+}
+
 // Creates a div containing moster information and adds it to the monster display div
 function loadMonster (monster) {
-<<<<<<< HEAD
-=======
-
     //create statblock variable
     const statBlock = document.createElement("stat-block");
 
     //creature-heading
-    const creatureHeading = document.createElement("creature-heading");
-    const name = createElement("h1", monster.name);
-    const sizeType = createElement("h2", `{$monster.size} {$monster.type}, {$monster.alignment}`);
-    creatureHeading.appendChild(name);
-    creatureHeading.appendChild(sizeType);
+    const creatureHeading = createCreatureHeading(monster);
+    statBlock.appendChild(creatureHeading);
 
     //top-stats
     const topStats = document.createElement("top-stats");
@@ -82,9 +86,9 @@ function loadMonster (monster) {
     //ac
     const propLine = document.createElement("property-line");
     const acHeader = createElement("h4", "Armor Class");
-    let acDesc = `{$monster.armor_class}`;
+    let acDesc = ` ${monster.armor_class}`;
     if (monster.armor_desc != null) {
-        acDesc += `( {$monster.armor_desc})`;
+        acDesc += `( ${monster.armor_desc})`;
     }
     const ac = createElement("p", acDesc);
     propLine.appendChild(acHeader);
@@ -94,7 +98,7 @@ function loadMonster (monster) {
     //hp
     const propLine2 = document.createElement("property-line");
     const hpHeader = createElement("h4", "Hit Points");
-    const hp = createElement("p", `{$monster.hit_points} ({$monster.hit_dice})`);
+    const hp = createElement("p", ` ${monster.hit_points} (${monster.hit_dice})`);
     propLine2.appendChild(hpHeader);
     propLine2.appendChild(hp);
     topStats.appendChild(propLine2);
@@ -102,31 +106,23 @@ function loadMonster (monster) {
     //speed
     const propLine3 = document.createElement("property-line");
     const speedHeader = createElement("h4", "Speed");
-    const speedDesc = `{$monster.speed["walk"]} ft.`;
+    const speedDesc = ` ${monster.speed["walk"]} ft.`;
     const speed = createElement("p", speedDesc);
     propLine3.appendChild(speedHeader);
     propLine3.appendChild(speed);
     topStats.appendChild(propLine3);
 
     //abilities-block
-    const abilitiesBlock = document.createElement(`abliities-block data-cha="{$monster.charisma}" data-con="{$monster.constitution}" data-dex="{$monster.dexterity}" data-int="{$monster.intelligence}" data-wis="{$monster.wisdom}"`)
-    topStats.appendChild(abilitiesBlock);
+    // const abilitiesBlock = document.createElement(`ablities-block data-cha="{$monster.charisma}" data-con="{$monster.constitution}" data-dex="{$monster.dexterity}" data-int="{$monster.intelligence}" data-wis="{$monster.wisdom}"`)
+    // topStats.appendChild(abilitiesBlock);
 
     //damage immunities
-
     statBlock.appendChild(creatureHeading);
     statBlock.appendChild(topStats);
 
-
-    // Div where we will display monsters
->>>>>>> 3469e0ccded24e6ae90e92240668e825ac8e7574
-    const showMonsterDiv = document.querySelector(".monster-display");
-
-    // Resetting Div (Temp for now)
-    showMonsterDiv.innerHTML = "";
-
-    // Adding name to first line
-    showMonsterDiv.appendChild(getElement("p", monster.name));
+    const monsterDisplay = document.querySelector(".monster-display");
+    monsterDisplay.innerHTML = "";
+    monsterDisplay.appendChild(statBlock);
 }
 
 //eventually move api calls into their own file??
@@ -238,7 +234,7 @@ const createMonsterButton = document.querySelector("#create-monster");
 
 async function fetchMonster(monsterName) {
     // Currently local only, need to change this for backend fetch calls when set up
-    const response = await fetch(`data/${monsterName}.json `)
+    const response = await fetch(`data/${monsterName}.json`)
     .then (response => response.json())
     .then (monster => loadMonster(monster));
 }
