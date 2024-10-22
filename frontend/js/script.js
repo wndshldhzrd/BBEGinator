@@ -1,8 +1,8 @@
 // Easier way to create a paragraph when loading moster
-function createPar (text) {
-    const par = document.createElement("p");
-    par.textContent = text;
-    return par;
+function createElement (type, text) {
+    const elem = document.createElement(type);
+    elem.textContent = text;
+    return elem;
 }
 
 // Calculates the modifier of a stat
@@ -63,6 +63,50 @@ function getHP (monsterSize, numDice, constMod) {
 
 // Creates a div containing moster information and adds it to the monster display div
 function loadMonster (monster) {
+
+    //create statblock variable
+    const statBlock = document.createElement("stat-block");
+
+    //creature-heading
+    const creatureHeading = document.createElement("creature-heading");
+    const name = createElement("h1", monster.name);
+    const sizeType = createElement("h2", `{$monster.size} {$monster.type}, {$monster.alignment}`);
+    creatureHeading.appendChild(name);
+    creatureHeading.appendChild(sizeType);
+
+    //top-stats
+    const topStats = document.createElement("top-stats");
+
+    //ac
+    const propLine = document.createElement("property-line");
+    const acHeader = createElement("h4", "Armor Class");
+    let acDesc = `{$monster.armor_class}`;
+    if (monster.armor_desc != null) {
+        acDesc += `( {$monster.armor_desc})`;
+    }
+    const ac = createElement("p", acDesc);
+    propLine.appendChild(acHeader);
+    propLine.appendChild(ac);
+
+    //hp
+    const propLine2 = document.createElement("property-line");
+    const hpHeader = createElement("h4", "Hit Points");
+    const hp = createElement("p", `{$monster.hit_points} ({$monster.hit_dice})`);
+    propLine2.appendChild(hpHeader);
+    propLine2.appendChild(hp);
+
+    //speed
+    const propLine3 = document.createElement("property-line");
+    const speedHeader = createElement("h4", "Speed");
+    const speedDesc = `{$monster.speed["walk"]} ft.`;
+    const speed = createElement("p", speedDesc);
+    propLine3.appendChild(speedHeader);
+    propLine3.appendChild(speed);
+
+    statBlock.appendChild(creatureHeading);
+    statBlock.appendChild(topStats);
+
+
     // Div where we will display monsters
     const showMonsterDiv = document.querySelector(".monster-display");
 
