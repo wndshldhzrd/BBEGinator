@@ -1,5 +1,5 @@
 class PartyMember():
-    health = 0
+    health = 1
     theClass = 0
     def __init__(self, health, theClass):
         self.health = health
