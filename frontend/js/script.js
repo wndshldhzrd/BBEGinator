@@ -1,8 +1,8 @@
 // Easier way to create a paragraph when loading moster
-function createPar (text) {
-    const par = document.createElement("p");
-    par.textContent = text;
-    return par;
+function createElement (type, text) {
+    const elem = document.createElement(type);
+    elem.textContent = text;
+    return elem;
 }
 
 // Calculates the modifier of a stat
@@ -63,6 +63,59 @@ function getHP (monsterSize, numDice, constMod) {
 
 // Creates a div containing moster information and adds it to the monster display div
 function loadMonster (monster) {
+
+    //create statblock variable
+    const statBlock = document.createElement("stat-block");
+
+    //creature-heading
+    const creatureHeading = document.createElement("creature-heading");
+    const name = createElement("h1", monster.name);
+    const sizeType = createElement("h2", `{$monster.size} {$monster.type}, {$monster.alignment}`);
+    creatureHeading.appendChild(name);
+    creatureHeading.appendChild(sizeType);
+
+    //top-stats
+    const topStats = document.createElement("top-stats");
+
+    //ac
+    const propLine = document.createElement("property-line");
+    const acHeader = createElement("h4", "Armor Class");
+    let acDesc = `{$monster.armor_class}`;
+    if (monster.armor_desc != null) {
+        acDesc += `( {$monster.armor_desc})`;
+    }
+    const ac = createElement("p", acDesc);
+    propLine.appendChild(acHeader);
+    propLine.appendChild(ac);
+    topStats.appendChild(propLine);
+
+    //hp
+    const propLine2 = document.createElement("property-line");
+    const hpHeader = createElement("h4", "Hit Points");
+    const hp = createElement("p", `{$monster.hit_points} ({$monster.hit_dice})`);
+    propLine2.appendChild(hpHeader);
+    propLine2.appendChild(hp);
+    topStats.appendChild(propLine2);
+
+    //speed
+    const propLine3 = document.createElement("property-line");
+    const speedHeader = createElement("h4", "Speed");
+    const speedDesc = `{$monster.speed["walk"]} ft.`;
+    const speed = createElement("p", speedDesc);
+    propLine3.appendChild(speedHeader);
+    propLine3.appendChild(speed);
+    topStats.appendChild(propLine3);
+
+    //abilities-block
+    const abilitiesBlock = document.createElement(`abliities-block data-cha="{$monster.charisma}" data-con="{$monster.constitution}" data-dex="{$monster.dexterity}" data-int="{$monster.intelligence}" data-wis="{$monster.wisdom}"`)
+    topStats.appendChild(abilitiesBlock);
+
+    //damage immunities
+
+    statBlock.appendChild(creatureHeading);
+    statBlock.appendChild(topStats);
+
+
     // Div where we will display monsters
     const showMonsterDiv = document.querySelector(".monster-display");
 
@@ -94,10 +147,13 @@ function loadMonster (monster) {
     // Speed
 }
 
+//eventually move api calls into their own file??
+
 //Function which takes in various parameters and then gets a json of all
 //monsters that match that criteria
 function searchMonster() {
 
+    //building the json
     payload = {
         'hit_points__gte': document.getElementById("hpMax").value, //max hp
         'hit_points__lte': document.getElementById("hpMin").value, //min hp
@@ -138,11 +194,57 @@ function searchMonster() {
     .then(json => {
         console.log(json);
     })
-
 }
 
+//Function which takes in a list of up to 10 players and gets a list of recommended monsters
+//for them to fight
+function getRecommendedMonster() {
+
+    //initializing our JSON
+    payload = {}
+    
+    //getting our list of players
+    playerList = document.getElementsByClassName("playerInput");
+
+    //looping through each player and getting the values
+    for(let i = 0; i < playerList.length; i++) {
+
+        //ignore the ugly grabbing this was the easiest solution I could think of
+        playerData = playerList[i];
+        playerClass = playerData.getElementsByClassName("dropdown")[0].value
+        playerLevel = playerData.getElementsByClassName("stat-Input")[0].value
+        playerHealth = playerData.getElementsByClassName("stat-Input")[1].value
+        
+        //ensuring all our data is valid, will need to update html page eventually to
+        //tell players which fields still need to be filled out
+        if(playerClass == "" || playerLevel == "" || playerHealth == "") {
+            console.error("ERROR ERROR INCOMPLETE INPUT DATA");
+            return;
+        }
+        
+        //adding values to our payload
+        payload["p" + i] = {
+            "class" : playerClass,
+            "level" : playerLevel,
+            "health" : playerHealth,
+        }
+    }
+
+    //adding a terminating player so backend knows when to stop parsing players
+    payload["p" + playerList.length] = "0"
 
 
+    //testing to ensure that parameters are being passed correctly
+    console.log(payload);
+
+    //making our api call
+    const url = 'https://zevce.pythonanywhere.com/getRecommendation/' + JSON.stringify(payload)
+    fetch(url)
+    .then(response => response.json())  
+    .then(json => {
+        console.log(json);
+    })
+}
 
 /****************************
 ** TESTING STUFF GOES HERE **

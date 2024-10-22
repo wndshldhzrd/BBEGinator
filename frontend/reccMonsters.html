@@ -19,8 +19,14 @@
             <a href = "/BBEGinator/about">About</a>
         </div>
     </div>
-    <div class = "playerInput" id = "player-1">
-        Class <select class = "dropdown" id = "class-dropdown">
+     
+    <!--Testing search button, dont worry too much about for now-->
+    <button onclick="getRecommendedMonster();">Get a recommended monster!</button>
+
+    <!--For now all ten players are static will eventually be able to dynamically add/remove players to the page-->
+    <div class = "playerInput">
+        Class <select class = "dropdown">
+            <option value=""></option>
             <option value="barbarian">Barbarian</option>      
             <option value="bard">Bard</option>
             <option value="cleric">Cleric</option>
@@ -35,12 +41,15 @@
             <option value="warlock">Warlock</option>
         </select>
         <br>
-        Level <input class = "stat-Input" type = "number" min = "1" value = 1>
+        Level <input class = "stat-Input" type = "number" min = "1" value = "">
         <br>
-        Hp <input class = "stat-Input" id = "playerHealth" type = "number" min = "1" value = 1>
+        Hp <input class = "stat-Input" type = "number" min = "1" value = "">
     </div>
-    <div class = "playerInput" id = "player-2">
-        Class <select class = "dropdown" id = "class-dropdown">
+
+
+    <div class = "playerInput">
+        Class <select class = "dropdown">
+            <option value=""></option>
             <option value="barbarian">Barbarian</option>      
             <option value="bard">Bard</option>
             <option value="cleric">Cleric</option>
@@ -55,12 +64,15 @@
             <option value="warlock">Warlock</option>
         </select>
         <br>
-        Level <input class = "stat-Input" type = "number" min = "1" value = 1>
+        Level <input class = "stat-Input" type = "number" min = "1" value = "">
         <br>
-        Hp <input class = "stat-Input" id = "playerHealth" type = "number" min = "1" value = 1>
+        Hp <input class = "stat-Input" type = "number" min = "1" value = "">
     </div>
-    <div class = "playerInput" id = "player-3">
-        Class <select class = "dropdown" id = "class-dropdown">
+
+
+    <div class = "playerInput">
+        Class <select class = "dropdown">
+            <option value=""></option>
             <option value="barbarian">Barbarian</option>      
             <option value="bard">Bard</option>
             <option value="cleric">Cleric</option>
@@ -75,12 +87,15 @@
             <option value="warlock">Warlock</option>
         </select>
         <br>
-        Level <input class = "stat-Input" type = "number" min = "1" value = 1>
+        Level <input class = "stat-Input" type = "number" min = "1" value = "">
         <br>
-        Hp <input class = "stat-Input" id = "playerHealth" type = "number" min = "1" value = 1>
+        Hp <input class = "stat-Input" type = "number" min = "1" value = "">
     </div>
-    <div class = "playerInput" id = "player-4">
-        Class <select class = "dropdown" id = "class-dropdown">
+
+
+    <div class = "playerInput">
+        Class <select class = "dropdown">
+            <option value=""></option>
             <option value="barbarian">Barbarian</option>      
             <option value="bard">Bard</option>
             <option value="cleric">Cleric</option>
@@ -95,12 +110,15 @@
             <option value="warlock">Warlock</option>
         </select>
         <br>
-        Level <input class = "stat-Input" type = "number" min = "1" value = 1>
+        Level <input class = "stat-Input" type = "number" min = "1" value = "">
         <br>
-        Hp <input class = "stat-Input" id = "playerHealth" type = "number" min = "1" value = 1>
+        Hp <input class = "stat-Input" type = "number" min = "1" value = "">
     </div>
-    <div class = "playerInput" id = "player-5">
-        Class <select class = "dropdown" id = "class-dropdown">
+
+
+    <div class = "playerInput">
+        Class <select class = "dropdown">
+            <option value=""></option>
             <option value="barbarian">Barbarian</option>      
             <option value="bard">Bard</option>
             <option value="cleric">Cleric</option>
@@ -115,12 +133,15 @@
             <option value="warlock">Warlock</option>
         </select>
         <br>
-        Level <input class = "stat-Input" type = "number" min = "1" value = 1>
+        Level <input class = "stat-Input" type = "number" min = "1" value = "">
         <br>
-        Hp <input class = "stat-Input" id = "playerHealth" type = "number" min = "1" value = 1>
+        Hp <input class = "stat-Input" type = "number" min = "1" value = "">
     </div>
-    <div class = "playerInput" id = "player-6">
-        Class <select class = "dropdown" id = "class-dropdown">
+
+
+    <div class = "playerInput">
+        Class <select class = "dropdown">
+            <option value=""></option>
             <option value="barbarian">Barbarian</option>      
             <option value="bard">Bard</option>
             <option value="cleric">Cleric</option>
@@ -135,12 +156,15 @@
             <option value="warlock">Warlock</option>
         </select>
         <br>
-        Level <input class = "stat-Input" type = "number" min = "1" value = 1>
+        Level <input class = "stat-Input" type = "number" min = "1" value = "">
         <br>
-        Hp <input class = "stat-Input" id = "playerHealth" type = "number" min = "1" value = 1>
+        Hp <input class = "stat-Input" type = "number" min = "1" value = "">
     </div>
-    <div class = "playerInput" id = "player-7">
-        Class <select class = "dropdown" id = "class-dropdown">
+
+
+    <div class = "playerInput">
+        Class <select class = "dropdown">
+            <option value=""></option>
             <option value="barbarian">Barbarian</option>      
             <option value="bard">Bard</option>
             <option value="cleric">Cleric</option>
@@ -155,12 +179,15 @@
             <option value="warlock">Warlock</option>
         </select>
         <br>
-        Level <input class = "stat-Input" type = "number" min = "1" value = 1>
+        Level <input class = "stat-Input" type = "number" min = "1" value = "">
         <br>
-        Hp <input class = "stat-Input" id = "playerHealth" type = "number" min = "1" value = 1>
+        Hp <input class = "stat-Input" type = "number" min = "1" value = "">
     </div>
-    <div class = "playerInput" id = "player-8">
-        Class <select class = "dropdown" id = "class-dropdown">
+
+
+    <div class = "playerInput">
+        Class <select class = "dropdown">
+            <option value=""></option>
             <option value="barbarian">Barbarian</option>      
             <option value="bard">Bard</option>
             <option value="cleric">Cleric</option>
@@ -175,12 +202,15 @@
             <option value="warlock">Warlock</option>
         </select>
         <br>
-        Level <input class = "stat-Input" type = "number" min = "1" value = 1>
+        Level <input class = "stat-Input" type = "number" min = "1" value = "">
         <br>
-        Hp <input class = "stat-Input" id = "playerHealth" type = "number" min = "1" value = 1>
+        Hp <input class = "stat-Input" type = "number" min = "1" value = "">
     </div>
-    <div class = "playerInput" id = "player-9">
-        Class <select class = "dropdown" id = "class-dropdown">
+
+
+    <div class = "playerInput">
+        Class <select class = "dropdown">
+            <option value=""></option>
             <option value="barbarian">Barbarian</option>      
             <option value="bard">Bard</option>
             <option value="cleric">Cleric</option>
@@ -195,12 +225,15 @@
             <option value="warlock">Warlock</option>
         </select>
         <br>
-        Level <input class = "stat-Input" type = "number" min = "1" value = 1>
+        Level <input class = "stat-Input" type = "number" min = "1" value = "">
         <br>
-        Hp <input class = "stat-Input" id = "playerHealth" type = "number" min = "1" value = 1>
+        Hp <input class = "stat-Input" type = "number" min = "1" value = "">
     </div>
-    <div class = "playerInput" id = "player-10">
-        Class <select class = "dropdown" id = "class-dropdown">
+
+
+    <div class = "playerInput">
+        Class <select class = "dropdown">
+            <option value=""></option>
             <option value="barbarian">Barbarian</option>      
             <option value="bard">Bard</option>
             <option value="cleric">Cleric</option>
@@ -215,9 +248,10 @@
             <option value="warlock">Warlock</option>
         </select>
         <br>
-        Level <input class = "stat-Input" type = "number" min = "1" value = 1>
+        Level <input class = "stat-Input" type = "number" min = "1" value = "">
         <br>
-        Hp <input class = "stat-Input" id = "playerHealth" type = "number" min = "1" value = 1>
+        Hp <input class = "stat-Input" type = "number" min = "1" value = "">
     </div>
+
 </body>
 </html>

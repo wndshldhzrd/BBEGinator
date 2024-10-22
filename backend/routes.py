@@ -5,7 +5,9 @@ app = Flask(__name__)
 
 #NOTE: CHANGES MADE HERE AND PUSHED TO THE GITHUB WILL NOT UPDATE THE ACTUAL BACKEND
 #OF THE WEBSITE, AFTER YOU HAVE PUSHED YOUR CODE PLEASE TALK TO ME (ZEV) AND I WILL
-#PUSH IT TO THE SERVER WHICH IS ACTUALLY RUNNING OUR BACKEND CODE
+#PUSH IT TO THE SERVER WHICH IS ACTUALLY RUNNING OUR BACKEND CODE. CHECK THE README.MD
+#FILE LOCATED IN THE BACKEND DIRECTORY FOR HOW TO TEST YOUR CODE LOCALLY, TALK TO ME IF
+#YOU ARE HAVING ANY ISSUES TESTING IT.
 
 #basically pointless, purely for my own convenience and amusement
 @app.route('/')
@@ -14,7 +16,7 @@ def landing():
     return "hello"
 
 #api call for searching for monsters by their stats
-#check the searchMonster function in frontend/script.js to see how the front end call is being made to the backend
+#check the searchMonster function in frontend/js/script.js to see how the front end call is being made to the backend
 #check mgetter.py to see the call the backend will make to open5e
 @app.route("/searchMonster/<string:info>")
 def searchMonster(info):
@@ -35,6 +37,7 @@ def searchMonster(info):
     return jsonify({"Lol":"Lmao"})
 
 #api call for getting a recommended list of monsters based on the stats of the entire party
+#check the getRecommendedMonsters function in frontend/js/script.js to see how the front end call is being made to the backend
 @app.route("getRecommendation/<string:info>")
 def getRecommendation(info):
       
