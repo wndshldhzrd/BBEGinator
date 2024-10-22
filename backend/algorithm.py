@@ -8,6 +8,56 @@ party = []
 monsterList = []
 mgetter = "?"
 
+def partyReader(JSON):
+    partyMembers = []
+    #read jsonfile
+    #create induvidual party member
+    #append to partyList
+    #gg
+
+
+    x = True
+    while x:
+        #parseJson nonsense
+        player = JSON(x)
+        if('''   player == 0    '''):
+            break
+        health = int(player["health"])
+        theClass = player["class"]
+        level = int(player["level"])
+
+        partyMembers.append(PartyMember(health, theClass, level))
+    
+    return partyMembers
+
+
+def monsterReader(JSON):
+    monsterDatabase = []
+    #read json
+    #create induvidual monster
+    #append monster
+    #gg
+
+    x = True
+    while x:
+        #jsonParsing
+        monster = JSON(x)
+        slug = monster["slug"]
+        ac = monster["ac"]
+        hp = monster["hp"]
+        s = monster["speeds"]
+        stats = monster["stats"]
+        saves = monster["saves"]
+        vulnerabilities = monster["vulnerabilities"]
+        resistances = monster["resistances"]
+        immunities = monster["immunities"]
+        actions = monster["actions"]
+        
+        monsterDatabase.append()
+
+        return monsterDatabase
+
+
 # ENCOUNTER DIFFICULTY
 class EncounterType(Enum):
     EASY = 1
@@ -23,6 +73,7 @@ def Algorithm(party, difficulty, lair, guys, mode):
 
         #search monster database to create list of tuples
     monsterList = []
+    monsters = []
     #when buying a monster, create a range of +- 5 of our point, and find all slugs within that range, pick one of those randomly
     #randomPoint -> parses monster list for a temp list of slugs
     #random[listofSlugs]
@@ -129,15 +180,12 @@ jackson = Monster("jackie", 5, 45, 300, [0,5,30,2,5,6], [None,None,None,None,Non
 barry = Monster("bartholomew", 5, 45, 300, [0,5,30,2,5,6], [None,None,None,None,None,None],[],[],[],[],4)
 
 database = {georgeBush.slug:georgeBush, jackson.slug : jackson, barry.slug:barry}
-monsterList = []
+party = partyReader('''partyjson''')
+
 print(database)
 for x in database:
     monsterList.append((x.points,x.slug))
 
 
-Algorithm(party, EncounterType.MEDIUM, database, None, 1, "bossBalanced")
-
-
-
-
+monsterList = Algorithm(party, EncounterType.MEDIUM, database, None, 1, "bossBalanced")
 
