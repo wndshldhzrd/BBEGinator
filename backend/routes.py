@@ -16,7 +16,7 @@ def landing():
     return "hello"
 
 #api call for searching for monsters by their stats
-#check the searchMonster function in frontend/script.js to see how the front end call is being made to the backend
+#check the searchMonster function in frontend/js/script.js to see how the front end call is being made to the backend
 #check mgetter.py to see the call the backend will make to open5e
 @app.route("/searchMonster/<string:info>")
 def searchMonster(info):
@@ -37,6 +37,7 @@ def searchMonster(info):
     return jsonify({"Lol":"Lmao"})
 
 #api call for getting a recommended list of monsters based on the stats of the entire party
+#check the getRecommendedMonsters function in frontend/js/script.js to see how the front end call is being made to the backend
 @app.route("getRecommendation/<string:info>")
 def getRecommendation(info):
       

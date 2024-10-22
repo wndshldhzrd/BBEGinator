@@ -19,14 +19,13 @@
             <a href = "/BBEGinator/about">About</a>
         </div>
     </div>
-     
-    <!--Testing search button, dont worry too much about for now-->
-    <button onclick="getRecommendedMonster();">Get a recommended monster!</button>
 
     <!--For now all ten players are static will eventually be able to dynamically add/remove players to the page-->
     <div class = "playerInput">
+        <label class = "playerName">Player 1</label><br>
+        <hr>
         Class <select class = "dropdown">
-            <option value=""></option>
+            <option disabled selected value></option> 
             <option value="barbarian">Barbarian</option>      
             <option value="bard">Bard</option>
             <option value="cleric">Cleric</option>
@@ -41,9 +40,33 @@
             <option value="warlock">Warlock</option>
         </select>
         <br>
-        Level <input class = "stat-Input" type = "number" min = "1" value = "">
+        Level <input class = "stat-Input" type = "number" min = "1" value = 1>
         <br>
-        Hp <input class = "stat-Input" type = "number" min = "1" value = "">
+        Hp <input class = "stat-Input" id = "playerHealth" type = "number" min = "1" value = 1>
+    </div>
+    <!--Testing search button, dont worry too much about for now-->
+    <button onclick="getRecommendedMonster();">Get a recommended monster!</button>
+
+
+     <div class = "playerInput" id = "player-2">
+        Class <select class = "dropdown" id = "class-dropdown">
+            <option value="barbarian">Barbarian</option>      
+            <option value="bard">Bard</option>
+            <option value="cleric">Cleric</option>
+            <option value="druid">Druid</option>
+            <option value="fighter">Fighter</option>
+            <option value="monk">Monk</option>
+            <option value="paladin">Paladin</option>
+            <option value="ranger">Ranger</option>
+            <option value="rogue">Rogue</option>
+            <option value="sorcerer">Sorcerer</option>
+            <option value="wizard">Wizard</option>
+            <option value="warlock">Warlock</option>
+        </select>
+        <br>
+        Level <input class = "stat-Input" type = "number" min = "1" value = 1>
+        <br>
+        Hp <input class = "stat-Input" id = "playerHealth" type = "number" min = "1" value = 1>
     </div>
 
 
@@ -229,29 +252,10 @@
         <br>
         Hp <input class = "stat-Input" type = "number" min = "1" value = "">
     </div>
-
-
-    <div class = "playerInput">
-        Class <select class = "dropdown">
-            <option value=""></option>
-            <option value="barbarian">Barbarian</option>      
-            <option value="bard">Bard</option>
-            <option value="cleric">Cleric</option>
-            <option value="druid">Druid</option>
-            <option value="fighter">Fighter</option>
-            <option value="monk">Monk</option>
-            <option value="paladin">Paladin</option>
-            <option value="ranger">Ranger</option>
-            <option value="rogue">Rogue</option>
-            <option value="sorcerer">Sorcerer</option>
-            <option value="wizard">Wizard</option>
-            <option value="warlock">Warlock</option>
-        </select>
-        <br>
-        Level <input class = "stat-Input" type = "number" min = "1" value = "">
-        <br>
-        Hp <input class = "stat-Input" type = "number" min = "1" value = "">
-    </div>
+    
+    <button id = "additionalPlayer">Add Player</button>
+    
+    <div id = "results">this is where the results would go</div>
 
 </body>
 </html>
