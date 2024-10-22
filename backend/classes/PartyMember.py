@@ -8,6 +8,7 @@ class PartyMember():
     def __init__(self, health, theClass, level):
         self.health = health
         self.theClass = theClass
+        self.healer = false
         self.spellcaster = False
         self.dmg = 0
         self.dmgMax =0

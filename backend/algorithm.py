@@ -20,7 +20,14 @@ class EncounterType(Enum):
 def Algorithm(party, difficulty, lair, guys, mode):
     
     points = 0
-    monsters = []
+
+        #search monster database to create list of tuples
+    monsterList = []
+    #when buying a monster, create a range of +- 5 of our point, and find all slugs within that range, pick one of those randomly
+    #randomPoint -> parses monster list for a temp list of slugs
+    #random[listofSlugs]
+
+
     
     totalHealth = 0 # finds max health of the party
     totalDmg = 0
@@ -116,8 +123,21 @@ def Algorithm(party, difficulty, lair, guys, mode):
     return monsters
 
 
-jimmy = PartyMember(65, "shmorbler", 7)            #testing values
-glorth = PartyMember(50, "glunkman", 13)
-party = [jimmy, glorth]
+#self, slug, ac, hp, speeds, stats, saves, vulnerabilities, resistances, immunities, actions, cr
+georgeBush = Monster("georgie", 5, 45, 300, [0,5,30,2,5,6], [None,None,None,None,None,None],[],[],[],[],4)
+jackson = Monster("jackie", 5, 45, 300, [0,5,30,2,5,6], [None,None,None,None,None,None],[],[],[],[],4)
+barry = Monster("bartholomew", 5, 45, 300, [0,5,30,2,5,6], [None,None,None,None,None,None],[],[],[],[],4)
 
-Algorithm(party, EncounterType.MEDIUM, None, 5, "boss")
+database = {georgeBush.slug:georgeBush, jackson.slug : jackson, barry.slug:barry}
+monsterList = []
+print(database)
+for x in database:
+    monsterList.append((x.points,x.slug))
+
+
+Algorithm(party, EncounterType.MEDIUM, database, None, 1, "bossBalanced")
+
+
+
+
+
