@@ -1,14 +1,13 @@
 """
 export_monster.py
 
-The parser function will call on mgetter.py to get monster 
-data in a json file, and export a monster to a .monster file
+The parser function will call take in monster data from a json file 
+and export a monster to a .monster file
 """
 
 import json
-#from mgetter import mgetter #retrieves desired json data
-import mgetter #above statement was causing an error, commented out for now
 
+#grabs the integer values from a string for each sense in .json to .monster conversion
 def get_sense(sense, description):
 	index = description.find(sense)
 	if (index == -1):
@@ -17,10 +16,8 @@ def get_sense(sense, description):
 	else:
 		index = index + len(sense) + 1
 
-		#numerical value following the sense
-		#unfortunately, the api data has a typo for crab-razorback, and 
-		#this is the best way to avoid any similar errors when parsing data, 
-		#so my apologies for this awful code
+		#numerical value following the sense to avoid any api data typos
+		#after encountering one in crab-razorback
 		end = index 
 		numbers = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"}
 		while end < len(description) and description[end] in numbers:
@@ -53,7 +50,8 @@ def export(monster, filename=""):
 			if monster[j2m[category]] != None:
 				jsonData[category] = monster[j2m[category]]
 
-	#CONVERT jsonData to .monster format:
+	#.JSON TO .MONSTER CONVERSIONS BELOW:
+	#senses
 	senses = ["darkvision", "tremorsense", "blindsight", "telepathy", "truesight"]
 	for s in senses:
 		jsonData[s] = get_sense(s, jsonData[s])
@@ -269,11 +267,9 @@ def export(monster, filename=""):
 		jsonData[r] = jsonData[r].replace("monster", name)
 
 	#natArmorBonus
-	#without this, the statblock won't load, so I added it
-	#NOTE: THIS NEEDS TESTING/POSSIBLE EXTRA IMPLEMENTATION FOR CREATURES WEARING ARMOR
 	jsonData["natArmorBonus"] = 0
 
-	#I didn't want to import math just to round this one case, so if statement for rounding
+	#if statement for rounding (didn't want to import math for only one use case)
 	dexBonus = jsonData["dexPoints"] - 10
 	if dexBonus % 2 == 1:
 		dexBonus = dexBonus - 1
@@ -288,11 +284,7 @@ def export(monster, filename=""):
 	#armorName fix--remove mention of shield
 	jsonData["armorName"] = jsonData["armorName"].replace(", shield", "")
 
-	#print("THE FULLY(?) EDITED CONVERSION OF DATA FROM JSON LOOKS LIKE THIS:")
-	#print(jsonData)
-	#print()
-
-	#.monster file, for now named test.monster
+	#.monster file (monstername.monster)
 	outfile = open(filename, 'w')
 	json.dump(jsonData, outfile)
 	outfile.close()
@@ -302,7 +294,7 @@ def export(monster, filename=""):
 
 #for testing purposes
 if __name__ == "__main__":
-	monSlug = "exploding-toad"
+	monSlug = "angel-psychopomp"
 	print("This is a test to convert a monster from the JSON file " +
 	 "format we get from mgetter.py to a .monster file")
 	print("This test depends on the monster data being stored in data.json, as we search " +
