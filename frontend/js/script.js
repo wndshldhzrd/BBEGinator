@@ -147,10 +147,13 @@ function loadMonster (monster) {
     // Speed
 }
 
+//eventually move api calls into their own file??
+
 //Function which takes in various parameters and then gets a json of all
 //monsters that match that criteria
 function searchMonster() {
 
+    //building the json
     payload = {
         'hit_points__gte': document.getElementById("hpMax").value, //max hp
         'hit_points__lte': document.getElementById("hpMin").value, //min hp
@@ -191,11 +194,57 @@ function searchMonster() {
     .then(json => {
         console.log(json);
     })
-
 }
 
+//Function which takes in a list of up to 10 players and gets a list of recommended monsters
+//for them to fight
+function getRecommendedMonster() {
+
+    //initializing our JSON
+    payload = {}
+    
+    //getting our list of players
+    playerList = document.getElementsByClassName("playerInput");
+
+    //looping through each player and getting the values
+    for(let i = 0; i < playerList.length; i++) {
+
+        //ignore the ugly grabbing this was the easiest solution I could think of
+        playerData = playerList[i];
+        playerClass = playerData.getElementsByClassName("dropdown")[0].value
+        playerLevel = playerData.getElementsByClassName("stat-Input")[0].value
+        playerHealth = playerData.getElementsByClassName("stat-Input")[1].value
+        
+        //ensuring all our data is valid, will need to update html page eventually to
+        //tell players which fields still need to be filled out
+        if(playerClass == "" || playerLevel == "" || playerHealth == "") {
+            console.error("ERROR ERROR INCOMPLETE INPUT DATA");
+            return;
+        }
+        
+        //adding values to our payload
+        payload["p" + i] = {
+            "class" : playerClass,
+            "level" : playerLevel,
+            "health" : playerHealth,
+        }
+    }
+
+    //adding a terminating player so backend knows when to stop parsing players
+    payload["p" + playerList.length] = "0"
 
 
+    //testing to ensure that parameters are being passed correctly
+    console.log(payload);
+
+    //making our api call
+    const url = 'https://zevce.pythonanywhere.com/getRecommendation/' + JSON.stringify(payload)
+    fetch(url)
+    .then(response => response.json())  
+    .then(json => {
+        console.log(json);
+    })
+}
 
 /****************************
 ** TESTING STUFF GOES HERE **
