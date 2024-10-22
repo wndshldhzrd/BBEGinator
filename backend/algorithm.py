@@ -42,12 +42,24 @@ def monsterReader(JSON):
     while x:
         #jsonParsing
         monster = JSON(x)
-        slug = monster["slug"]
-        ac = monster["ac"]
-        hp = monster["hp"]
-        s = monster["speeds"]
-        stats = monster["stats"]
-        saves = monster["saves"]
+        name = monster["name"]
+        ac = monster["otherArmorDesc"]
+        hp = monster["hpText"]
+        speeds = {"ground": monster["speedDesc"],
+                  "flying": monster["flySpeed"],
+                  "swim": monster["swimSpeed"]}
+        stats = {"str": monster["strpoints"],
+                 "dex": monster["dexpoints"],
+                 "con": monster["conpoints"],
+                 "int": monster["intpoints"],
+                 "wis": monster["wispoints"],
+                 "cha": monster["chapoints"]}
+        saves = {"str": monster["sthrows"].get("str"),
+                 "dex": monster["sthrows"].get("dex"),
+                 "con": monster["sthrows"].get("con"),
+                 "int": monster["sthrows"].get("int"),
+                 "wis": monster["sthrows"].get("wis"),
+                 "cha": monster["sthrows"].get("cha")}
         vulnerabilities = monster["vulnerabilities"]
         resistances = monster["resistances"]
         immunities = monster["immunities"]
