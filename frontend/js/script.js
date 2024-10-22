@@ -87,6 +87,7 @@ function loadMonster (monster) {
     const ac = createElement("p", acDesc);
     propLine.appendChild(acHeader);
     propLine.appendChild(ac);
+    topStats.appendChild(propLine);
 
     //hp
     const propLine2 = document.createElement("property-line");
@@ -94,6 +95,7 @@ function loadMonster (monster) {
     const hp = createElement("p", `{$monster.hit_points} ({$monster.hit_dice})`);
     propLine2.appendChild(hpHeader);
     propLine2.appendChild(hp);
+    topStats.appendChild(propLine2);
 
     //speed
     const propLine3 = document.createElement("property-line");
@@ -102,6 +104,13 @@ function loadMonster (monster) {
     const speed = createElement("p", speedDesc);
     propLine3.appendChild(speedHeader);
     propLine3.appendChild(speed);
+    topStats.appendChild(propLine3);
+
+    //abilities-block
+    const abilitiesBlock = document.createElement(`abliities-block data-cha="{$monster.charisma}" data-con="{$monster.constitution}" data-dex="{$monster.dexterity}" data-int="{$monster.intelligence}" data-wis="{$monster.wisdom}"`)
+    topStats.appendChild(abilitiesBlock);
+
+    //damage immunities
 
     statBlock.appendChild(creatureHeading);
     statBlock.appendChild(topStats);
