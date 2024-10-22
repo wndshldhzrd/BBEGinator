@@ -4,7 +4,7 @@ from classes import PartyMember
 
 # DATA
 party = []
-mgetter
+#mgetter
 
 # ENCOUNTER THINGS
 class EncounterType(Enum):
@@ -27,10 +27,13 @@ def Algorithm(Party, encounter, Mgetter, lair):
     MonsterDmgMax # = all the attacks used in the monsters multiattack in the maximum amount
     MonsterCritMax # = all the attacks used in the monsters multiattack in the maximum, critical amount
 
-    if (avgPartyMemberHealth >= (3*MonsterDmgAvg * (encounter/5)) :
+    if (avgPartyMemberHealth >= (3*MonsterDmgAvg * (encounter/5))):
+        print()
     #add as a boss monster
     elif  (avgPartyMemberHealth > 3*MonsterDmgMax * (encounter/5)):
+        print()
     #add as a acolyte Monster
-    else (avgPartyMemberHealth > 3*MonsterCritMax * (encounter/5)):
+    else: #(avgPartyMemberHealth > 3*MonsterCritMax * (encounter/5)):
+        print()
     #add as a minion Monster
 
