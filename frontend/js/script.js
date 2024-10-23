@@ -78,7 +78,6 @@ function loadMonster (monster) {
 
     //creature-heading
     const creatureHeading = createCreatureHeading(monster);
-    statBlock.appendChild(creatureHeading);
 
     //top-stats
     const topStats = document.createElement("top-stats");
@@ -88,7 +87,7 @@ function loadMonster (monster) {
     const acHeader = createElement("h4", "Armor Class");
     let acDesc = ` ${monster.armor_class}`;
     if (monster.armor_desc != null) {
-        acDesc += `( ${monster.armor_desc})`;
+        acDesc += ` (${monster.armor_desc})`;
     }
     const ac = createElement("p", acDesc);
     propLine.appendChild(acHeader);
@@ -107,16 +106,51 @@ function loadMonster (monster) {
     const propLine3 = document.createElement("property-line");
     const speedHeader = createElement("h4", "Speed");
     const speedDesc = ` ${monster.speed["walk"]} ft.`;
+    for (const s in monster.speed) {
+        if (s != "walk") {
+            speedDesc += `, ${s} ${monster.speed[s]} ft.`
+        }
+    }
     const speed = createElement("p", speedDesc);
     propLine3.appendChild(speedHeader);
     propLine3.appendChild(speed);
     topStats.appendChild(propLine3);
 
     //abilities-block
-    // const abilitiesBlock = document.createElement(`ablities-block data-cha="{$monster.charisma}" data-con="{$monster.constitution}" data-dex="{$monster.dexterity}" data-int="{$monster.intelligence}" data-wis="{$monster.wisdom}"`)
-    // topStats.appendChild(abilitiesBlock);
+    const abilitiesBlock = document.createElement("abilities-block");
+    abilitiesBlock.setAttribute("data-cha", `${monster.charisma}`);
+    abilitiesBlock.setAttribute("data-con", `${monster.constitution}`);
+    abilitiesBlock.setAttribute("data-dex", `${monster.dexterity}`);
+    abilitiesBlock.setAttribute("data-int", `${monster.intelligence}`);
+    abilitiesBlock.setAttribute("data-str", `${monster.strength}`);
+    abilitiesBlock.setAttribute("data-wis", `${monster.wisdom}`);
+    topStats.appendChild(abilitiesBlock);
 
-    //damage immunities
+    //TO DO:
+    //saving throws
+
+    //skills
+
+    //damage vulnerabilities, resistances, immunities
+
+    //condition immunities
+
+    //senses
+
+    //languages
+
+    //cr
+    //NOTE: THIS IS THE END OF TOP-STATS
+
+    //special abilities (property-block)
+
+    //actions
+
+    //bonus actions
+
+    //legendary actions
+
+    //appending blocks to statBlock
     statBlock.appendChild(creatureHeading);
     statBlock.appendChild(topStats);
 
