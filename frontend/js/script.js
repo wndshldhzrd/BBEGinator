@@ -1,8 +1,8 @@
-// Easier way to create a paragraph when loading moster
-function createPar (text) {
-    const par = document.createElement("p");
-    par.textContent = text;
-    return par;
+// Easier way to create an element when loading a monster
+function createElement (type, text) {
+    const newEle = document.createElement(type);
+    newEle.textContent = text;
+    return newEle;
 }
 
 // Calculates the modifier of a stat
@@ -61,50 +61,146 @@ function getHP (monsterSize, numDice, constMod) {
     }
 }
 
-// Creates a div containing moster information and adds it to the monster display div
-function loadMonster (monster) {
-    // Div where we will display monsters
-    const showMonsterDiv = document.querySelector(".monster-display");
+function createCreatureHeading(monster) {
+    const creatureHeading = document.createElement("creature-heading");
+    const name = createElement("h1", monster.name);
+    const sizeType = createElement("h2", `${monster.size} ${monster.type}, ${monster.alignment}`);
+    creatureHeading.appendChild(name);
+    creatureHeading.appendChild(sizeType);
 
-    // Monster background information
-    const monsterBackground = new Image();
-    monsterBackground.src = "./img/MonsterBackground.png";
-    showMonsterDiv.style.backgroundImage = 'url("./img/MonsterBackground.png")';
-    showMonsterDiv.style.maxWidth = monsterBackground.width + "px";
-
-    // Resetting Div (Temp for now)
-    showMonsterDiv.innerHTML = "";
-
-    // Adding name to first line
-    showMonsterDiv.appendChild(createPar(monster.name));
-    // Adding size, type, and alignment
-    showMonsterDiv.appendChild(createPar(monster.size + " " + monster.type + ", " + monster.alignment));
-    // Line break
-    showMonsterDiv.appendChild(document.createElement("hr"));
-    // Adding Armor class
-    showMonsterDiv.appendChild(createPar("Armor Class " + monster.otherArmorDesc));
-    // Calculating and adding Hit Points
-    const maybeHP = monster.hpText;
-    const constMod = getModifier(monster.conPoints);
-    if (/^\d+$/.test(maybeHP)) { // Checks if maybeHP is only digits
-        showMonsterDiv.appendChild(createPar("Hit Points " + getHP(monster.size, maybeHP, constMod)));
-    } else {
-        showMonsterDiv.appendChild(createPar("Hit Points " + monster.hpText));
-    }
-    // Adding Speed
-    showMonsterDiv.appendChild(createPar("Speed " + monster.speed + " ft."));
-    // Line break
-    showMonsterDiv.appendChild(document.createElement("hr"));
-    
-    // Creating stats block
-    showMonsterDiv.appendChild(createStats(monster));
+    return creatureHeading
 }
 
-// function for grabbing monsters from the website based on various search criteria
-// currently the only paramter we have is the size of the monster
-// TODO: Catch invalid json/timeouts so we don't have errors on loadMonster
-function getMonster(monsterSizeNum) {
-    const url = 'https://zevce.pythonanywhere.com/getMonster/' + monsterSizeNum
+// Creates a div containing moster information and adds it to the monster display div
+function loadMonster (monster) {
+    //create statblock variable
+    const statBlock = document.createElement("stat-block");
+
+    //creature-heading
+    const creatureHeading = createCreatureHeading(monster);
+
+    //top-stats
+    const topStats = document.createElement("top-stats");
+
+    //ac
+    const propLine = document.createElement("property-line");
+    const acHeader = createElement("h4", "Armor Class");
+    let acDesc = ` ${monster.armor_class}`;
+    if (monster.armor_desc != null) {
+        acDesc += ` (${monster.armor_desc})`;
+    }
+    const ac = createElement("p", acDesc);
+    propLine.appendChild(acHeader);
+    propLine.appendChild(ac);
+    topStats.appendChild(propLine);
+
+    //hp
+    const propLine2 = document.createElement("property-line");
+    const hpHeader = createElement("h4", "Hit Points");
+    const hp = createElement("p", ` ${monster.hit_points} (${monster.hit_dice})`);
+    propLine2.appendChild(hpHeader);
+    propLine2.appendChild(hp);
+    topStats.appendChild(propLine2);
+
+    //speed
+    const propLine3 = document.createElement("property-line");
+    const speedHeader = createElement("h4", "Speed");
+    const speedDesc = ` ${monster.speed["walk"]} ft.`;
+    for (const s in monster.speed) {
+        if (s != "walk") {
+            speedDesc += `, ${s} ${monster.speed[s]} ft.`
+        }
+    }
+    const speed = createElement("p", speedDesc);
+    propLine3.appendChild(speedHeader);
+    propLine3.appendChild(speed);
+    topStats.appendChild(propLine3);
+
+    //abilities-block
+    const abilitiesBlock = document.createElement("abilities-block");
+    abilitiesBlock.setAttribute("data-cha", `${monster.charisma}`);
+    abilitiesBlock.setAttribute("data-con", `${monster.constitution}`);
+    abilitiesBlock.setAttribute("data-dex", `${monster.dexterity}`);
+    abilitiesBlock.setAttribute("data-int", `${monster.intelligence}`);
+    abilitiesBlock.setAttribute("data-str", `${monster.strength}`);
+    abilitiesBlock.setAttribute("data-wis", `${monster.wisdom}`);
+    topStats.appendChild(abilitiesBlock);
+
+    //TO DO:
+    //saving throws
+
+    //skills
+
+    //damage vulnerabilities, resistances, immunities
+
+    //condition immunities
+
+    //senses
+
+    //languages
+
+    //cr
+    //NOTE: THIS IS THE END OF TOP-STATS
+
+    //special abilities (property-block)
+
+    //actions
+
+    //bonus actions
+
+    //legendary actions
+
+    //appending blocks to statBlock
+    statBlock.appendChild(creatureHeading);
+    statBlock.appendChild(topStats);
+
+    const monsterDisplay = document.querySelector(".monster-display");
+    monsterDisplay.innerHTML = "";
+    monsterDisplay.appendChild(statBlock);
+}
+
+//eventually move api calls into their own file??
+
+//Function which takes in various parameters and then gets a json of all
+//monsters that match that criteria
+function searchMonster() {
+
+    //building the json
+    payload = {
+        'hit_points__gte': document.getElementById("hpMax").value, //max hp
+        'hit_points__lte': document.getElementById("hpMin").value, //min hp
+        'armor_class__gte': document.getElementById("acMax").value, //max ac
+        'armor_class__lte': document.getElementById("acMin").value, //min ac
+        'type__iexact': document.getElementById("type-dropdown").value,  //creature type
+        'size__iexact': document.getElementById("size-dropdown").value, //creature size
+        'alignmnet': document.getElementById('alignmment-dropdown').value, //creature alignment
+        'swim_speed_lte' : '', //min swimspeed
+        'swim_speed_gte' : '', //max swimspeed
+        'fly_speed_lte' : '', //min flyspeed
+        'fly_speed_gte' : '', //max flyspeed
+        'walk_speed_lte' : '', //min walkspeed
+        'walk_speed_gte' : '', //max walkspeed
+        'str_lte' : document.getElementById("strMin").value, //min str
+        'str_gte' : document.getElementById("strMax").value, //max str
+        'dex_lte' : document.getElementById("dexMin").value, //min dex
+        'dex_gte' : document.getElementById("dexMax").value, //max dex
+        'con_lte' : document.getElementById("conMin").value, //min con
+        'con_gte' : document.getElementById("conMax").value, //max con
+        'int_lte' : document.getElementById("intMin").value, //min int
+        'int_gte' : document.getElementById("intMax").value, //max int
+        'wis_lte' : document.getElementById("wisMin").value, //min wis
+        'wis_gte' : document.getElementById("wisMax").value, //max wis
+        'cha_lte' : document.getElementById("chaMin").value, //min cha
+        'cha_gte' : document.getElementById("chaMax").value, //max cha
+        //metric which creatures should be ordered by
+        'sort_by': document.getElementById("Sort-dropdown").value + "-" 
+        + document.getElementById("Sort-style").value
+    }
+
+    //testing to ensure that parameters are being passed correctly
+    console.log(payload);
+
+    const url = 'https://zevce.pythonanywhere.com/searchMonster/' + JSON.stringify(payload)
     fetch(url)
     .then(response => response.json())  
     .then(json => {
@@ -112,38 +208,55 @@ function getMonster(monsterSizeNum) {
     })
 }
 
-//testing sending data to our flask server
-//will eventually send a json which contains info about all players in the party
-//any html file that uses this method will need to have
-//<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-//above its script.js source
-function sendData() {
-    /*
-    $.ajax({
-        type: 'POST',
-        //contentType: 'application/json',
-        data: {"hello" : "world"},
-        dataType: 'json',
-        url: 'https://zevce.pythonanywhere.com/testRoute',
-        success: function (e) {
-            console.log(e);
-        },
-        error: function(error) {
-            console.log(error);
+//Function which takes in a list of up to 10 players and gets a list of recommended monsters
+//for them to fight
+function getRecommendedMonster() {
+
+    //initializing our JSON
+    payload = {}
+    
+    //getting our list of players
+    playerList = document.getElementsByClassName("playerInput");
+
+    //looping through each player and getting the values
+    for(let i = 0; i < playerList.length; i++) {
+
+        //ignore the ugly grabbing this was the easiest solution I could think of
+        playerData = playerList[i];
+        playerClass = playerData.getElementsByClassName("dropdown")[0].value
+        playerLevel = playerData.getElementsByClassName("stat-Input")[0].value
+        playerHealth = playerData.getElementsByClassName("stat-Input")[1].value
+        
+        //ensuring all our data is valid, will need to update html page eventually to
+        //tell players which fields still need to be filled out
+        if(playerClass == "" || playerLevel == "" || playerHealth == "") {
+            console.error("ERROR ERROR INCOMPLETE INPUT DATA");
+            return;
         }
-   });
-   */
+        
+        //adding values to our payload
+        payload["p" + i] = {
+            "class" : playerClass,
+            "level" : playerLevel,
+            "health" : playerHealth,
+        }
+    }
 
-   $.post("https://zevce.pythonanywhere.com/testRoute",
-    {
-      hello: "world",
-    },
-    function(e){
-      console.log(e);
-    });
+    //adding a terminating player so backend knows when to stop parsing players
+    payload["p" + playerList.length] = "0"
 
+
+    //testing to ensure that parameters are being passed correctly
+    console.log(payload);
+
+    //making our api call
+    const url = 'https://zevce.pythonanywhere.com/getRecommendation/' + JSON.stringify(payload)
+    fetch(url)
+    .then(response => response.json())  
+    .then(json => {
+        console.log(json);
+    })
 }
-
 
 /****************************
 ** TESTING STUFF GOES HERE **
@@ -152,14 +265,16 @@ function sendData() {
 // Button that creates a monster (TEMP)
 const createMonsterButton = document.querySelector("#create-monster");
 
-//James this is terrible practice im going to kill you
-createMonsterButton.addEventListener("click", () => {
-    fetchMonster("goat");
-});
 
 async function fetchMonster(monsterName) {
     // Currently local only, need to change this for backend fetch calls when set up
-    const response = await fetch(`data/${monsterName}.monster`)
+    const response = await fetch(`data/${monsterName}.json`)
     .then (response => response.json())
     .then (monster => loadMonster(monster));
 }
+
+//James this is terrible practice im going to kill you
+createMonsterButton.addEventListener("click", () => {
+    fetchMonster("goat");
+})
+

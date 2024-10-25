@@ -1,14 +1,13 @@
 """
 export_monster.py
 
-The parser function will call on mgetter.py to get monster 
-data in a json file, and export a monster to a .monster file
+The parser function will call take in monster data from a json file 
+and export a monster to a .monster file
 """
 
 import json
-#from mgetter import mgetter #retrieves desired json data
-import mgetter #above statement was causing an error, commented out for now
 
+#grabs the integer values from a string for each sense in .json to .monster conversion
 def get_sense(sense, description):
 	index = description.find(sense)
 	if (index == -1):
@@ -17,18 +16,30 @@ def get_sense(sense, description):
 	else:
 		index = index + len(sense) + 1
 
-		#numerical value following the sense
-		val = int(description[index : description.find(" ", index+1)])
+		#numerical value following the sense to avoid any api data typos
+		#after encountering one in crab-razorback
+		#sorry for the awful code it was the only way
+		end = index 
+		numbers = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"}
+		while end < len(description) and description[end] in numbers:
+			end = end+1
+
+		val = int(description[index : end])
 		return val
 
 #export a monster's data to a .monster style format
-def export(monster):
-	#monster is a dictionary containing input data from json file
+def export(monster, filename=""):
+	#jsonData starts as a .monster-style template to fill in
 	jsonData = json.loads(open('sample_monster.monster').read())
 
+	#keys in monster file and corresponding keys in json as values
 	j2m = json.loads(open("j2m_keys.json").read())
 
-	#to do: edit monster json into jsonData
+	#default filename is the monster slug
+	if filename == "":
+		filename = monster["slug"] + ".monster"
+
+	#insert data into our template
 	for category in j2m:
 		if (isinstance(j2m[category], list)):
 			jsonData[category] = ""
@@ -40,16 +51,16 @@ def export(monster):
 			if monster[j2m[category]] != None:
 				jsonData[category] = monster[j2m[category]]
 
-
-	#CONVERT jsonData to .monster format:
+	#.JSON TO .MONSTER CONVERSIONS BELOW:
+	#senses
 	senses = ["darkvision", "tremorsense", "blindsight", "telepathy", "truesight"]
 	for s in senses:
 		jsonData[s] = get_sense(s, jsonData[s])
 
-	#blind boolean
+	#blind
 	jsonData["blind"] = (jsonData["blind"].find("blind ") != -1)
 
-	#hitdice fix
+	#hitdice
 	jsonData["hitDice"] = (jsonData["hitDice"][:jsonData["hitDice"].find("d")])
 
 	#walk speed
@@ -67,7 +78,7 @@ def export(monster):
 		else:
 			jsonData[s] = 0
 
-	#hover boolean
+	#hover
 	jsonData["hover"] = "hover" in jsonData["hover"]
 
 	#skills
@@ -99,7 +110,7 @@ def export(monster):
 		
 	jsonData["skills"] = new_skills
 
-	#convert cr from double to string
+	#cr double to string conversion
 	double_to_frac = {0: "0", 0.125: "1/8", 0.25: "1/4", 0.5: "1/2"}
 	if jsonData["cr"] < 1:
 		jsonData["cr"] = double_to_frac[jsonData["cr"]]
@@ -223,11 +234,14 @@ def export(monster):
 	jsonData["languages"] = jsonData["languages"].split(", ")
 	for i in range(len(jsonData["languages"])):
 		jsonData["languages"][i] = {"name": jsonData["languages"][i], "speaks": True}
+	
 	#shieldbonus
-	if jsonData["shieldBonus"].find("shield") != -1:
-		jsonData["shieldBonus"] = 2
-	else:
-		jsonData["shieldBonus"] = 0
+	#null values leave shieldBonus as its default--0
+	if jsonData["shieldBonus"] != 0:
+		if jsonData["shieldBonus"].find("shield") != -1:
+			jsonData["shieldBonus"] = 2
+		else:
+			jsonData["shieldBonus"] = 0
 
 	#check for null conditions
 	if jsonData["conditions"] == None:
@@ -244,7 +258,7 @@ def export(monster):
 	#lowercase size
 	jsonData["size"] = jsonData["size"].lower()
 
-	#update hitdice to an int
+	#hitdice int conversion (must stay at bottom)
 	jsonData["hitDice"] = int(jsonData["hitDice"])
 
 	#update lair and mythic descriptions to contain monster name
@@ -254,38 +268,40 @@ def export(monster):
 		jsonData[r] = jsonData[r].replace("monster", name)
 
 	#natArmorBonus
-	#without this, the statblock won't load, so I added it
-	#NOTE: THIS NEEDS TESTING/POSSIBLE EXTRA IMPLEMENTATION FOR CREATURES WEARING ARMOR
 	jsonData["natArmorBonus"] = 0
-	dexBonus = (jsonData["dexPoints"] - 10) / 2
+
+	#if statement for rounding (didn't want to import math for only one use case)
+	dexBonus = jsonData["dexPoints"] - 10
+	if dexBonus % 2 == 1:
+		dexBonus = dexBonus - 1
+	dexBonus = dexBonus / 2
+
 	ac = monster["armor_class"]
 	natArmorBonusCheck = ac - (10 + dexBonus + jsonData["shieldBonus"])
 	if natArmorBonusCheck > 0:
 		jsonData["natArmorBonus"] = natArmorBonusCheck
 	jsonData["natArmorBonus"] = int(jsonData["natArmorBonus"])
 
-	print("THE FULLY(?) EDITED CONVERSION OF DATA FROM JSON LOOKS LIKE THIS:")
-	print(jsonData)
-	print()
+	#armorName fix--remove mention of shield
+	jsonData["armorName"] = jsonData["armorName"].replace(", shield", "")
 
-	#.monster file, for now named test.monster
-	outfile = open('test.monster', 'w')
+	#.monster file (file called monSlug.monster)
+	outfile = open(filename, 'w')
 	json.dump(jsonData, outfile)
 	outfile.close()
 
-	return
+	return filename
 
 
 #for testing purposes
 if __name__ == "__main__":
-	monSlug = "adult-red-dragon"
+	monSlug = "angel-psychopomp"
 	print("This is a test to convert a monster from the JSON file " +
 	 "format we get from mgetter.py to a .monster file")
-	print("Current monster slug: " + monSlug + "\n")
-
-	#uses an api to get monster data and places it in a json file called data.json
-	#mgetter() [currently calls an error?]
-
+	print("This test depends on the monster data being stored in data.json, as we search " +
+		"for a specific slug. The actual function export_monster, however, simply requires " +
+		"a dictionary containing the json data for the desired monster")
+	print("\nCurrent monster slug: " + monSlug)
 
 	#for testing purposes, we used the current mgetter to find a specific test monster,
 	#with the goal of converting that data to .monster format in our code
@@ -296,11 +312,14 @@ if __name__ == "__main__":
 
 	if (end != -1):
 		end = end + 1	#include "}" for the sake of json.loads
+	else:
+		if monsters[-1] == "]":
+			end = monsters.rfind('}') + 1
 	
 	mon = monsters[start:end]
 	if (start == -1):
 		print("Failed to find monster by that slug")
-		print(mon)
-		mon = ""
-
-	export(json.loads(mon))
+		
+	else:
+		outfile = export(json.loads(mon))
+		print("\nFinished conversion, data stored in " + outfile)

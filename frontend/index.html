@@ -4,15 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script type="module" src="monsterCard/js/stat-block.js"></script>
-    <script type="module" src="monsterCard/js/creature-heading.js"></script>
-    <script type="module" src="monsterCard/js/top-stats.js"></script>
-    <script type="module" src="monsterCard/js/abilities-block.js"></script>
-    <script type="module" src="monsterCard/js/property-line.js"></script>
-    <script type="module" src="monsterCard/js/property-block.js"></script>
+    <script type="module" src="src/js/stat-block.js"></script>
+    <script type="module" src="src/js/creature-heading.js"></script>
+    <script type="module" src="src/js/top-stats.js"></script>
+    <script type="module" src="src/js/abilities-block.js"></script>
+    <script type="module" src="src/js/property-line.js"></script>
+    <script type="module" src="src/js/property-block.js"></script>
     <script defer src="js/script.js"></script>
-    <title>BBEGinator</title>
+    <title>BBEGinator Home</title>
 </head>
 <body>
     <div class="header">
@@ -21,16 +20,16 @@
         </ul>
         <div class = "nav-bar">
             <a>Home</a>
-            <a href="\frontend\search.html">Search Monsters</a>
+            <a href="/BBEGinator/search">Search Monsters</a>
+            <a href = "/BBEGinator/reccMonsters">Reccomend Monsters</a>
+            <a href = "/BBEGinator/about">About</a>
         </div>
     </div>
 
-    <div class="body">
-        <button id="create-monster">Create a monster</button>
-        <button onclick="sendData();"></button>
-        <div class="monster-display">
+    <button id="create-monster">Create a monster</button>
+    <button onclick="sendData();">Send player info</button>
+    <div class="monster-display">
             
-        </div>
     </div>
 
 </body>

@@ -18,11 +18,10 @@ def get_data(url, payload):
     response = requests.get(url, payload)
     return response.json()
 
-def write_to_json(data, filename):
-    with open(filename, 'a') as f:
+def write_to_json(data, filename="output.json"):
+    with open(filename, 'w') as f:
         json.dump(data['results'], f)
         f.write('\n')
-
 
 
 def main():
@@ -43,7 +42,7 @@ def main():
     'cr': '', #exact cr
     'cr__range': '', #range for cr but annoying to do so i implement later
     'cr__gt': '', #number you want cr to be greater than
-    'cr__gte': '14', #number u want cr to be greater than or equal to
+    'cr__gte': '', #number u want cr to be greater than or equal to
     'cr__lt': '', #number u want cr to be less than
     'cr__lte': '', #number u want cr to be less than or equal to
     'hit_points': '', #hit points of creature

@@ -192,7 +192,6 @@ def Algorithm(party, difficulty, monsterList, lair, guys, mode):
     print(f"Returning monster list: {monsters}")
     return monsters
 
-
 #self, slug, ac, hp, speeds, stats, saves, vulnerabilities, resistances, immunities, actions, cr
 georgeBush = Monster("georgie", "George W. Bush", 5, 45, 300, [0,5,30,2,5,6], [None,None,None,None,None,None],[],[],[],[],4)
 jackson = Monster("jackie", "Michael Jackson", 5, 45, 300, [0,5,30,2,5,6], [None,None,None,None,None,None],[],[],[],[],4)
@@ -208,4 +207,3 @@ for x, y in database.items():
 
 
 monsterList = Algorithm(party, EncounterType.MEDIUM, database.items(), None, 4, "bossBalanced")
-

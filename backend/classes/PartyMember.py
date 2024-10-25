@@ -3,7 +3,7 @@ from audioop import mul
 
 
 class PartyMember():
-    health = 0
+    health = 1
     theClass = 0
     def __init__(self, health, theClass, level):
         self.health = health
