@@ -119,37 +119,53 @@ def Algorithm(party, difficulty, monsterList, lair, guys, mode):
             if(i < guys - 1):
                 toSpend = randint(int(points * 0.1), int(points * 0.67))
                 print(f"I want to spend {toSpend} points")
+                found = False
                 for x, y in monsterList:
                     if y.points > toSpend - 5 and y.points < toSpend + 5:
                         tempList.append(x)
-                monsters.append(choice(tempList))
+                if not found:
+                    print("I couldn't find a monster. In the actual thing that would be a problem but this is just testing")
+                else:
+                    monsters.append(choice(tempList))
                 points -= toSpend
             else:
                 print(f"This is the last monster, using my last {points} points")
     elif(mode == "sameMonster"):
         toSpend = points / guys
         print(f"I want to buy {guys} of the same monster with a point value around {toSpend}")
+        found = False
         for x, y in monsterList:
             if y.points > toSpend - 5 and y.points < toSpend + 5:
                 tempList.append(x)
-        myGuy = choice(tempList)
+        if not found:
+            print("I couldn't find a monster. In the actual thing that would be a problem but this is just testing")
+        else:
+            myGuy = choice(tempList)
         for i in range(guys - 1): monsters.append(myGuy)
     elif(mode == "balanced"):
         toSpend = points / guys
         print(f"I want to buy {guys} monsters with point values around {toSpend}")
+        found = False
         for x, y in monsterList:
             if y.points > toSpend - 5 and y.points < toSpend + 5:
                 tempList.append(x)
-        for i in range(guys - 1): monsters.append(choice(tempList))
+        if not found:
+            print("I couldn't find a monster. In the actual thing that would be a problem but this is just testing")
+        else:
+            for i in range(guys - 1): monsters.append(choice(tempList))
     elif(mode == "boss"):
         print(f"This is a boss encounter, I will spend most of my points on a boss")
         toSpend = points if guys == 1 else randint(int(points * 0.67), int(points * 0.8))
         print(f"Generating monster 1 of {guys}")
         print(f"I want to spend {toSpend} points on the boss")
+        found = False
         for x, y in monsterList:
             if y.points > toSpend - 5 and y.points < toSpend + 5:
                 tempList.append(x)
-        monsters.append(choice(tempList))
+        if not found:
+            print("I couldn't find a monster. In the actual thing that would be a problem but this is just testing")
+        else:
+            monsters.append(choice(tempList))
         points -= toSpend
         for i in range(guys - 1):
             print(f"Generating monster {i + 2} of {guys}")
@@ -158,18 +174,22 @@ def Algorithm(party, difficulty, monsterList, lair, guys, mode):
                 toSpend = randint(int(points * 0.1), int(points * 0.67))
                 print(f"I want to spend {toSpend} points")
                 tempList = []
+                found = False
                 for x, y in monsterList:
                     if y.points > toSpend - 5 and y.points < toSpend + 5:
                         tempList.append(x)
-                monsters.append(choice(tempList))
+                if not found:
+                    print("I couldn't find a monster. In the actual thing that would be a problem but this is just testing")
+                else:
+                    monsters.append(choice(tempList))
                 points -= toSpend
             else: print(f"This is the last monster, using my last {points} points")
     elif(mode == "bossBalanced"):
         print(f"This is a boss encounter, I will spend most of my points on a boss")
         toSpend = points if guys == 1 else randint(int(points * 0.67), int(points * 0.8))
         print(f"I want to spend {toSpend} points on the boss")
+        found = False
         for x, y in monsterList:
-            found = False
             if y.points > toSpend - 5 and y.points < toSpend + 5:
                 tempList.append(x)
         if not found:
