@@ -1,6 +1,8 @@
 from ast import Mult
 from audioop import mul
 
+spellcasters = {"wizard", "sorcerer", "bard", "cleric", "druid"}
+healers = {"cleric", "druid", "paladin"}
 
 class PartyMember():
     health = 1
@@ -12,7 +14,7 @@ class PartyMember():
         self.spellcaster = False
         self.dmg = 0
         self.dmgMax =0
-        if (self.theClass == "wizard" or self.theClass == "sorcerer" or self.theClass == "bard" or self.theClass == "cleric" or self.theClass == "druid"):
+        if self.theClass in spellcasters:
             self.spellcaster = True
             self.dmg = (level//2)*10 + 5  #spell levels 
             self.dmgMax = self.dmg * 2 #double dmg
@@ -91,5 +93,5 @@ class PartyMember():
 
         self.dmgMax = self.dmg * 2    
         
-        if (theClass == "cleric" or theClass == "druid" or theClass == "paladin"):    #designated healer point calculations
+        if theClass in healers:    #designated healer point calculations
             self.health += (self.health//2)
