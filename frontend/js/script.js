@@ -195,7 +195,7 @@ function loadMonster (monster) {
     const languageHeader = createElement("h4", "Languages");
     const languageDesc = ` ${monster.languages}`;
     if(languageDesc == "") {
-        languageDesc = "—";
+        languageDesc = " —";
     }
     const languages = createElement("p", languageDesc);
     propLine11.appendChild(languageHeader);
