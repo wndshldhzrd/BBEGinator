@@ -126,8 +126,37 @@ function loadMonster (monster) {
     abilitiesBlock.setAttribute("data-wis", `${monster.wisdom}`);
     topStats.appendChild(abilitiesBlock);
 
-    //TO DO:
     //saving throws
+    //this should become a function
+    const saveVars = ["strength_save", "dexterity_save", "constitution_save", "intelligence_save", "wisdom_save", "charisma_save"];
+    let saves = "";
+    let propLine4 = null;
+    for (sav in saveVars) {
+        let s = saveVars[sav];
+        if (monster[s] != null) {
+            if (!propLine4) {
+                propLine4 = document.createElement("property-line");
+                const saveHeader = createElement("h4", "Saving Throws");
+                propLine4.appendChild(saveHeader);
+                saves += " ";
+            }
+            else {
+                saves += ", ";
+            }
+            saves += s[0].toUpperCase();
+            saves += (s.substring(1, 3)) + " ";
+            if (monster[s] >= 0) {
+                saves = saves + "+";
+            }
+
+            saves = saves + `${monster[s]}`;
+        }
+    }
+    if (propLine4 != null) {
+        saveThrows = createElement("p", saves);
+        propLine4.appendChild(saveThrows);
+        topStats.appendChild(propLine4);
+    }
 
     //skills
 
