@@ -100,7 +100,7 @@ function throwsPropLine(monster, name, keys, printKeys) {
             }
 
             //add this new skill/save/etc to the throws text
-            throws += printKeys[key] + " ";
+            throws += printKeys[key][0].toUpperCase() + printKeys[key].slice(1) + " ";
             if (monster[k] >= 0) {
                 throws += "+";
             }
@@ -180,11 +180,14 @@ function loadMonster (monster) {
     }
 
   //skills
-    const propLine5 = document.createElement("property-line");
-    const skillHeader = createElement("h4", "Skills");
-    propLine5.appendChild(skillHeader);
-    topStats.appendChild(propLine5);
+    const skillDict = monster.skills;
+    const skillNames = Object.keys(skillDict);
+    const propLine5 = throwsPropLine(skillDict, "Skills", skillNames, skillNames);
+    if (propLine5 != null) {
+        topStats.appendChild(propLine5);
+    }
 
+    //TO DO:
     //damage vulnerabilities, resistances, immunities
     const propLine6 = document.createElement("property-line");
     const propLine7 = document.createElement("property-line");
@@ -214,8 +217,8 @@ function loadMonster (monster) {
     //languages
     const propLine11 = document.createElement("property-line");
     const languageHeader = createElement("h4", "Languages");
-    const languageDesc = ` ${monster.languages}`;
-    if(languageDesc == "") {
+    let languageDesc = ` ${monster.languages}`;
+    if (languageDesc == " ") {
         languageDesc = " —";
     }
     const languages = createElement("p", languageDesc);
