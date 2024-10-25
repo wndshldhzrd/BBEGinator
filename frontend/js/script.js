@@ -158,17 +158,49 @@ function loadMonster (monster) {
         topStats.appendChild(propLine4);
     }
 
-    //skills
+  //skills
+    const propLine5 = document.createElement("property-line");
+    const skillHeader = createElement("h4", "Skills");
+    propLine5.appendChild(skillHeader);
+    topStats.appendChild(propLine5);
 
     //damage vulnerabilities, resistances, immunities
+    const propLine6 = document.createElement("property-line");
+    const propLine7 = document.createElement("property-line");
+    const propLine8 = document.createElement("property-line");
+    const vulnHeader = createElement("h4", "Damage Vulnerabilities");
+    const resistHeader = createElement("h4", "Damage Resistances");
+    const immunHeader = createElement("h4", "Damage Immunities");
+    propLine6.appendChild(vulnHeader);
+    propLine7.appendChild(resistHeader);
+    propLine8.appendChild(immunHeader);
+    topStats.appendChild(propLine6);
+    topStats.appendChild(propLine7);
+    topStats.appendChild(propLine8);
 
     //condition immunities
+    const propLine9 = document.createElement("property-line");
+    const conditionHeader = createElement("h4", "Condition Immunities");
+    propLine9.appendChild(conditionHeader);
+    topStats.appendChild(propLine9);
 
     //senses
+    const propLine10 = document.createElement("property-line");
+    const senseHeader = createElement("h4", "Senses");
+    propLine10.appendChild(senseHeader);
+    topStats.appendChild(propLine10);
 
     //languages
+    const propLine11 = document.createElement("property-line");
+    const languageHeader = createElement("h4", "Languages");
+    propLine11.appendChild(languageHeader);
+    topStats.appendChild(propLine11);
 
     //cr
+    const propLine12 = document.createElement("property-line");
+    const challengeHeader = createElement("h4", "Challenge");
+    propLine12.appendChild(challengeHeader);
+    topStats.appendChild(propLine12);
     //NOTE: THIS IS THE END OF TOP-STATS
 
     //special abilities (property-block)
