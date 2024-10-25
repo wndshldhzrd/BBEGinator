@@ -71,6 +71,50 @@ function createCreatureHeading(monster) {
     return creatureHeading
 }
 
+function createCreatureHeading(monster) {
+    const creatureHeading = document.createElement("creature-heading");
+    const name = createElement("h1", monster.name);
+    const sizeType = createElement("h2", `${monster.size} ${monster.type}, ${monster.alignment}`);
+    creatureHeading.appendChild(name);
+    creatureHeading.appendChild(sizeType);
+
+    return creatureHeading
+}
+
+function throwsPropLine(monster, name, keys, printKeys) {
+    let throws = "";
+    let throwsPropLine = null;
+    for (key in keys) {
+        let k = keys[key];
+
+        //create the property line if it hasn't been initialized
+        if (monster[k] != null) {
+            if (!throwsPropLine) {
+                throwsPropLine = document.createElement("property-line");
+                const header = createElement("h4", name);
+                throwsPropLine.appendChild(header);
+                throws += " ";
+            }
+            else {
+                throws += ", ";
+            }
+
+            //add this new skill/save/etc to the throws text
+            throws += printKeys[key] + " ";
+            if (monster[k] >= 0) {
+                throws += "+";
+            }
+            throws += `${monster[k]}`;
+        }
+    }
+    if (throwsPropLine != null) {
+        throwsText = createElement("p", throws);
+        throwsPropLine.appendChild(throwsText);
+    }
+
+    return throwsPropLine;
+}
+
 // Creates a div containing moster information and adds it to the monster display div
 function loadMonster (monster) {
     //create statblock variable
@@ -129,32 +173,9 @@ function loadMonster (monster) {
     //saving throws
     //this should become a function
     const saveVars = ["strength_save", "dexterity_save", "constitution_save", "intelligence_save", "wisdom_save", "charisma_save"];
-    let saves = "";
-    let propLine4 = null;
-    for (sav in saveVars) {
-        let s = saveVars[sav];
-        if (monster[s] != null) {
-            if (!propLine4) {
-                propLine4 = document.createElement("property-line");
-                const saveHeader = createElement("h4", "Saving Throws");
-                propLine4.appendChild(saveHeader);
-                saves += " ";
-            }
-            else {
-                saves += ", ";
-            }
-            saves += s[0].toUpperCase();
-            saves += (s.substring(1, 3)) + " ";
-            if (monster[s] >= 0) {
-                saves = saves + "+";
-            }
-
-            saves = saves + `${monster[s]}`;
-        }
-    }
+    const saveKeys = ["Str", "Dex", "Con", "Int", "Wis", "Cha"];
+    const propLine4 = throwsPropLine(monster, "Saving Throws", saveVars, saveKeys);
     if (propLine4 != null) {
-        saveThrows = createElement("p", saves);
-        propLine4.appendChild(saveThrows);
         topStats.appendChild(propLine4);
     }
 
