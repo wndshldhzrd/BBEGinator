@@ -171,7 +171,6 @@ function loadMonster (monster) {
     topStats.appendChild(abilitiesBlock);
 
     //saving throws
-    //this should become a function
     const saveVars = ["strength_save", "dexterity_save", "constitution_save", "intelligence_save", "wisdom_save", "charisma_save"];
     const saveKeys = ["Str", "Dex", "Con", "Int", "Wis", "Cha"];
     const propLine4 = throwsPropLine(monster, "Saving Throws", saveVars, saveKeys);
@@ -179,7 +178,7 @@ function loadMonster (monster) {
         topStats.appendChild(propLine4);
     }
 
-  //skills
+    //skills
     const skillDict = monster.skills;
     const skillNames = Object.keys(skillDict);
     const propLine5 = throwsPropLine(skillDict, "Skills", skillNames, skillNames);
@@ -187,52 +186,56 @@ function loadMonster (monster) {
         topStats.appendChild(propLine5);
     }
 
-    //TO DO:
-    //damage vulnerabilities, resistances, immunities
-    const propLine6 = document.createElement("property-line");
-    const propLine7 = document.createElement("property-line");
-    const propLine8 = document.createElement("property-line");
-    const vulnHeader = createElement("h4", "Damage Vulnerabilities");
-    const resistHeader = createElement("h4", "Damage Resistances");
-    const immunHeader = createElement("h4", "Damage Immunities");
-    propLine6.appendChild(vulnHeader);
-    propLine7.appendChild(resistHeader);
-    propLine8.appendChild(immunHeader);
-    topStats.appendChild(propLine6);
-    topStats.appendChild(propLine7);
-    topStats.appendChild(propLine8);
+    //damage types, condition immunities, senses
+    const damageTypes = ["damage_vulnerabilities", "damage_resistances", "damage_immunities", "condition_immunities", "senses"];
+    for (type in damageTypes) {
+        let d = damageTypes[type];
 
-    //condition immunities
-    const propLine9 = document.createElement("property-line");
-    const conditionHeader = createElement("h4", "Condition Immunities");
-    propLine9.appendChild(conditionHeader);
-    topStats.appendChild(propLine9);
+        let damageNameArr = d.split("_");
+        let damageName = "";
+        for (i in damageNameArr) {
+            let dName = damageNameArr[i];
+            damageName += dName[0].toUpperCase() + dName.slice(1) + " ";
+        }
 
-    //senses
-    const propLine10 = document.createElement("property-line");
-    const senseHeader = createElement("h4", "Senses");
-    propLine10.appendChild(senseHeader);
-    topStats.appendChild(propLine10);
+        if (monster[d] != "") {
+            let propLine6 = document.createElement("property-line");
+            const header = createElement("h4", damageName);
+            const desc = createElement("p", monster[d]);
+            propLine6.appendChild(header);
+            propLine6.appendChild(desc);
+            topStats.appendChild(propLine6);
+        }
+    }
 
     //languages
-    const propLine11 = document.createElement("property-line");
+    const propLine7 = document.createElement("property-line");
     const languageHeader = createElement("h4", "Languages");
     let languageDesc = ` ${monster.languages}`;
     if (languageDesc == " ") {
         languageDesc = " —";
     }
     const languages = createElement("p", languageDesc);
-    propLine11.appendChild(languageHeader);
-    propLine11.appendChild(languages);
-    topStats.appendChild(propLine11);
+    propLine7.appendChild(languageHeader);
+    propLine7.appendChild(languages);
+    topStats.appendChild(propLine7);
 
     //cr
-    const propLine12 = document.createElement("property-line");
+    const propLine8 = document.createElement("property-line");
     const challengeHeader = createElement("h4", "Challenge");
-    propLine12.appendChild(challengeHeader);
-    topStats.appendChild(propLine12);
-    //NOTE: THIS IS THE END OF TOP-STATS
+    const xpDict = {"0": "10", "1/8": "25", "1/4": "50", "1/2": "100", "1": "200", "2": "450", "3": "700", "4": "1,100", "5": "1,800", 
+        "6": "2,300", "7": "2,900", "8": "3,900", "9": "5,000", "10": "5,900", "11": "7,200", "12": "8,400", "13": "10,000", 
+        "14": "11,500", "15": "13,000", "16": "15,000", "17": "18,000", "18": "20,000", "19": "22,000", "20": "25,000",
+        "21": "33,000", "22": "41,000", "23": "50,000", "24": "62,000", "25": "75,000", "26": "90,000", "27": "105,000",
+        "28": "120,000", "29": "135,000", "30": "155,000"
+    };
+    const challenge = ` ${monster.challenge_rating} (${xpDict[monster.challenge_rating]} XP)`;
+    const challengeDesc = createElement("p", challenge);
+    propLine8.appendChild(challengeHeader);
+    propLine8.appendChild(challengeDesc);
+    topStats.appendChild(propLine8);
 
+    //TO DO (NO LONGER TOP STATS):
     //special abilities (property-block)
 
     //actions
