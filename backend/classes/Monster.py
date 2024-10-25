@@ -1,7 +1,8 @@
 class Monster():
     
 
-    def __init__(self, name, ac, hp, speeds, stats, saves, vulnerabilities, resistances, immunities, actions, cr):
+    def __init__(self, slug, name, ac, hp, speeds, stats, saves, vulnerabilities, resistances, immunities, actions, cr):
+        self.slug = slug
         self.name = name
         self.ac = ac
         self.hp = hp
@@ -20,9 +21,3 @@ class Monster():
         points += hp
         if (ac >= 10):points = int( float(points) * (1 + (ac-10)/10))
         #add speeds in later
-        stats
-
-
-
-
-

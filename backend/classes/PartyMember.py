@@ -8,7 +8,7 @@ class PartyMember():
     def __init__(self, health, theClass, level):
         self.health = health
         self.theClass = theClass
-        self.healer = false
+        self.healer = False
         self.spellcaster = False
         self.dmg = 0
         self.dmgMax =0
@@ -47,7 +47,7 @@ class PartyMember():
                     multiattack = 2
                 self.dmg = multiattack * (4 + (((level+1)//3)*5))           #divine smite dmg calculations(number of attacks *(attack modifier + highest spell level * dmg dice averages))
 
-            elif(theClass == "Ranger"):
+            elif(theClass == "ranger"):
                 multiattack = 1
                 hunterMark = 3
                 statAdd = 4 #stand in for dex to add to attack rolls + dmg
