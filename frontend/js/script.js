@@ -193,7 +193,13 @@ function loadMonster (monster) {
     //languages
     const propLine11 = document.createElement("property-line");
     const languageHeader = createElement("h4", "Languages");
+    const languageDesc = `${monster.languages}`;
+    if(languageDesc == "") {
+        languageDesc = "—";
+    }
+    const languages = createElement("p", languageDesc);
     propLine11.appendChild(languageHeader);
+    propLine11.appendChild(languages);
     topStats.appendChild(propLine11);
 
     //cr
