@@ -266,6 +266,7 @@ function loadMonster (monster) {
     let actions = [];
     const actionHeader = createElement("h3", "Actions");
     if(monster.actions != null && monster.actions != []){
+        statBlock.appendChild(actionHeader);
         for(i in monster.actions){
             const actionProp = document.createElement("property-block");
             const prop = monster.actions[i];
@@ -278,25 +279,70 @@ function loadMonster (monster) {
             actions.push(actionProp);
         }
         for(i in actions){
-            actionHeader.appendChild(actions[i]);
+            statBlock.appendChild(actions[i]);
         }
-        statBlock.appendChild(actionHeader);
     }
     
 
     //bonus actions 
+    let bonusactions = [];
     const bonusactionHeader = createElement("h3", "Bonus Actions")
     if(monster.bonus_actions != null && monster.bonus_actions != []){
+        /*for(i in monster.bonus_actions){
+            const bonusactionProp = document.createElement("property-block");
+            const prop = monster.bonusactions[i];
+            const name = createElement("h4", `${prop.name}. `);
+            bonusactionProp.appendChild(name);
+
+            const desc = createElement("p", `${prop.desc} `);
+            bonusactionProp.appendChild(desc);
+
+            bonusactions.push(bonusactionProp);
+        }
+        for(i in bonusactions){
+            bonusactionHeader.appendChild(bonusactions[i]);
+        }*/
         statBlock.appendChild(bonusactionHeader);
     }
+
     //reactions
+    let reactions = [];
     const reactionHeader = createElement("h3", "Reactions");
     if(monster.reactions != null && monster.reactions != []){
+        /*for(i in monster.reactions){
+            const reactionProp = document.createElement("property-block");
+            const prop = monster.reactions[i];
+            const name = createElement("h4", `${prop.name}. `);
+            reactionProp.appendChild(name);
+
+            const desc = createElement("p", `${prop.desc} `);
+            reactionProp.appendChild(desc);
+
+            reactions.push(reactionProp);
+        }
+        for(i in reactions){
+            reactionHeader.appendChild(reactions[i]);
+        }*/
         statBlock.appendChild(reactionHeader);
     }
+
     //legendary actions
     const legactionHeader = createElement("h3", "Legendary Actions");
     if(monster.legendary_actions != null && monster.legendary_actions != []){
+        /*for(i in monster.legendary_actions){
+            const legactionProp = document.createElement("property-block");
+            const prop = monster.bonusactions[i];
+            const name = createElement("h4", `${prop.name}. `);
+            bonusactionProp.appendChild(name);
+
+            const desc = createElement("p", `${prop.desc} `);
+            bonusactionProp.appendChild(desc);
+
+            bonusactions.push(bonusactionProp);
+        }
+        for(i in bonusactions){
+            bonusactionHeader.appendChild(bonusactions[i]);
+        }*/
         statBlock.appendChild(legactionHeader);
     }
 
