@@ -13,6 +13,7 @@ function getModifier (score) {
     return Math.floor((score - 10) / 2);
 }
 
+// Creates statDivs for usage in createStats (cuts down on appending)
 function createStatDiv (name, value) {
     const statDiv = document.createElement("div");
     statDiv.appendChild(createPar(name));
@@ -64,6 +65,7 @@ function getHP (monsterSize, numDice, constMod) {
     }
 }
 
+//creates the creature heading
 function createCreatureHeading(monster) {
     const creatureHeading = document.createElement("creature-heading");
     const name = createElement("h1", monster.name);
@@ -74,16 +76,7 @@ function createCreatureHeading(monster) {
     return creatureHeading
 }
 
-function createCreatureHeading(monster) {
-    const creatureHeading = document.createElement("creature-heading");
-    const name = createElement("h1", monster.name);
-    const sizeType = createElement("h2", `${monster.size} ${monster.type}, ${monster.alignment}`);
-    creatureHeading.appendChild(name);
-    creatureHeading.appendChild(sizeType);
-
-    return creatureHeading
-}
-
+//creates a PropLine used for saving throws & skills
 function throwsPropLine(monster, name, keys, printKeys) {
     let throws = "";
     let throwsPropLine = null;
@@ -118,6 +111,27 @@ function throwsPropLine(monster, name, keys, printKeys) {
     return throwsPropLine;
 }
 
+//Used for implementing property blocks w/ the input of a monster category (ex: monster.actions)
+//and statBlock (for appendChild)
+function makePropBlock(category, statBlock){
+    //names are based off monster.actions (hence "actions"), works w/ other categories.
+    let actions = [];
+    for(i in category){
+            const actionProp = document.createElement("property-block");
+            const prop = category[i];
+            const name = createElement("h4", `${prop.name}. `);
+            actionProp.appendChild(name);
+
+            const desc = createElement("p", `${prop.desc} `);
+            actionProp.appendChild(desc);
+
+            actions.push(actionProp);
+        }
+        for(i in actions){
+            statBlock.appendChild(actions[i]);
+        }
+    return;
+}
 // Creates a div containing moster information and adds it to the monster display div
 function loadMonster (monster) {
     //create statblock variable
@@ -238,18 +252,43 @@ function loadMonster (monster) {
     propLine8.appendChild(challengeDesc);
     topStats.appendChild(propLine8);
 
-    //TO DO (NO LONGER TOP STATS):
-    //special abilities (property-block)
-
-    //actions
-
-    //bonus actions
-
-    //legendary actions
-
-    //appending blocks to statBlock
     statBlock.appendChild(creatureHeading);
     statBlock.appendChild(topStats);
+    //End of topstats, below are all property-blocks
+    
+    //special abilities
+    if (monster.special_abilities != null && monster.special_abilities != []) {
+        makePropBlock(monster.special_abilities, statBlock)
+    }
+
+    //actions
+    const actionHeader = createElement("h3", "Actions");
+    if(monster.actions != null && monster.actions != []){
+        statBlock.appendChild(actionHeader);
+        makePropBlock(monster.actions, statBlock)
+    }
+    
+
+    //bonus actions 
+    const bonusactionHeader = createElement("h3", "Bonus Actions")
+    if(monster.bonus_actions != null && monster.bonus_actions != []){
+        statBlock.appendChild(bonusactionHeader);
+        makePropBlock(monster.bonus_actions, statBlock)
+    }
+
+    //reactions
+    const reactionHeader = createElement("h3", "Reactions");
+    if(monster.reactions != null && monster.reactions != []){
+        statBlock.appendChild(reactionHeader);
+        makePropBlock(monster.reactions, statBlock)
+    }
+
+    //legendary actions
+    const legactionHeader = createElement("h3", "Legendary Actions");
+    if(monster.legendary_actions != null && monster.legendary_actions != []){
+        statBlock.appendChild(legactionHeader);
+        makePropBlock(monster.legendary_actions, statBlock)
+    }
 
     const monsterDisplay = document.querySelector(".monster-display");
     monsterDisplay.innerHTML = "";
