@@ -10,6 +10,7 @@ function getModifier (score) {
     return Math.floor((score - 10) / 2);
 }
 
+// Creates statDivs for usage in createStats (cuts down on appending)
 function createStatDiv (name, value) {
     const statDiv = document.createElement("div");
     statDiv.appendChild(createPar(name));
@@ -61,6 +62,7 @@ function getHP (monsterSize, numDice, constMod) {
     }
 }
 
+//creates the creature heading
 function createCreatureHeading(monster) {
     const creatureHeading = document.createElement("creature-heading");
     const name = createElement("h1", monster.name);
@@ -71,16 +73,7 @@ function createCreatureHeading(monster) {
     return creatureHeading
 }
 
-function createCreatureHeading(monster) {
-    const creatureHeading = document.createElement("creature-heading");
-    const name = createElement("h1", monster.name);
-    const sizeType = createElement("h2", `${monster.size} ${monster.type}, ${monster.alignment}`);
-    creatureHeading.appendChild(name);
-    creatureHeading.appendChild(sizeType);
-
-    return creatureHeading
-}
-
+//creates a PropLine used for saving throws & skills
 function throwsPropLine(monster, name, keys, printKeys) {
     let throws = "";
     let throwsPropLine = null;
@@ -115,7 +108,10 @@ function throwsPropLine(monster, name, keys, printKeys) {
     return throwsPropLine;
 }
 
+//Used for implementing property blocks w/ the input of a monster category (ex: monster.actions)
+//and statBlock (for appendChild)
 function makePropBlock(category, statBlock){
+    //names are based off monster.actions (hence "actions"), works w/ other categories.
     let actions = [];
     for(i in category){
             const actionProp = document.createElement("property-block");
@@ -255,9 +251,9 @@ function loadMonster (monster) {
 
     statBlock.appendChild(creatureHeading);
     statBlock.appendChild(topStats);
-
-    //NO LONGER TOPSTATS
-    //special abilities (property-block)
+    //End of topstats, below are all property-blocks
+    
+    //special abilities
     if (monster.special_abilities != null && monster.special_abilities != []) {
         makePropBlock(monster.special_abilities, statBlock)
     }
@@ -290,7 +286,6 @@ function loadMonster (monster) {
         statBlock.appendChild(legactionHeader);
         makePropBlock(monster.legendary_actions, statBlock)
     }
-
 
     const monsterDisplay = document.querySelector(".monster-display");
     monsterDisplay.innerHTML = "";
