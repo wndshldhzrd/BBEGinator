@@ -115,6 +115,23 @@ function throwsPropLine(monster, name, keys, printKeys) {
     return throwsPropLine;
 }
 
+function makePropBlock(category, statBlock){
+    for(i in category){
+            const actionProp = document.createElement("property-block");
+            const prop = category[i];
+            const name = createElement("h4", `${prop.name}. `);
+            actionProp.appendChild(name);
+
+            const desc = createElement("p", `${prop.desc} `);
+            actionProp.appendChild(desc);
+
+            actions.push(actionProp);
+        }
+        for(i in actions){
+            statBlock.appendChild(actions[i]);
+        }
+    return;
+}
 // Creates a div containing moster information and adds it to the monster display div
 function loadMonster (monster) {
     //create statblock variable
@@ -267,7 +284,8 @@ function loadMonster (monster) {
     const actionHeader = createElement("h3", "Actions");
     if(monster.actions != null && monster.actions != []){
         statBlock.appendChild(actionHeader);
-        for(i in monster.actions){
+        makePropBlock(monster.actions, statBlock)
+        /*for(i in monster.actions){
             const actionProp = document.createElement("property-block");
             const prop = monster.actions[i];
             const name = createElement("h4", `${prop.name}. `);
@@ -280,7 +298,7 @@ function loadMonster (monster) {
         }
         for(i in actions){
             statBlock.appendChild(actions[i]);
-        }
+        }*/
     }
     
 
