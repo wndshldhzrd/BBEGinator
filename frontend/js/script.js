@@ -237,8 +237,28 @@ function loadMonster (monster) {
 
     statBlock.appendChild(creatureHeading);
     statBlock.appendChild(topStats);
+
     //TO DO (NO LONGER TOP STATS):
     //special abilities (property-block)
+    let specialProperties = [];
+    if (monster.special_abilities != null && monster.special_abilities != []) {
+        for (i in monster.special_abilities) {
+            const specialProp = document.createElement("property-block");
+            const prop = monster.special_abilities[i];
+
+            const name = createElement("h4", `${prop.name}. `);
+            specialProp.appendChild(name);
+
+            const desc = createElement("p", `${prop.desc} `);
+            specialProp.appendChild(desc);
+
+            specialProperties.push(specialProp);
+        }
+    }
+
+    for (i in specialProperties) {
+        statBlock.appendChild(specialProperties[i]);
+    }
 
     //actions
     const actionHeader = createElement("h3", "Actions");
