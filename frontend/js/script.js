@@ -235,18 +235,39 @@ function loadMonster (monster) {
     propLine8.appendChild(challengeDesc);
     topStats.appendChild(propLine8);
 
+    statBlock.appendChild(creatureHeading);
+    statBlock.appendChild(topStats);
     //TO DO (NO LONGER TOP STATS):
     //special abilities (property-block)
 
     //actions
+    const actionHeader = createElement("h3", "Actions");
+    if(monster.actions != null && monster.actions != []){
+        statBlock.appendChild(actionHeader);
+    }
+    //const actionDict = monster.actions;
+    //const actionNames = Object.keys(actionDict);
+    //const propLine5 = throwsPropLine(skillDict, "Skills", skillNames, skillNames);
+    //if (propLine5 != null) {
+    //    topStats.appendChild(propLine5);
+    //}
 
-    //bonus actions
-
+    //bonus actions 
+    const bonusactionHeader = createElement("h3", "Bonus Actions")
+    if(monster.bonus_actions != null && monster.bonus_actions != []){
+        statBlock.appendChild(bonusactionHeader);
+    }
+    //reactions
+    const reactionHeader = createElement("h3", "Reactions");
+    if(monster.reactions != null && monster.reactions != []){
+        statBlock.appendChild(reactionHeader);
+    }
     //legendary actions
+    const legactionHeader = createElement("h3", "Legendary Actions");
+    if(monster.legendary_actions != null && monster.legendary_actions != []){
+        statBlock.appendChild(legactionHeader);
+    }
 
-    //appending blocks to statBlock
-    statBlock.appendChild(creatureHeading);
-    statBlock.appendChild(topStats);
 
     const monsterDisplay = document.querySelector(".monster-display");
     monsterDisplay.innerHTML = "";
