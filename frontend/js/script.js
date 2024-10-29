@@ -258,111 +258,37 @@ function loadMonster (monster) {
 
     //NO LONGER TOPSTATS
     //special abilities (property-block)
-    let specialProperties = [];
     if (monster.special_abilities != null && monster.special_abilities != []) {
-        for (i in monster.special_abilities) {
-            const specialProp = document.createElement("property-block");
-            const prop = monster.special_abilities[i];
-
-            const name = createElement("h4", `${prop.name}. `);
-            specialProp.appendChild(name);
-
-            const desc = createElement("p", `${prop.desc} `);
-            specialProp.appendChild(desc);
-
-            specialProperties.push(specialProp);
-        }
+        makePropBlock(monster.special_abilities, statBlock)
     }
 
-    for (i in specialProperties) {
-        statBlock.appendChild(specialProperties[i]);
-    }
-
-    //note: can prob be turned into a func, unsure how element name stuff works in function form though.
-    //will work on that if these work
     //actions
-    let actions = [];
     const actionHeader = createElement("h3", "Actions");
     if(monster.actions != null && monster.actions != []){
         statBlock.appendChild(actionHeader);
         makePropBlock(monster.actions, statBlock)
-        /*for(i in monster.actions){
-            const actionProp = document.createElement("property-block");
-            const prop = monster.actions[i];
-            const name = createElement("h4", `${prop.name}. `);
-            actionProp.appendChild(name);
-
-            const desc = createElement("p", `${prop.desc} `);
-            actionProp.appendChild(desc);
-
-            actions.push(actionProp);
-        }
-        for(i in actions){
-            statBlock.appendChild(actions[i]);
-        }*/
     }
     
 
     //bonus actions 
-    let bonusactions = [];
     const bonusactionHeader = createElement("h3", "Bonus Actions")
     if(monster.bonus_actions != null && monster.bonus_actions != []){
-        /*for(i in monster.bonus_actions){
-            const bonusactionProp = document.createElement("property-block");
-            const prop = monster.bonusactions[i];
-            const name = createElement("h4", `${prop.name}. `);
-            bonusactionProp.appendChild(name);
-
-            const desc = createElement("p", `${prop.desc} `);
-            bonusactionProp.appendChild(desc);
-
-            bonusactions.push(bonusactionProp);
-        }
-        for(i in bonusactions){
-            bonusactionHeader.appendChild(bonusactions[i]);
-        }*/
         statBlock.appendChild(bonusactionHeader);
+        makePropBlock(monster.bonus_actions, statBlock)
     }
 
     //reactions
-    let reactions = [];
     const reactionHeader = createElement("h3", "Reactions");
     if(monster.reactions != null && monster.reactions != []){
-        /*for(i in monster.reactions){
-            const reactionProp = document.createElement("property-block");
-            const prop = monster.reactions[i];
-            const name = createElement("h4", `${prop.name}. `);
-            reactionProp.appendChild(name);
-
-            const desc = createElement("p", `${prop.desc} `);
-            reactionProp.appendChild(desc);
-
-            reactions.push(reactionProp);
-        }
-        for(i in reactions){
-            reactionHeader.appendChild(reactions[i]);
-        }*/
         statBlock.appendChild(reactionHeader);
+        makePropBlock(monster.reactions, statBlock)
     }
 
     //legendary actions
     const legactionHeader = createElement("h3", "Legendary Actions");
     if(monster.legendary_actions != null && monster.legendary_actions != []){
-        /*for(i in monster.legendary_actions){
-            const legactionProp = document.createElement("property-block");
-            const prop = monster.bonusactions[i];
-            const name = createElement("h4", `${prop.name}. `);
-            bonusactionProp.appendChild(name);
-
-            const desc = createElement("p", `${prop.desc} `);
-            bonusactionProp.appendChild(desc);
-
-            bonusactions.push(bonusactionProp);
-        }
-        for(i in bonusactions){
-            bonusactionHeader.appendChild(bonusactions[i]);
-        }*/
         statBlock.appendChild(legactionHeader);
+        makePropBlock(monster.legendary_actions, statBlock)
     }
 
 
