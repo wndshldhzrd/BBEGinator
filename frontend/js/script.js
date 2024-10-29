@@ -116,6 +116,7 @@ function throwsPropLine(monster, name, keys, printKeys) {
 }
 
 function makePropBlock(category, statBlock){
+    let actions = [];
     for(i in category){
             const actionProp = document.createElement("property-block");
             const prop = category[i];
