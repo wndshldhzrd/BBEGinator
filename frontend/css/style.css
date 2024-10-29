@@ -2,11 +2,47 @@
     margin: 0;
     padding: 0;
     border: 0;
-}
+} 
 
 body {
     font-family: roboto, sans-serif;
-    background-color: lightgoldenrodyellow;
+    background-color: #f5f2ed;
+}
+
+.header {
+    background-color: #d11149;
+    border-bottom: 1px;
+    font-size: 50px;
+    border-style: solid;
+    padding: 30px;
+}
+
+hr{
+    width: 95%;
+    height: 3px;
+    background-color: #0a0757;
+    margin-bottom: 10px;
+    margin-top: 20px;
+}
+
+.menu{
+    width: 230px;
+    background-color: #eee1cc;
+    text-align: center;
+    font-size: 38px;
+    font-weight: 550;
+    color: #0a0757;
+    float: left;
+    padding-bottom: 4%;
+    padding-top: 3%;
+    min-height: 100%;
+    position: sticky;
+    top: 0px;
+}
+
+a:link{
+    color: #0a0757;
+    text-decoration: none;
 }
 
 .monster-display{
@@ -14,33 +50,18 @@ body {
     padding: 0p 1em 1em;
 }
 
-hr {
-    margin: 2px 0;
-    border: solid 1px;
+/* General */
+.title{
+    color: #0a0757;
+    padding: 10px 0px 10px 0px;
+    font-size: 40px;
 }
 
-.header {
-    background-image: linear-gradient(to right, red, darkred, darkred, darkred);
-    border-bottom: 1px;
-    font-size: large;
-    border-style: solid;
+.flavor-Text{
+    color: #d11149;
 }
 
-.header img {
-    max-height: 100px;
-}
-
-.header ul {
-    display: flex;
-    align-items: center;
-    list-style: none;
-}
-
-.nav-bar{
-    font: 500;
-    background-color: lightgoldenrodyellow;
-}
-
+/* other? */
 #inputs{
     width: 50%;
     height:100%;
