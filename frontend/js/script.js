@@ -238,7 +238,7 @@ function loadMonster (monster) {
     statBlock.appendChild(creatureHeading);
     statBlock.appendChild(topStats);
 
-    //TO DO (NO LONGER TOP STATS):
+    //NO LONGER TOPSTATS
     //special abilities (property-block)
     let specialProperties = [];
     if (monster.special_abilities != null && monster.special_abilities != []) {
@@ -260,17 +260,29 @@ function loadMonster (monster) {
         statBlock.appendChild(specialProperties[i]);
     }
 
+    //note: can prob be turned into a func, unsure how element name stuff works in function form though.
+    //will work on that if these work
     //actions
+    let actions = [];
     const actionHeader = createElement("h3", "Actions");
     if(monster.actions != null && monster.actions != []){
+        for(i in monster.actions){
+            const actionProp = document.createElement("property-block");
+            const prop = monster.actions[i];
+            const name = createElement("h4", `${prop.name}. `);
+            actionProp.appendChild(name);
+
+            const desc = createElement("p", `${prop.desc} `);
+            actionProp.appendChild(desc);
+
+            actions.push(actionProp);
+        }
+        for(i in actions){
+            actionHeader.appendChild(actions[i]);
+        }
         statBlock.appendChild(actionHeader);
     }
-    //const actionDict = monster.actions;
-    //const actionNames = Object.keys(actionDict);
-    //const propLine5 = throwsPropLine(skillDict, "Skills", skillNames, skillNames);
-    //if (propLine5 != null) {
-    //    topStats.appendChild(propLine5);
-    //}
+    
 
     //bonus actions 
     const bonusactionHeader = createElement("h3", "Bonus Actions")
