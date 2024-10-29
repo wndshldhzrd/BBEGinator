@@ -1,3 +1,6 @@
+//TODO: SPLIT FUNCTIONS ACROSS MULTIPLE JS FILES TO AVOID THE 400 LINE SPAGHETTI MONSTER FILE
+
+
 // Easier way to create an element when loading a monster
 function createElement (type, text) {
     const newEle = document.createElement(type);
@@ -253,7 +256,79 @@ function loadMonster (monster) {
     monsterDisplay.appendChild(statBlock);
 }
 
-//eventually move api calls into their own file??
+
+//variable which keeps track of how many players the page is currently displaying
+var players = [];
+
+//function for adding a player to the recommendMonster page
+function addPlayer() {
+
+    //getting the div which players are added to
+    var playerStatBlockDisplay = document.getElementById("playerStatBlocks");
+
+    //creating our player stat block to be added to the page
+    var playerStatBlock = document.createElement("div");
+
+    //adding our player element to the list of player elements
+    players.push(playerStatBlock)
+
+    //setting the inner html of the player statblock
+    //ideally refactor into an html template page, but good enough for now
+    playerStatBlock.innerHTML =
+    `<div class="playerInput">
+        <label class="playerName">Player ${players.length}</label><br>
+        <hr>
+        Class <select class="dropdown">
+            <option disabled="" selected="" value=""></option> 
+            <option value="barbarian">Barbarian</option>      
+            <option value="bard">Bard</option>
+            <option value="cleric">Cleric</option>
+            <option value="druid">Druid</option>
+            <option value="fighter">Fighter</option>
+            <option value="monk">Monk</option>
+            <option value="paladin">Paladin</option>
+            <option value="ranger">Ranger</option>
+            <option value="rogue">Rogue</option>
+            <option value="sorcerer">Sorcerer</option>
+            <option value="wizard">Wizard</option>
+            <option value="warlock">Warlock</option>
+        </select>
+        <br>
+        Level <input class="stat-Input" type="number" min="1" value="1">
+        <br>
+        Hp <input class="stat-Input" id="playerHealth" type="number" min="1" value="1">
+    </div>`;
+
+    //displaying our player on the page
+    playerStatBlockDisplay.appendChild(playerStatBlock);
+
+    toggleRemovePlayerButton();
+}
+
+function removePlayer() {
+
+    //grabbing all of our player stat blocks
+    var playerStatBlocks = document.getElementsByClassName("playerInput");
+
+    //removing the last one
+    playerStatBlocks[players.length-1].remove();
+
+    //removing the player element from our array
+    players.pop();
+
+    toggleRemovePlayerButton();
+}
+
+//determining whether to hide/show our remove player button
+function toggleRemovePlayerButton() {
+    if (players.length > 1) {
+        document.getElementById("removePlayer").style.display= "inline-block";
+    }
+    else {
+        document.getElementById("removePlayer").style.display= "none";
+    }
+}
+
 
 //Function which takes in various parameters and then gets a json of all
 //monsters that match that criteria
@@ -302,21 +377,19 @@ function searchMonster() {
     })
 }
 
-//Function which takes in a list of up to 10 players and gets a list of recommended monsters
-//for them to fight
+//Function which takes in all the currently inputted player data sends
+//it as an api call to our back end and then displays a recommended monster
+//based off of the stats of the party
 function getRecommendedMonster() {
 
     //initializing our JSON
     payload = {}
-    
-    //getting our list of players
-    playerList = document.getElementsByClassName("playerInput");
 
     //looping through each player and getting the values
-    for(let i = 0; i < playerList.length; i++) {
+    for(let i = 0; i < players.length; i++) {
 
         //ignore the ugly grabbing this was the easiest solution I could think of
-        playerData = playerList[i];
+        playerData = players[i];
         playerClass = playerData.getElementsByClassName("dropdown")[0].value
         playerLevel = playerData.getElementsByClassName("stat-Input")[0].value
         playerHealth = playerData.getElementsByClassName("stat-Input")[1].value
@@ -337,7 +410,7 @@ function getRecommendedMonster() {
     }
 
     //adding a terminating player so backend knows when to stop parsing players
-    payload["p" + playerList.length] = "0"
+    payload["p" + players.length] = "0"
 
 
     //testing to ensure that parameters are being passed correctly
@@ -368,7 +441,7 @@ async function fetchMonster(monsterName) {
 }
 
 //James this is terrible practice im going to kill you
-createMonsterButton.addEventListener("click", () => {
+/*createMonsterButton.addEventListener("click", () => {
     fetchMonster("goat");
-})
+})*/
 
