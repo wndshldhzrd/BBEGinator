@@ -2,3 +2,4 @@
 /backend/app/__pycache__
 *.pyc
 backend/data.json
+backend/output.json
