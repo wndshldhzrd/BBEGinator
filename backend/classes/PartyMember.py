@@ -4,9 +4,13 @@ from audioop import mul
 spellcasters = {"wizard", "sorcerer", "bard", "cleric", "druid"}
 healers = {"cleric", "druid", "paladin"}
 
+#class was stored as tuple?
+
+
 class PartyMember():
     health = 1
     theClass = 0
+    #for each class run this and +=
     def __init__(self, health, theClass, level):
         self.health = health
         self.theClass = theClass

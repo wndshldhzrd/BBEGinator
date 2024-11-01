@@ -61,12 +61,13 @@ def monsterReader(JSON):
                  "int": monster["sthrows"].get("int"),
                  "wis": monster["sthrows"].get("wis"),
                  "cha": monster["sthrows"].get("cha")}
-        vulnerabilities = monster["vulnerabilities"]
-        resistances = monster["resistances"]
-        immunities = monster["immunities"]
+        vulnerabilities = monster["damage_vulnerabilities"]
+        resistances = monster["damage_resistances"]
+        immunities = monster["damage_immunities"]
+        abilities = monster["abilities"]
         actions = monster["actions"]
         
-        monsterDatabase.append()
+        monsterDatabase.append(Monster(slug,name, ac, hp, speeds, stats, saves, vulnerabilities, resistances, immunities, actions, abilities))
 
         return monsterDatabase
 
@@ -232,4 +233,4 @@ for x, y in database.items():
     monsterList.append((y.points, x))
 
 
-monsterList = Algorithm(party, EncounterType.MEDIUM, database.items(), None, 4, "bossBalanced")
+monsterList = Algorithm(party, EncounterType.MEDIUM, database.items(), None, 4, "boss")
