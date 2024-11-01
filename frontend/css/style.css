@@ -66,14 +66,13 @@ a:link{
 }
 
 /* other? */
-#inputs{
-    height:100%;
-    float: left;
-}
 
 button {
     padding: 0.5em;
     border: solid 1px;
+    background-color: #d11149;
+    color:rgb(230, 230, 230);
+    border-radius: 5px;
 }
 
 .dropdown{
