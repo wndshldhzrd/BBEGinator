@@ -122,28 +122,29 @@
                 <td><input class = "stat-Input" id = "crMax"  type = "number" min = "1" max = "30" value = 30></td>
               </tr>
             </table> 
-            <button onclick="searchMonster();">Search for monster!</button>
+            <button onclick="searchMonster();">SEARCH FOR MONSTER!</button>
             </div>
-            <div id = "resultsBorder" style = "width: 50%">
-              Results
+            <div style = "font-size: 30px; color: #d11149">Results
               <select class = "dropdown" id="Sort-dropdown">
+                <option value="name">Name </option>
                 <option value="size">Size </option>
                 <option value="type">Type</option>
                 <option value="alignment">Alignment</option>
                 <option value="ac">Armor Class</option>
                 <option value="hp">Hit Points</option>
                 <option value="spd">Speed</option>
-                <option value="str">Constitution</option>
+                <option value="str">Strength</option>
                 <option value="dex">Dexerity</option>
                 <option value="con">Constitution</option>
-                <option value="int">Intellignece</option>
+                <option value="int">Intelligence</option>
                 <option value="wis">Wisdom</option>
                 <option value="cha">Charisma</option>
               </select>
               <select class = "dropdown" id="Sort-style">
-                <option value="ascending">Ascending </option>
                 <option value="descending">Descending</option>
-              </select>
+                <option value="ascending">Ascending </option>
+              </select></div>
+            <div id = "resultsBorder">
               <div id = "results">this is where the results would go</div>
             </div>
       </div>

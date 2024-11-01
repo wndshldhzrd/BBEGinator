@@ -9,6 +9,7 @@ body {
     margin: 0;
     padding: 0;
     border: 0;
+    height: 100%;
     font-family: roboto, sans-serif;
     background-color: #f5f2ed;
 }
@@ -19,25 +20,33 @@ body {
     padding: 30px;
 }
 
-hr{
+.menu hr{
     width: 95%;
     height: 3px;
     background-color: #0a0757;
     margin: 0;
 }
 
+.menu a {
+    padding: 20px 10px;
+}
+
 .menu{
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 250px;
+    max-width: 300px;
     background-color: #eee1cc;
     text-align: center;
     font-size: 38px;
-    font-weight: 550;
+    font-weight: 850;
     color: #0a0757;
-    padding-bottom: 4%;
-    min-height: 100%;
+    height: 100vh;
+
+    /* Sticking to side */
+    position: sticky;
+    z-index: 1;
+    top: 0;
 }
 
 a:link{
@@ -48,10 +57,6 @@ a:link{
 .monster-display{
     border:  solid 2px;
     padding: 0p 1em 1em;
-}
-
-.menu a {
-    padding: 20px 10px;
 }
 
 /* General */
@@ -66,14 +71,13 @@ a:link{
 }
 
 /* other? */
-#inputs{
-    height:100%;
-    float: left;
-}
 
 button {
     padding: 0.5em;
     border: solid 1px;
+    background-color: #d11149;
+    color:rgb(230, 230, 230);
+    border-radius: 5px;
 }
 
 .dropdown{
@@ -120,6 +124,7 @@ button {
 }
 
 .main {
+    height: 100%;
     display: flex;
 }
 
