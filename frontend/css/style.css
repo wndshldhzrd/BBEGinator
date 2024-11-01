@@ -1,9 +1,15 @@
+/* Reset of margin/padding/border. Good practice to use, may or may not use
+   is as it conflicts with creating monster cards. Cool if we can do later,
+   no big deal if we don't get to it */
 /* * {
     margin: 0;
     padding: 0;
     border: 0;
 } */
 
+/* 
+    Basic elements 
+*/
 
 body {
     margin: 0;
@@ -14,22 +20,41 @@ body {
     background-color: #f5f2ed;
 }
 
+a:link{
+    color: #0a0757;
+    text-decoration: none;
+}
+
+button {
+    padding: 0.5em;
+    border: solid 1px;
+    background-color: #d11149;
+    color:rgb(230, 230, 230);
+    border-radius: 5px;
+}
+
+/*
+    Header
+*/
+
 .header {
     background-color: #d11149;
     font-size: 50px;
     padding: 30px;
 }
 
-.menu hr{
-    width: 95%;
-    height: 3px;
-    background-color: #0a0757;
-    margin: 0;
+/*
+    Main, contains menu and content
+*/
+
+.main {
+    height: 100%;
+    display: flex;
 }
 
-.menu a {
-    padding: 20px 10px;
-}
+/*
+    Menu
+*/
 
 .menu{
     display: flex;
@@ -49,62 +74,63 @@ body {
     top: 0;
 }
 
-a:link{
-    color: #0a0757;
-    text-decoration: none;
+.menu hr{
+    width: 95%;
+    height: 3px;
+    background-color: #0a0757;
+    margin: 0;
 }
 
-.monster-display{
-    border:  solid 2px;
-    padding: 0p 1em 1em;
+.menu a {
+    padding: 20px 10px;
 }
 
-/* General */
-.title{
+/*
+    Content
+*/
+
+.content {
+    margin: 0px;
+    padding: 10px;
+    padding-right: 0px;
+    width: 100%;
+}
+
+.content .title{
     color: #0a0757;
     font-size: 40px;
     padding-bottom: 10px;
 }
 
-.flavor-Text{
+.content .flavor-Text{
     color: #d11149;
 }
 
-/* other? */
-
-button {
-    padding: 0.5em;
-    border: solid 1px;
-    background-color: #d11149;
-    color:rgb(230, 230, 230);
-    border-radius: 5px;
-}
-
-.dropdown{
+.content .dropdown{
     background-color: rgb(230, 230, 230);
     outline-width: 1px;
     outline-style: solid;
     outline-color: black;
 }
 
-.stat-Input{
+.content .stat-Input{
     max-width: 40px;
     outline-width: 1px;
     outline-style: solid;
     outline-color: black;
 }
 
-.statInputTable{
+.content .statInputTable{
     text-align: center;
 }
 
-#resultsBorder{
+.content #resultsBorder{
     background-color: rgb(255, 80, 100);
     margin-left: 10px;
     float: left;
 }
 
-#results{
+.content #results{
     height: 500px;
     background-color: rgb(255, 123, 143);
     margin: 10px;
@@ -115,7 +141,7 @@ button {
     border-radius: 5px;
 }
 
-.playerInput{
+.content .playerInput{
     margin: 7px;
     background-color: blueviolet;
     border-style: solid;
@@ -123,14 +149,7 @@ button {
     padding: 1px;
 }
 
-.main {
-    height: 100%;
-    display: flex;
-}
-
-.content {
-    margin: 0px;
-    padding: 10px;
-    padding-right: 0px;
-    width: 100%;
+.content .monster-display{
+    border:  solid 2px;
+    padding: 0p 1em 1em;
 }
