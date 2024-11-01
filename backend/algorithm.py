@@ -79,6 +79,14 @@ class EncounterType(Enum):
     UNFAIR = 4
     # BULLSHIT
 
+def WordToNum(word):
+    if word == "one": return 1
+    elif word == "two": return 2
+    elif word == "three": return 3
+    elif word == "four": return 4
+    elif word == "five": return 5
+    else: return -69420
+
     #parses each monster from the mgetter and calulates its dmg/health ranges
 def Algorithm(party, difficulty, monsterList, lair, guys, mode):
     
@@ -104,8 +112,6 @@ def Algorithm(party, difficulty, monsterList, lair, guys, mode):
         totalDmg += p.dmg
         partyDmgMax += p.dmgMax
     
-    partyHealthAvg = totalHealth // len(party)
-    partyDmgAvg = totalDmg // len(party)
     partyDmgMaxAvg = partyDmgMax // len(party)
     
     points = (totalDmg+totalHealth+ (partyDmgMaxAvg/4)) * (float(difficulty.value) * (3 / 2))      #calculation for the point pool
