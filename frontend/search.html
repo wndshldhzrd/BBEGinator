@@ -9,140 +9,143 @@
 </head>
 <body>
     <div class="header">BBEGinator Logo</div>
-    <div class = "menu">
-      <a href="index.html">Home</a><hr>
-      <a href="search.html">Create Encounter</a><hr>
-      <a href="search.html">Search Monsters</a><hr>
-      <a href="reccMonsters.html">Reccomend Monsters</a><hr>
-      <a href="about.html">About</a>
-    </div>
 
-    <div class="content">
-      <div id = "inputs">
-        <label for="input-size">Size:</label>
-          <select class = "dropdown"  id="size-dropdown">      
-          <option value="unknown"></option>    
-          <option value="tiny">Tiny</option>
-          <option value="small">Small</option>
-          <option value="medium">Medium</option>
-          <option value="large">Large</option>
-          <option value="huge">Huge</option>
-          <option value="Gargantuan">Gargantuan</option>
-        </select>
-        <br>
-        <label for="input-type">Type:</label>
-        <select class = "dropdown" id="type-dropdown">        
-          <option value="unknown"></option>      
-          <option value="aberration">Aberration</option>
-          <option value="beast">Beast</option>
-          <option value="celestial">Celestial</option>
-          <option value="construct">Construct</option>
-          <option value="dragon">Dragon</option>
-          <option value="elemental">Elemental</option>
-          <option value="fey">Fey</option>
-          <option value="fiend">Fiend</option>
-          <option value="giant">Giant</option>
-          <option value="humanoid">Humanoid</option>
-          <option value="monstrosity">Monstrosity</option>
-          <option value="ooze">Ooze</option>
-          <option value="plant">Plant</option>
-          <option value="undead">Undead</option>
-        </select>
-        <br>
-        <label for="input-type">Alignment:</label>
-        <select class = "dropdown" id="alignmment-dropdown">        
-          <option value="unknow"></option>      
-          <option value="lawful good">Lawful Good</option>
-          <option value="neutral good">Neutral Good</option>
-          <option value="chaotic good">Chaotic Good</option>
-          <option value="lawful neutral">Lawful Neutral</option>
-          <option value="true neutral">True Neutral</option>
-          <option value="chaotic neutral">Chaotic Neutral</option>
-          <option value="lawful evil">Lawful Evil</option>
-          <option value="neutral evil">Neutral Evil</option>
-          <option value="chaotic evil">Chaotic Evil</option>
-        </select>
-    
-        <table class = "statInputTable">
-            <tr>
-              <th>Stat</th>
-              <th>Min</th>
-              <th>Max</th>
-            </tr>
-            <tr>
-              <td>&nbsp&nbsp AC &nbsp&nbsp</td>
-              <td><input class = "stat-Input" id = "acMin" type = "number" min = "0" value = 0></td>
-              <td><input class = "stat-Input" id = "acMax"  type = "number" min = "0" value = 100></td>
-            </tr>
-            <tr>
-              <td>HP</td>
-              <td><input class = "stat-Input" id = "hpMin" type = "number" min = "0" value = 0></td>
-              <td><input class = "stat-Input" id = "hpMax"  type = "number" min = "0" value = 676></td>
-            </tr>
-            <tr>
-              <td>Speed</td>
-              <td><input class = "stat-Input" id = "speedMin" type = "number" min = "0" value = 0></td>
-              <td><input class = "stat-Input" id = "speedMax"  type = "number" min = "0" value = 300></td>
-            </tr>
-            <tr>
-              <td>Str</td>
-              <td><input class = "stat-Input" id = "strMin" type = "number" min = "0" max = "30" value = 0></td>
-              <td><input class = "stat-Input" id = "strMax"  type = "number" min = "0" max = "30" value = 30></td>
-            </tr>
-            <tr>
-              <td>Dex</td>
-              <td><input class = "stat-Input" id = "dexMin"  type = "number" min = "0" max = "30" value = 0></td>
-              <td><input class = "stat-Input" id = "dexMax"  type = "number" min = "0" max = "30" value = 30></td>
-            </tr>
-            <tr>
-              <td>Con</td>
-              <td><input class = "stat-Input" id = "conMin"  type = "number" min = "0" max = "30" value = 0></td>
-              <td><input class = "stat-Input" id = "conMax"  type = "number" min = "0" max = "30" value = 30></td>
-            </tr>
-            <tr>
-              <td>Int</td>
-              <td><input class = "stat-Input" id = "intMin"  type = "number" min = "0" max = "30" value = 0></td>
-              <td><input class = "stat-Input" id = "intMax"  type = "number" min = "0" max = "30" value = 30></td>
-            </tr>
-            <tr>
-              <td>Wis</td>
-              <td><input class = "stat-Input" id = "wisMin"  type = "number" min = "0" max = "30" value = 0></td>
-              <td><input class = "stat-Input" id = "wisMax"  type = "number" min = "0" max = "30" value = 30> </td>
-            </tr>
-            <tr>
-              <td>Cha</td>
-              <td><input class = "stat-Input" id = "chaMin"  type = "number" min = "0" max = "30" value = 0></td>
-              <td><input class = "stat-Input" id = "chaMax"  type = "number" min = "0" max = "30" value = 30></td>
-            </tr><tr>
-              <td>CR</td>
-              <td><input class = "stat-Input" id = "crMin"  type = "number" min = "1" max = "30" value = 1></td>
-              <td><input class = "stat-Input" id = "crMax"  type = "number" min = "1" max = "30" value = 30></td>
-            </tr>
-          </table> 
-          <button onclick="searchMonster();">Search for monster!</button>
-          </div>
-          <div id = "resultsBorder" style = "width: 50%">
-            Results
-            <select class = "dropdown" id="Sort-dropdown">
-              <option value="size">Size </option>
-              <option value="type">Type</option>
-              <option value="alignment">Alignment</option>
-              <option value="ac">Armor Class</option>
-              <option value="hp">Hit Points</option>
-              <option value="spd">Speed</option>
-              <option value="str">Constitution</option>
-              <option value="dex">Dexerity</option>
-              <option value="con">Constitution</option>
-              <option value="int">Intellignece</option>
-              <option value="wis">Wisdom</option>
-              <option value="cha">Charisma</option>
-            </select>
-            <select class = "dropdown" id="Sort-style">
-              <option value="ascending">Ascending </option>
-              <option value="descending">Descending</option>
-            </select>
-            <div id = "results">this is where the results would go</div>
-          </div>
+    <div class="main">
+      <div class = "menu">
+        <a href="index.html">Home</a><hr>
+        <a href="search.html">Create Encounter</a><hr>
+        <a href="search.html">Search Monsters</a><hr>
+        <a href="reccMonsters.html">Reccomend Monsters</a><hr>
+        <a href="about.html">About</a>
+      </div>
+
+      <div class="content">
+        <div id = "inputs">
+          <label for="input-size">Size:</label>
+            <select class = "dropdown"  id="size-dropdown">      
+            <option value="unknown"></option>    
+            <option value="tiny">Tiny</option>
+            <option value="small">Small</option>
+            <option value="medium">Medium</option>
+            <option value="large">Large</option>
+            <option value="huge">Huge</option>
+            <option value="Gargantuan">Gargantuan</option>
+          </select>
+          <br>
+          <label for="input-type">Type:</label>
+          <select class = "dropdown" id="type-dropdown">        
+            <option value="unknown"></option>      
+            <option value="aberration">Aberration</option>
+            <option value="beast">Beast</option>
+            <option value="celestial">Celestial</option>
+            <option value="construct">Construct</option>
+            <option value="dragon">Dragon</option>
+            <option value="elemental">Elemental</option>
+            <option value="fey">Fey</option>
+            <option value="fiend">Fiend</option>
+            <option value="giant">Giant</option>
+            <option value="humanoid">Humanoid</option>
+            <option value="monstrosity">Monstrosity</option>
+            <option value="ooze">Ooze</option>
+            <option value="plant">Plant</option>
+            <option value="undead">Undead</option>
+          </select>
+          <br>
+          <label for="input-type">Alignment:</label>
+          <select class = "dropdown" id="alignmment-dropdown">        
+            <option value="unknow"></option>      
+            <option value="lawful good">Lawful Good</option>
+            <option value="neutral good">Neutral Good</option>
+            <option value="chaotic good">Chaotic Good</option>
+            <option value="lawful neutral">Lawful Neutral</option>
+            <option value="true neutral">True Neutral</option>
+            <option value="chaotic neutral">Chaotic Neutral</option>
+            <option value="lawful evil">Lawful Evil</option>
+            <option value="neutral evil">Neutral Evil</option>
+            <option value="chaotic evil">Chaotic Evil</option>
+          </select>
+      
+          <table class = "statInputTable">
+              <tr>
+                <th>Stat</th>
+                <th>Min</th>
+                <th>Max</th>
+              </tr>
+              <tr>
+                <td>&nbsp&nbsp AC &nbsp&nbsp</td>
+                <td><input class = "stat-Input" id = "acMin" type = "number" min = "0" value = 0></td>
+                <td><input class = "stat-Input" id = "acMax"  type = "number" min = "0" value = 100></td>
+              </tr>
+              <tr>
+                <td>HP</td>
+                <td><input class = "stat-Input" id = "hpMin" type = "number" min = "0" value = 0></td>
+                <td><input class = "stat-Input" id = "hpMax"  type = "number" min = "0" value = 676></td>
+              </tr>
+              <tr>
+                <td>Speed</td>
+                <td><input class = "stat-Input" id = "speedMin" type = "number" min = "0" value = 0></td>
+                <td><input class = "stat-Input" id = "speedMax"  type = "number" min = "0" value = 300></td>
+              </tr>
+              <tr>
+                <td>Str</td>
+                <td><input class = "stat-Input" id = "strMin" type = "number" min = "0" max = "30" value = 0></td>
+                <td><input class = "stat-Input" id = "strMax"  type = "number" min = "0" max = "30" value = 30></td>
+              </tr>
+              <tr>
+                <td>Dex</td>
+                <td><input class = "stat-Input" id = "dexMin"  type = "number" min = "0" max = "30" value = 0></td>
+                <td><input class = "stat-Input" id = "dexMax"  type = "number" min = "0" max = "30" value = 30></td>
+              </tr>
+              <tr>
+                <td>Con</td>
+                <td><input class = "stat-Input" id = "conMin"  type = "number" min = "0" max = "30" value = 0></td>
+                <td><input class = "stat-Input" id = "conMax"  type = "number" min = "0" max = "30" value = 30></td>
+              </tr>
+              <tr>
+                <td>Int</td>
+                <td><input class = "stat-Input" id = "intMin"  type = "number" min = "0" max = "30" value = 0></td>
+                <td><input class = "stat-Input" id = "intMax"  type = "number" min = "0" max = "30" value = 30></td>
+              </tr>
+              <tr>
+                <td>Wis</td>
+                <td><input class = "stat-Input" id = "wisMin"  type = "number" min = "0" max = "30" value = 0></td>
+                <td><input class = "stat-Input" id = "wisMax"  type = "number" min = "0" max = "30" value = 30> </td>
+              </tr>
+              <tr>
+                <td>Cha</td>
+                <td><input class = "stat-Input" id = "chaMin"  type = "number" min = "0" max = "30" value = 0></td>
+                <td><input class = "stat-Input" id = "chaMax"  type = "number" min = "0" max = "30" value = 30></td>
+              </tr><tr>
+                <td>CR</td>
+                <td><input class = "stat-Input" id = "crMin"  type = "number" min = "1" max = "30" value = 1></td>
+                <td><input class = "stat-Input" id = "crMax"  type = "number" min = "1" max = "30" value = 30></td>
+              </tr>
+            </table> 
+            <button onclick="searchMonster();">Search for monster!</button>
+            </div>
+            <div id = "resultsBorder" style = "width: 50%">
+              Results
+              <select class = "dropdown" id="Sort-dropdown">
+                <option value="size">Size </option>
+                <option value="type">Type</option>
+                <option value="alignment">Alignment</option>
+                <option value="ac">Armor Class</option>
+                <option value="hp">Hit Points</option>
+                <option value="spd">Speed</option>
+                <option value="str">Constitution</option>
+                <option value="dex">Dexerity</option>
+                <option value="con">Constitution</option>
+                <option value="int">Intellignece</option>
+                <option value="wis">Wisdom</option>
+                <option value="cha">Charisma</option>
+              </select>
+              <select class = "dropdown" id="Sort-style">
+                <option value="ascending">Ascending </option>
+                <option value="descending">Descending</option>
+              </select>
+              <div id = "results">this is where the results would go</div>
+            </div>
+      </div>
     </div>
       
 </body>

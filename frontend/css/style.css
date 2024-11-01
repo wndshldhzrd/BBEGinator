@@ -11,7 +11,6 @@ body {
 
 .header {
     background-color: #d11149;
-    border-bottom: 1px;
     font-size: 50px;
     border-style: solid;
     padding: 30px;
@@ -32,11 +31,9 @@ hr{
     font-size: 38px;
     font-weight: 550;
     color: #0a0757;
-    float: left;
     padding-bottom: 4%;
     padding-top: 3%;
     min-height: 100%;
-    position: sticky;
     top: 0px;
 }
 
@@ -53,8 +50,8 @@ a:link{
 /* General */
 .title{
     color: #0a0757;
-    padding: 10px 0px 10px 0px;
     font-size: 40px;
+    padding-bottom: 10px;
 }
 
 .flavor-Text{
@@ -116,6 +113,11 @@ button {
     padding: 1px;
 }
 
+.main {
+    display: flex;
+}
+
 .content {
-    margin-left: 10px;
+    margin: 0px;
+    padding: 10px;
 }
