@@ -40,4 +40,18 @@ class Monster():
                    avgRoll = (dice[1] - 1) / 2
                    dmgAvg = dice[0] * avgRoll + bonus
                    
+        resistances.split(';')
+        if len(resistances) > 1:
+            for res in resistances:
+                res.split(',')
+                for r in res:
+                    points += 10
+        
+        immunities.split(';')
+        if len(immunities) > 1:
+            for imm in immunities:
+                imm.split(',')
+                for i in imm:
+                    points += 10
+                   
         points += dmgAvg + dmgMax
