@@ -20,15 +20,23 @@
 
         <div class="content">
             <div class = "title">RECOMMEND MONSTERS</div>
+            <select class="dropdown">
+                <option disabled selected value>ENCOUNTER DIFFICULTY</option>
+                <option value="1">Easy</option>      
+                <option value="2">Medium</option>
+                <option value="3">Hard</option>
+                <option value="4">Extra Hard</option>
+                <!-- <option value="5">Bullshit</option> -->
+            </select>
             <!--This div is where player stat blocks get added to the page for the end user to fill out-->
             <div id="playerStatBlocks"></div>
 
             <!--Basic control buttons for the user-->
-            <button onclick="getRecommendedMonster();">Get a recommended monster!</button> 
-            <button onclick="addPlayer();">Add Player</button>
+            <button onclick="addPlayer();">Add Player</button><br>
+            <button onclick="getRecommendedMonster();">Get a recommended monster!</button>
             <button id="removePlayer" style="display: none;" onclick="removePlayer();">Remove Player</button>
             
-            <div id = "results">this is where the results would go</div>
+            <div id = "results"></div>
         </div>
     </div>
 
