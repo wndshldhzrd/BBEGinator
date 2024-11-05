@@ -1,23 +1,23 @@
-//variable which keeps track of how many players the page is currently displaying
+//variable which keeps track of how many monsters the page is currently displaying
 var monsters = [];
 
-//function for adding a player to the recommendMonster page
+//function for adding a monster to the recommendMonster page
 function addMonster() {
 
-    //getting the div which players are added to
+    //getting the div which monsters are added to
     var monsterStatBlockDisplay = document.getElementById("monsterStatBlocks");
 
-    //creating our player stat block to be added to the page
+    //creating our monster stat block to be added to the page
     var monsterStatBlock = document.createElement("div");
 
-    //adding our player element to the list of player elements
+    //adding our monster element to the list of monster elements
     monsters.push(monsterStatBlock)
 
-    //setting the inner html of the player statblock
+    //setting the inner html of the monster statblock
     //ideally refactor into an html template page, but good enough for now
     monsterStatBlock.innerHTML =
-    `<div class="playerInput">
-        <label class="playerName">Player ${players.length}</label><br>
+    `<div class="monsterInput">
+        <label class="monsterName">Monster ${monsters.length}</label><br>
         <hr>
         Class <select class="dropdown">
             <option disabled="" selected="" value=""></option> 
@@ -37,30 +37,30 @@ function addMonster() {
         <br>
         Level <input class="stat-Input" type="number" min="1" value="1">
         <br>
-        Hp <input class="stat-Input" id="playerHealth" type="number" min="1" value="1">
+        Hp <input class="stat-Input" id="monsterHealth" type="number" min="1" value="1">
     </div>`;
 
-    //displaying our player on the page
+    //displaying our monster on the page
     monsterStatBlockDisplay.appendChild(monsterStatBlock);
 
     toggleRemoveMonsterButton();
 }
 
-function removePlayer() {
+function removeMonster() {
 
-    //grabbing all of our player stat blocks
+    //grabbing all of our monster stat blocks
     var monsterStatBlocks = document.getElementsByClassName("monsterInput");
 
     //removing the last one
     monsterStatBlocks[monsters.length-1].remove();
 
-    //removing the player element from our array
+    //removing the monster element from our array
     monsters.pop();
 
     toggleRemoveMonsterButton();
 }
 
-//determining whether to hide/show our remove player button
+//determining whether to hide/show our remove monster button
 function toggleRemoveMonsterButton() {
     if (monsters.length > 1) {
         document.getElementById("removeMonster").style.display= "inline-block";
