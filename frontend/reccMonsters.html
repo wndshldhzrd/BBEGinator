@@ -7,8 +7,8 @@
     <script defer src="js/reccMonsters.js"></script>
     <title>BBEGinator</title>
 </head>
-<body>
-    <div class="header">BBEGinator Logo</div>
+<body onload = "addPlayer()">
+    <div class="header"><img class = "logo" src = "\frontend\img\LogoDefault.png"></div>
     <div class="main">
         <div class = "menu">
             <a href="index.html">Home</a><hr>
@@ -28,15 +28,31 @@
                 <option value="4">Extra Hard</option>
                 <!-- <option value="5">Bullshit</option> -->
             </select>
-            <!--This div is where player stat blocks get added to the page for the end user to fill out-->
-            <div id="playerStatBlocks"></div>
-
-            <!--Basic control buttons for the user-->
-            <button onclick="addPlayer();">Add Player</button><br>
-            <button onclick="getRecommendedMonster();">Get a recommended monster!</button>
-            <button id="removePlayer" style="display: none;" onclick="removePlayer();">Remove Player</button>
             
-            <div id = "results"></div>
+            <br><a class = "subheader">Players</a><br>
+
+            <!--This div is where player stat blocks get added to the page for the end user to fill out-->
+            <div id = "partyContain">
+                <div id = "party">
+                
+                    <div id="playerStatBlocks"></div>
+                
+                
+                    <button onclick="addPlayer();">Add Player</button>
+                    <button id="removePlayer" style="display: none;" onclick="removePlayer();">Remove Player</button>
+                </div>
+            </div>
+
+            <div id = "recsContain">
+                <div id = "recs">
+
+                <div style = "background-color: #d11149; color: #f5f2ed; font-size: 20px; padding: 3px;">Monster Recomendations:</div>
+
+                </div>
+
+                <!--Basic control buttons for the user-->
+                <br><button onclick="getRecommendedMonster();">Generate new suggestion</button>
+            </div>
         </div>
     </div>
 
