@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
-    <script defer src="js/script.js"></script>
+    <script defer src="js/createEncounter.js"></script>
     <title>BBEGinator</title>
 </head>
 <body>
@@ -19,7 +19,15 @@
         </div>
 
         <div class="content">
-            <div id = "results">chat how are we actually implementing this</div>
+            <div class = "title">CREATE ENCOUNTER</div>
+            <!--This div is where player stat blocks get added to the page for the end user to fill out-->
+            <div id="monsterStatBlocks"></div>
+
+            <!--Basic control buttons for the user-->
+            <button onclick="addMonster();">Add Monster</button><br>
+            <button id="removeMonster" style="display: none;" onclick="removeMonster();">Remove Monster</button>
+            
+            <div id = "results"></div>
         </div>
     </div>
 
