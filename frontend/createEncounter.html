@@ -19,7 +19,15 @@
         </div>
 
         <div class="content">
-            <div id = "results">chat how are we actually implementing this</div>
+            <div class = "title">CREATE ENCOUNTER</div>
+            <!--This div is where player stat blocks get added to the page for the end user to fill out-->
+            <div id="playerStatBlocks"></div>
+
+            <!--Basic control buttons for the user-->
+            <button onclick="addPlayer();">Add Monster</button><br>
+            <button id="removePlayer" style="display: none;" onclick="removePlayer();">Remove Player</button>
+            
+            <div id = "results"></div>
         </div>
     </div>
 
