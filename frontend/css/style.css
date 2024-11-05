@@ -15,9 +15,10 @@ body {
     margin: 0;
     padding: 0;
     border: 0;
-    height: 100%;
     font-family: roboto, sans-serif;
     background-color: #f5f2ed;
+    display: flex;
+    flex-direction: column;
 }
 
 a:link{
@@ -68,7 +69,7 @@ button {
     max-width: 300px;
     background-color: #eee1cc;
     text-align: center;
-    font-size: 38px;
+    font-size: 3vh; /* Hopefully find a better way to scale */
     font-weight: 850;
     color: #0a0757;
     height: 100vh;
