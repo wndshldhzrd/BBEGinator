@@ -17,8 +17,6 @@ class Monster():
         self.cr = cr
         self.points = 0
 
-        points = 0
-
         points += hp
         if (ac >= 10):points = int( float(points) * (1 + (ac-10)/10))
         #multiattack calculation
@@ -31,12 +29,15 @@ class Monster():
                         if x.description(position+1) == "with":
                             attacks.append(x.description(position), x.description(position+3))
 
-        for a in actions :
-            #if the action name == an attack name we have parsed already, send it
-            for A in attacks:
-               if a["name"].lower() == A[1]:
-                   #do the math and shit
-
-
-
-        #add speeds in later
+        dmgAvg = 0
+        dmgMax = 0
+        for action in actions:
+            for attack in attacks:
+               if action["name"].lower() == attack[1]:
+                   dice = action["damage_dice"].split('d')
+                   bonus = action["damage_bonus"]
+                   dmgMax = dice[0] * dice[1] + bonus
+                   avgRoll = (dice[1] - 1) / 2
+                   dmgAvg = dice[0] * avgRoll + bonus
+                   
+        points += dmgAvg + dmgMax

@@ -220,9 +220,11 @@ def Algorithm(party, difficulty, monsterList, lair, guys, mode):
     return monsters
 
 #self, slug, ac, hp, speeds, stats, saves, vulnerabilities, resistances, immunities, actions, cr
-georgeBush = Monster("georgie", "George W. Bush", 5, 45, 300, [0,5,30,2,5,6], [None,None,None,None,None,None],[],[],[],[],4)
-jackson = Monster("jackie", "Michael Jackson", 5, 45, 300, [0,5,30,2,5,6], [None,None,None,None,None,None],[],[],[],[],4)
-barry = Monster("bartholomew", "Bartholemew", 5, 45, 300, [0,5,30,2,5,6], [None,None,None,None,None,None],[],[],[],[],4)
+georgeBush = Monster("georgie", "George W. Bush", 5, 45, [0,5,30,2,5,6], [None,None,None,None,None,None],[],[],[],[],[],[],4)
+jackson = Monster("jackie", "Michael Jackson", 5, 45, [0,5,30,2,5,6], [None,None,None,None,None,None],[],[],[],[],[],[],4)
+barry = Monster("bartholomew", "Bartholemew", 5, 45, [0,5,30,2,5,6], [None,None,None,None,None,None],[],[],[],[],[],[],4)
+
+print(georgeBush.points, jackson.points, barry.points)
 
 database = {georgeBush.slug:georgeBush, jackson.slug : jackson, barry.slug:barry}
 #party = partyReader('''party.json''')
