@@ -15,9 +15,10 @@ body {
     margin: 0;
     padding: 0;
     border: 0;
-    height: 100%;
     font-family: roboto, sans-serif;
     background-color: #f5f2ed;
+    display: flex;
+    flex-direction: column;
 }
 
 a:link{
@@ -29,7 +30,8 @@ button {
     padding: 0.5em;
     border: solid 1px;
     background-color: #d11149;
-    color:rgb(230, 230, 230);
+    color: #f5f2ed;
+    border-color: #f5f2ed;
     border-radius: 5px;
 }
 
@@ -40,7 +42,11 @@ button {
 .header {
     background-color: #d11149;
     font-size: 50px;
-    padding: 30px;
+    padding-left: 30px;
+}
+
+.logo{
+    max-height: 160px;
 }
 
 /*
@@ -60,10 +66,10 @@ button {
     display: flex;
     flex-direction: column;
     align-items: center;
-    max-width: 300px;
+    width: 300px;
     background-color: #eee1cc;
     text-align: center;
-    font-size: 38px;
+    font-size: 3vh; /* Hopefully find a better way to scale */
     font-weight: 850;
     color: #0a0757;
     height: 100vh;
@@ -91,7 +97,7 @@ button {
 
 .content {
     margin: 0px;
-    padding: 10px;
+    padding: 20px;
     padding-right: 0px;
     width: 100%;
 }
@@ -102,22 +108,33 @@ button {
     padding-bottom: 10px;
 }
 
+.content .subheader{
+    font-size: 40px;
+    color: #d11149;
+}
+
 .content .flavor-Text{
     color: #d11149;
 }
 
 .content .dropdown{
-    background-color: rgb(230, 230, 230);
-    outline-width: 1px;
-    outline-style: solid;
-    outline-color: black;
+    background-color: #d11149;
+    color: #f5f2ed;
+    border-color: #d11149;
+    border-radius: 7px;
+    font-size: 3;
+    padding: 10px;
 }
 
 .content .stat-Input{
-    max-width: 40px;
-    outline-width: 1px;
-    outline-style: solid;
-    outline-color: black;
+    background-color: #d11149;
+    color: #f5f2ed;
+    border-color: #d11149;
+    border-radius: 7px;
+    max-width: 60px;
+    font-size: 4;
+    padding: 10px;
+    margin: 3px;
 }
 
 .content .statInputTable{
@@ -130,7 +147,7 @@ button {
     float: left;
 }
 
-.content #results{
+.content .results{
     height: 500px;
     background-color: rgb(255, 123, 143);
     margin: 10px;
@@ -141,15 +158,45 @@ button {
     border-radius: 5px;
 }
 
+#recsContain{
+    width: 45%;
+    margin-left: 2.5%;
+    min-height: 500px;
+    float:left;
+}
+
+#recs{
+    min-height: 500px;
+    background-color: #0a0757;
+}
+
+#partyContain{
+    width: 45%;
+    margin-left: 2.5%;
+    min-height: 500px;
+    float:left;
+}
+
+#party{
+    min-height: 500px;
+    background-color: #eee1cc;
+}
+
 .content .playerInput{
-    margin: 7px;
-    background-color: blueviolet;
+    background-color: #0a0757;
+    color: #eee1cc;
     border-style: solid;
     border-width: 1px;
     padding: 1px;
 }
 
-.content .monster-display{
+/* Monster display */
+
+.content .monster-display {
     border:  solid 2px;
     padding: 0p 1em 1em;
+}
+
+.monster-display .stat-block {
+    margin: 30px;
 }

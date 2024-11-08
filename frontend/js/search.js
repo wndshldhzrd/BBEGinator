@@ -44,3 +44,22 @@ function searchMonster() {
         console.log(json);
     })
 }
+
+//function for downloading monsters from the webpage
+function downloadMonster() {
+    obj = {"lol" : "lmao"}
+    filename = "goat";
+
+    const blob = new Blob([JSON.stringify(obj, null, 2)], {
+        type: 'application/json',
+      });
+
+
+      const url = URL.createObjectURL(blob);
+      
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${filename}.monster`;
+      a.click();
+      URL.revokeObjectURL(url);
+}
