@@ -103,8 +103,13 @@ function getRecommendedMonster() {
         }
     }
 
+    if(players.length < 1) {
+        console.error("ERROR ERROR INCOMPLETE INPUT DATA");
+        return;
+    }
+
     //adding a terminating player so backend knows when to stop parsing players
-    payload["p" + players.length] = "0"
+    payload["p" + players.length] = "0";
 
 
     //testing to ensure that parameters are being passed correctly
@@ -112,6 +117,7 @@ function getRecommendedMonster() {
 
     //making our api call
     const url = 'https://zevce.pythonanywhere.com/getRecommendation/' + JSON.stringify(payload)
+    console.log(url);
     fetch(url)
     .then(response => response.json())  
     .then(json => {

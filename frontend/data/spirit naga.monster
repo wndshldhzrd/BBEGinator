@@ -1,0 +1,121 @@
+{
+    "name": "Spirit Naga",
+    "size": "large",
+    "type": "Monstrosity",
+    "tag": "",
+    "alignment": "chaotic evil",
+    "hitDice": 10,
+    "armorName": "natural armor",
+    "shieldBonus": 0,
+    "natArmorBonus": 2,
+    "otherArmorDesc": "15 (natural armor)",
+    "speed": 40,
+    "burrowSpeed": 0,
+    "climbSpeed": 0,
+    "flySpeed": 0,
+    "hover": false,
+    "swimSpeed": 0,
+    "customHP": false,
+    "customSpeed": false,
+    "hpText": "10",
+    "speedDesc": "40 ft.",
+    "strPoints": 18,
+    "dexPoints": 17,
+    "conPoints": 14,
+    "intPoints": 16,
+    "wisPoints": 15,
+    "chaPoints": 16,
+    "blindsight": 0,
+    "blind": false,
+    "darkvision": 60,
+    "tremorsense": 0,
+    "truesight": 0,
+    "telepathy": 0,
+    "cr": "8",
+    "customCr": "8 (3,900 XP)",
+    "customProf": 3,
+    "isLegendary": false,
+    "legendariesDescription": "The spirit naga can take 3 legendary actions, choosing from the options below. Only one legendary action option can be used at a time and only at the end of another creature's turn. The spirit naga regains spent legendary actions at the start of its turn.",
+    "isLair": false,
+    "lairDescription": "When fighting inside its lair, the spirit naga can invoke the ambient magic to take lair actions. On initiative count 20 (losing initiative ties), the spirit naga can take one lair action to cause one of the following effects:",
+    "lairDescriptionEnd": "The spirit naga can't repeat an effect until they have all been used, and it can't use the same effect two rounds in a row.",
+    "isMythic": false,
+    "mythicDescription": "If the spirit naga's mythic trait is active, it can use the options below as legendary actions for 1 hour after using {Some Ability}.",
+    "isRegional": false,
+    "regionalDescription": "The region containing the spirit naga's lair is warped by the creature's presence, which creates one or more of the following effects:",
+    "regionalDescriptionEnd": "If the spirit naga dies, the first two effects fade over the course of 3d10 days.",
+    "properties": [],
+    "abilities": [
+        {
+            "name": "Rejuvenation",
+            "desc": "If it dies, the naga returns to life in 1d6 days and regains all its hit points. Only a wish spell can prevent this trait from functioning."
+        },
+        {
+            "name": "Spellcasting",
+            "desc": "The naga is a 10th-level spellcaster. Its spellcasting ability is Intelligence (spell save DC [INT SAVE], [INT ATK] to hit with spell attacks), and it needs only verbal components to cast its spells. It has the following wizard spells prepared:\n\n\n> * Cantrips (at will): _mage hand, minor illusion, ray of frost_\n> * 1st level (4 slots): _charm person, detect magic, sleep_\n> * 2nd level (3 slots): _detect thoughts, hold person_\n> * 3rd level (3 slots): _lightning bolt, water breathing_\n> * 4th level (3 slots): _blight, dimension door_\n> * 5th level (2 slots): _dominate person_"
+        }
+    ],
+    "actions": [
+        {
+            "name": "Bite",
+            "desc": "_Melee Weapon Attack:_ +7 to hit, reach 10 ft., one creature. _Hit:_ 7 (1d6 + 4) piercing damage, and the target must make a DC 13 Constitution saving throw, taking 31 (7d8) poison damage on a failed save, or half as much damage on a successful one."
+        }
+    ],
+    "bonusActions": [],
+    "reactions": [],
+    "legendaries": [],
+    "mythics": [],
+    "lairs": [],
+    "regionals": [],
+    "sthrows": [
+        {
+            "name": "dex",
+            "order": 1
+        },
+        {
+            "name": "con",
+            "order": 2
+        },
+        {
+            "name": "wis",
+            "order": 4
+        },
+        {
+            "name": "cha",
+            "order": 5
+        }
+    ],
+    "skills": [],
+    "damagetypes": [
+        {
+            "name": "poison",
+            "note": " (Immune)",
+            "type": "i"
+        }
+    ],
+    "specialdamage": [],
+    "conditions": [
+        {
+            "name": "charmed"
+        },
+        {
+            "name": "poisoned"
+        }
+    ],
+    "languages": [
+        {
+            "name": "Abyssal",
+            "speaks": true
+        },
+        {
+            "name": "Common",
+            "speaks": true
+        }
+    ],
+    "understandsBut": "",
+    "shortName": "",
+    "pluralName": "",
+    "doubleColumns": false,
+    "separationPoint": 1,
+    "damage": []
+}
