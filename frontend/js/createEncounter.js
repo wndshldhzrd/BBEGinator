@@ -11,6 +11,51 @@ function handleSubmit(event) {
     uploadFiles();
 }
 
+//display an error message in the case of submitting invalid file type
+const errorMessage = document.getElementById('errorMessage');
+const submitButton = document.querySelector('button[name="submitMonsters"]');
+const fileInput = document.querySelector('input[name="file"]');
+fileInput.addEventListener('change', handleSubmit);
+
+//for testing purposes
+const testMessage = document.getElementById('testMsg');
+
+
+//update the errorMessage that gets displayed
+function updateErrorMessage(e) {
+    errorMessage.textContent = e;
+}
+
+//check filetype validity
+function checkFileType(files) {
+    for (const f of files) {
+        const {name: fileName} = f;
+
+        if (fileName.slice(-8) != '.monster') {
+            throw new Error(`\nERROR: File ${fileName} is not a valid upload type--please only upload .monster files`);
+        }
+    }
+}
+
+//handle submitted files
+function handleSubmit() {
+    resetErrorMessage();
+    try {
+        checkFileType(fileInput.files);
+    }
+    catch (err) {
+        updateErrorMessage(err.message);
+        return;
+    }
+    submitButton.disabled = false;
+}
+
+function resetErrorMessage() {
+    submitButton.disabled = true;
+    updateErrorMessage("");
+}
+
+//after files are uploaded, run this function
 function uploadFiles() {
     const url = 'https://httpbin.org/post';
     const method = 'post';
@@ -18,12 +63,20 @@ function uploadFiles() {
     const xhr = new XMLHttpRequest();
     const data = new FormData(form);
 
+    xhr.addEventListener('loadend', () => {
+        if (xhr.satus === 200) {
+            testMessage.textContent = 'Successful upload';
+        } else {
+            testMessage.textContent = 'Failed upload';
+        }
+    });
+
     xhr.open(method, url);
     xhr.send(data);
 }
 
 
-//function for adding a monster to the createEncounter page
+//function for adding a monster to the createEncounter page--we should remove this
 function addMonster() {
 
     //getting the div which monsters are added to
