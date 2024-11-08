@@ -63,3 +63,10 @@ function downloadMonster() {
       a.click();
       URL.revokeObjectURL(url);
 }
+
+//test function
+function testRunningPython() {
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "backend/test_script.py", true);
+    xhr.send();
+}
