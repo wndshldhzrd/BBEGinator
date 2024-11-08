@@ -172,14 +172,12 @@ button {
 
 #partyContain{
     width: 45%;
-    margin-left: 2.5%;
     min-height: 500px;
     float:left;
 }
 
 #party{
     min-height: 500px;
-    background-color: #eee1cc;
 }
 
 .content .playerInput{
@@ -199,4 +197,23 @@ button {
 
 .monster-display .stat-block {
     margin: 30px;
+}
+
+.playerName{
+    border-radius: 0;
+    background-color: #0a0757;
+    border-color: #0a0757;
+    border-style: none;
+    width: 100%;
+    text-align: left;
+    font-size: medium;
+    margin-top: 5px;
+}
+
+.playerContent{
+  background-color: #eee1cc;
+  color:#0a0757;
+  font-size: large;
+  padding-left: 10px;
+  font-style: bolder;
 }
