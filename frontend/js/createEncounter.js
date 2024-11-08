@@ -1,31 +1,33 @@
-//upload files event listener and behavior upon receiving a submit
+//Upload files event listener and behavior upon receiving a submit
 const form = document.querySelector('form');
 form.addEventListener('submit', handleSubmit);
 
-//runs when a submit occurs
+//Runs when a submit (hitting the submit button) occurs
 function handleSubmit(event) {
     event.preventDefault();
     uploadFiles();
 }
 
-//display an error message in the case of submitting invalid file type
+//Display an error message in the case of submitting invalid file type
 const errorMessage = document.getElementById('errorMessage');
+
+//Set up the button and uploaded files
 const submitButton = document.querySelector('button[name="submitMonsters"]');
 const fileInput = document.querySelector('input[name="file"]');
 fileInput.addEventListener('change', handleInputChange);
 
-//Changes upon upload
+//Upon an upload, displays if the upload is in progress, successful, or failed
 const uploadMessage = document.getElementById('uploadMessage');
 
-//file data
+//The data contained in the .monster files is currently pasted here
 const data = document.getElementById('fileData');
 
-//update the errorMessage that gets displayed
+//Update the errorMessage that gets displayed
 function updateErrorMessage(e) {
     errorMessage.textContent = e;
 }
 
-//check filetype validity
+//Check filetype validity
 function checkFileType(files) {
     for (const f of files) {
         const {name: fileName} = f;
@@ -36,7 +38,7 @@ function checkFileType(files) {
     }
 }
 
-//user has selected new files, check their validity
+//User has selected new files, check their validity and handle the submitButton
 function handleInputChange() {
     resetErrorMessage();
     try {
@@ -49,6 +51,7 @@ function handleInputChange() {
     submitButton.disabled = false;
 }
 
+//resets everything when new files are selected by the user
 function resetErrorMessage() {
     submitButton.disabled = true;
     updateErrorMessage("");
@@ -56,7 +59,7 @@ function resetErrorMessage() {
     data.textContent = '';
 }
 
-//after files are uploaded, run this function
+//When files are uploaded (submitted), run this function
 function uploadFiles() {
     const url = 'https://httpbin.org/post';
     const method = 'post';
@@ -78,16 +81,20 @@ function uploadFiles() {
     xhr.open(method, url);
     xhr.send(data);
 }
+
 //Gets the file contents and puts them on the page (currently just the .monster in its entirety)
 function getFileContents(fileList) {
-    data.textContent = '';
+    data.innerHTML = '';
     for (const f of fileList) {
-        data.innerHTML = `NAME: ${f.name}<br><br>`;
-        data.innerHTML += `CONTENTS:`;
-        let fr = new FileReader();
-        fr.onload = function () {
-            data.innerHTML += fr.result;
-        }
-        fr.readAsText(f);
+        readFile(f);
     }
+}
+
+function readFile(f) {
+    let fr = new FileReader();
+    fr.onload = function () {
+        let result = fr.result;
+        data.innerHTML += `NAME: ${f.name}<br>` + `CONTENTS:<br>` + result + '<br><br><br>';
+    }
+    fr.readAsText(f);
 }
