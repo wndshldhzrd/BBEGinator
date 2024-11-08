@@ -61,7 +61,7 @@ button {
     display: flex;
     flex-direction: column;
     align-items: center;
-    max-width: 300px;
+    width: 300px;
     background-color: #eee1cc;
     text-align: center;
     font-size: 3vh; /* Hopefully find a better way to scale */
@@ -150,7 +150,13 @@ button {
     padding: 1px;
 }
 
-.content .monster-display{
+/* Monster display */
+
+.content .monster-display {
     border:  solid 2px;
     padding: 0p 1em 1em;
+}
+
+.monster-display .stat-block {
+    margin: 30px;
 }
