@@ -1,71 +1,102 @@
-//variable which keeps track of how many monsters the page is currently displaying
-var monsters = [];
+//Upload files event listener and behavior upon receiving a submit
+const form = document.querySelector('form');
+form.addEventListener('submit', handleSubmit);
 
-//function for adding a monster to the recommendMonster page
-function addMonster() {
-
-    //getting the div which monsters are added to
-    var monsterStatBlockDisplay = document.getElementById("monsterStatBlocks");
-
-    //creating our monster stat block to be added to the page
-    var monsterStatBlock = document.createElement("div");
-
-    //adding our monster element to the list of monster elements
-    monsters.push(monsterStatBlock)
-
-    //setting the inner html of the monster statblock
-    //ideally refactor into an html template page, but good enough for now
-    monsterStatBlock.innerHTML =
-    `<div class="monsterInput">
-        <label class="monsterName">Monster ${monsters.length}</label><br>
-        <hr>
-        Class <select class="dropdown">
-            <option disabled="" selected="" value=""></option> 
-            <option value="barbarian">Barbarian</option>      
-            <option value="bard">Bard</option>
-            <option value="cleric">Cleric</option>
-            <option value="druid">Druid</option>
-            <option value="fighter">Fighter</option>
-            <option value="monk">Monk</option>
-            <option value="paladin">Paladin</option>
-            <option value="ranger">Ranger</option>
-            <option value="rogue">Rogue</option>
-            <option value="sorcerer">Sorcerer</option>
-            <option value="wizard">Wizard</option>
-            <option value="warlock">Warlock</option>
-        </select>
-        <br>
-        Level <input class="stat-Input" type="number" min="1" value="1">
-        <br>
-        Hp <input class="stat-Input" id="monsterHealth" type="number" min="1" value="1">
-    </div>`;
-
-    //displaying our monster on the page
-    monsterStatBlockDisplay.appendChild(monsterStatBlock);
-
-    toggleRemoveMonsterButton();
+//Runs when a submit (hitting the submit button) occurs
+function handleSubmit(event) {
+    event.preventDefault();
+    uploadFiles();
 }
 
-function removeMonster() {
+//Display an error message in the case of submitting invalid file type
+const errorMessage = document.getElementById('errorMessage');
 
-    //grabbing all of our monster stat blocks
-    var monsterStatBlocks = document.getElementsByClassName("monsterInput");
+//Set up the button and uploaded files
+const submitButton = document.querySelector('button[name="submitMonsters"]');
+const fileInput = document.querySelector('input[name="file"]');
+fileInput.addEventListener('change', handleInputChange);
 
-    //removing the last one
-    monsterStatBlocks[monsters.length-1].remove();
+//Upon an upload, displays if the upload is in progress, successful, or failed
+const uploadMessage = document.getElementById('uploadMessage');
 
-    //removing the monster element from our array
-    monsters.pop();
+//The data contained in the .monster files is currently pasted here
+const data = document.getElementById('fileData');
 
-    toggleRemoveMonsterButton();
+//Update the errorMessage that gets displayed
+function updateErrorMessage(e) {
+    errorMessage.textContent = e;
 }
 
-//determining whether to hide/show our remove monster button
-function toggleRemoveMonsterButton() {
-    if (monsters.length > 1) {
-        document.getElementById("removeMonster").style.display= "inline-block";
+//Check filetype validity
+function checkFileType(files) {
+    for (const f of files) {
+        const {name: fileName} = f;
+
+        if (fileName.slice(-8) != '.monster') {
+            throw new Error(`\nERROR: File ${fileName} is not a valid upload type--please only upload .monster files`);
+        }
     }
-    else {
-        document.getElementById("removeMonster").style.display= "none";
+}
+
+//User has selected new files, check their validity and handle the submitButton
+function handleInputChange() {
+    resetErrorMessage();
+    try {
+        checkFileType(fileInput.files);
     }
+    catch (err) {
+        updateErrorMessage(err.message);
+        return;
+    }
+    submitButton.disabled = false;
+}
+
+//resets everything when new files are selected by the user
+function resetErrorMessage() {
+    submitButton.disabled = true;
+    updateErrorMessage("");
+    uploadMessage.textContent = "";
+    data.textContent = '';
+}
+
+//When files are uploaded (submitted), run this function
+function uploadFiles() {
+    const url = 'https://httpbin.org/post';
+    const method = 'post';
+
+    const xhr = new XMLHttpRequest();
+    const data = new FormData(form);
+
+    uploadMessage.textContent = 'Uploading...';
+
+    xhr.addEventListener('loadend', () => {
+        if (xhr.status === 200) {
+            uploadMessage.textContent = 'Successful upload';
+            getFileContents(fileInput.files);
+        } else {
+            uploadMessage.textContent = 'Failed upload';
+        }
+    });
+
+    xhr.open(method, url);
+    xhr.send(data);
+}
+
+//Function that loops through all the submitted monster files and calls readFile(f) to display their contents
+//(currently just the .monster in its entirety)
+function getFileContents(fileList) {
+    data.innerHTML = '';
+    for (const f of fileList) {
+        readFile(f);
+    }
+}
+
+//Made into separate function to stop errors from occurring :)
+function readFile(f) {
+    let fr = new FileReader();
+    fr.onload = function () {
+        let result = fr.result;
+        data.innerHTML += `NAME: ${f.name}<br>` + `CONTENTS:<br>` + result + '<br><br><br>';
+    }
+    fr.readAsText(f);
 }

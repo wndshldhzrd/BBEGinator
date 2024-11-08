@@ -55,12 +55,9 @@ def monsterReader(JSON):
                  "int": monster["intpoints"],
                  "wis": monster["wispoints"],
                  "cha": monster["chapoints"]}
-        saves = {"str": monster["sthrows"].get("str"),
-                 "dex": monster["sthrows"].get("dex"),
-                 "con": monster["sthrows"].get("con"),
-                 "int": monster["sthrows"].get("int"),
-                 "wis": monster["sthrows"].get("wis"),
-                 "cha": monster["sthrows"].get("cha")}
+        saves = []#list of saves, actual points calculated inside monster class
+        for statSave in monster["sthrows"]:
+            saves.append(statSave["name"])
         vulnerabilities = monster["damage_vulnerabilities"]
         resistances = monster["damage_resistances"]
         immunities = monster["damage_immunities"]
