@@ -78,7 +78,7 @@ function uploadFiles() {
     xhr.open(method, url);
     xhr.send(data);
 }
-
+//Gets the file contents and puts them on the page (currently just the .monster in its entirety)
 function getFileContents(fileList) {
     data.textContent = '';
     for (const f of fileList) {
