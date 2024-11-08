@@ -82,7 +82,8 @@ function uploadFiles() {
     xhr.send(data);
 }
 
-//Gets the file contents and puts them on the page (currently just the .monster in its entirety)
+//Function that loops through all the submitted monster files and calls readFile(f) to display their contents
+//(currently just the .monster in its entirety)
 function getFileContents(fileList) {
     data.innerHTML = '';
     for (const f of fileList) {
@@ -90,6 +91,7 @@ function getFileContents(fileList) {
     }
 }
 
+//Made into separate function to stop errors from occurring :)
 function readFile(f) {
     let fr = new FileReader();
     fr.onload = function () {
