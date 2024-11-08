@@ -8,7 +8,7 @@
     <title>BBEGinator</title>
 </head>
 <body>
-    <div class="header">BBEGinator Logo</div>
+    <div class="header"><img class = "logo" src = "\frontend\img\LogoDefault.png"></div>
     <div class="main">
         <div class = "menu">
             <a href="index.html">Home</a><hr>
@@ -20,14 +20,33 @@
 
         <div class="content">
             <div class = "title">CREATE ENCOUNTER</div>
+
+            <!--button to upload .monster files-->
+            <form action="https://httpbin.org/post" method="post" enctype="multipart/form-data">
+                <input name="file" type="file" multiple accept = ".monster">
+                <button type="submit">Submit Monsters</button>
+            </form>
+            <div class = "flavor-Text">
+                Select .monster files above to upload and view your encounter's statblocks.<br>
+            </div>
+
+
             <!--This div is where player stat blocks get added to the page for the end user to fill out-->
             <div id="monsterStatBlocks"></div>
 
+            <div class = "flavor-Text">
+                <br>
+            </div>
+
             <!--Basic control buttons for the user-->
+<<<<<<< Updated upstream
             <button onclick="addMonster();">Add Monster</button><br>
+=======
+            <button onclick="addMonster();">Pointless button!</button><br>
+>>>>>>> Stashed changes
             <button id="removeMonster" style="display: none;" onclick="removeMonster();">Remove Monster</button>
             
-            <div id = "results"></div>
+        <!--<div id = "results"></div> -->
         </div>
     </div>
 

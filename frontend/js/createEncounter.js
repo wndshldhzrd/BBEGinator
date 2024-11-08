@@ -1,7 +1,29 @@
 //variable which keeps track of how many monsters the page is currently displaying
 var monsters = [];
 
-//function for adding a monster to the recommendMonster page
+//upload files event listener and behavior upon receiving a submit
+const form = document.querySelector('form');
+form.addEventListener('submit', handleSubmit);
+
+function handleSubmit(event) {
+    event.preventDefault();
+
+    uploadFiles();
+}
+
+function uploadFiles() {
+    const url = 'https://httpbin.org/post';
+    const method = 'post';
+
+    const xhr = new XMLHttpRequest();
+    const data = new FormData(form);
+
+    xhr.open(method, url);
+    xhr.send(data);
+}
+
+
+//function for adding a monster to the createEncounter page
 function addMonster() {
 
     //getting the div which monsters are added to
@@ -19,21 +41,7 @@ function addMonster() {
     `<div class="monsterInput">
         <label class="monsterName">Monster ${monsters.length}</label><br>
         <hr>
-        Class <select class="dropdown">
-            <option disabled="" selected="" value=""></option> 
-            <option value="barbarian">Barbarian</option>      
-            <option value="bard">Bard</option>
-            <option value="cleric">Cleric</option>
-            <option value="druid">Druid</option>
-            <option value="fighter">Fighter</option>
-            <option value="monk">Monk</option>
-            <option value="paladin">Paladin</option>
-            <option value="ranger">Ranger</option>
-            <option value="rogue">Rogue</option>
-            <option value="sorcerer">Sorcerer</option>
-            <option value="wizard">Wizard</option>
-            <option value="warlock">Warlock</option>
-        </select>
+        UploadMonster <button onclick="uploadMonster();">Upload Monster</button>
         <br>
         Level <input class="stat-Input" type="number" min="1" value="1">
         <br>
@@ -44,6 +52,10 @@ function addMonster() {
     monsterStatBlockDisplay.appendChild(monsterStatBlock);
 
     toggleRemoveMonsterButton();
+}
+
+function uploadMonster() {
+    
 }
 
 function removeMonster() {
