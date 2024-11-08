@@ -17,9 +17,11 @@ const submitButton = document.querySelector('button[name="submitMonsters"]');
 const fileInput = document.querySelector('input[name="file"]');
 fileInput.addEventListener('change', handleInputChange);
 
-//for testing purposes
-const testMessage = document.getElementById('testMsg');
+//Changes upon upload
+const uploadMessage = document.getElementById('uploadMessage');
 
+//file data
+const data = document.getElementById('fileData');
 
 //update the errorMessage that gets displayed
 function updateErrorMessage(e) {
@@ -53,7 +55,8 @@ function handleInputChange() {
 function resetErrorMessage() {
     submitButton.disabled = true;
     updateErrorMessage("");
-    testMessage.textContent = "";
+    uploadMessage.textContent = "";
+    data.textContent = '';
 }
 
 //after files are uploaded, run this function
@@ -64,13 +67,14 @@ function uploadFiles() {
     const xhr = new XMLHttpRequest();
     const data = new FormData(form);
 
-    testMessage.textContent = 'uploading...';
+    uploadMessage.textContent = 'Uploading...';
 
     xhr.addEventListener('loadend', () => {
         if (xhr.status === 200) {
-            testMessage.textContent = 'Successful upload';
+            uploadMessage.textContent = 'Successful upload';
+            getFileContents(fileInput.files);
         } else {
-            testMessage.textContent = 'Failed upload';
+            uploadMessage.textContent = 'Failed upload';
         }
     });
 
@@ -78,6 +82,18 @@ function uploadFiles() {
     xhr.send(data);
 }
 
+function getFileContents(fileList) {
+    data.textContent = '';
+    for (const f of fileList) {
+        data.innerHTML = `NAME: ${f.name}<br><br>`;
+        data.innerHTML += `CONTENTS:`;
+        let fr = new FileReader();
+        fr.onload = function () {
+            data.innerHTML += fr.result;
+        }
+        fr.readAsText(f);
+    }
+}
 
 //function for adding a monster to the createEncounter page--we should remove this
 function addMonster() {
