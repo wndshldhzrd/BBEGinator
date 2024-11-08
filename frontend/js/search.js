@@ -37,7 +37,7 @@ function searchMonster() {
     //testing to ensure that parameters are being passed correctly
     console.log(payload);
 
-    const url = 'https://zevce.pythonanywhere.com/searchMonster/' + JSON.stringify(payload)
+    const url = 'https://zevce.pythonanywhere.com/searchMonster/' + JSON.stringify(payload);
     fetch(url)
     .then(response => response.json())  
     .then(json => {

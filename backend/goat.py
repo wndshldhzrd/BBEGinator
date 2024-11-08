@@ -16,7 +16,7 @@ goat = Monster("goat", "Goat", 10, 4, {"walk": 40},
         {
             "name": "Ram",
             "desc": "_Melee Weapon Attack:_ +3 to hit, reach 5 ft., one target. _Hit:_ 3 (1d4 + 1) bludgeoning damage."
-        }
+        },
     ],
     [
         {

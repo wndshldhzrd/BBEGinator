@@ -48,18 +48,27 @@ class Monster():
 
         dmgAvg = 0
         dmgMax = 0
+        coolActions = []
+        for x in actions:
+            if x["desc"].find("(") > -1 and x["desc"].find(")") > -1:
+                y = x["desc"].find("(")
+                z = x["desc"].find(")")
+                relevant = x["desc"][y + 1:z]
+                diceAndBonus = relevant.split(" + ")
+                
+                coolActions.append({"name": x["name"], "desc": x["desc"], "damage_dice": diceAndBonus[0], "damage_bonus": diceAndBonus[1]})
 
         #multiattack calculation
         attacks = []
-        for x in actions:
+        for x in coolActions:
             if x["name"] == "multiattack":
-                desc = x["description"].split()
+                desc = x["desc"].split()
                 for position in range(len(desc)):
                     if desc[position] == "one" or desc[position] == "two" or desc[position] == "three" or desc[position] == "four" or desc[position] == "five":
                         if desc[position + 1] == "with":
                             for i in range(WordToNum(desc[position])): attacks.append(desc[position], desc[position + 3])
         if(len(attacks) > 0): # multiattack
-            for action in actions:
+            for action in coolActions:
                 #if saving throw then pase as is
                 #else do this
                 for attack in attacks:
@@ -69,6 +78,17 @@ class Monster():
                         dmgMax = dice[0] * dice[1] + bonus
                         avgRoll = (dice[1] - 1) / 2
                         dmgAvg = dice[0] * avgRoll + bonus
+        else: # no multiattack, we calculate in another way
+            dmgAvgTotal = 0
+            dmgMaxTotal = 0
+            for action in coolActions:
+                dice = action["damage_dice"].split('d')
+                bonus = action["damage_bonus"]
+                dmgMaxTotal += int(dice[0]) * int(dice[1]) + int(bonus)
+                avgRoll = (int(dice[1]) - 1) / 2
+                dmgAvgTotal += int(dice[0]) * avgRoll + int(bonus)
+            dmgAvg = dmgAvgTotal // len(coolActions)
+            dmgMax = dmgMaxTotal // len(coolActions)
 
         self.points += dmgAvg + dmgMax
         
@@ -80,7 +100,6 @@ class Monster():
                     self.points *= 0.9
      
         jimmy = resistances.split(';')
-        print(jimmy)
         if len(jimmy) >= 1:
             for res in jimmy:
                 jimmy2 = res.split(',')
