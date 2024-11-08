@@ -5,9 +5,9 @@ var monsters = [];
 const form = document.querySelector('form');
 form.addEventListener('submit', handleSubmit);
 
+//runs when a submit occurs
 function handleSubmit(event) {
     event.preventDefault();
-
     uploadFiles();
 }
 
@@ -15,7 +15,7 @@ function handleSubmit(event) {
 const errorMessage = document.getElementById('errorMessage');
 const submitButton = document.querySelector('button[name="submitMonsters"]');
 const fileInput = document.querySelector('input[name="file"]');
-fileInput.addEventListener('change', handleSubmit);
+fileInput.addEventListener('change', handleInputChange);
 
 //for testing purposes
 const testMessage = document.getElementById('testMsg');
@@ -37,8 +37,8 @@ function checkFileType(files) {
     }
 }
 
-//handle submitted files
-function handleSubmit() {
+//user has selected new files, check their validity
+function handleInputChange() {
     resetErrorMessage();
     try {
         checkFileType(fileInput.files);
@@ -53,6 +53,7 @@ function handleSubmit() {
 function resetErrorMessage() {
     submitButton.disabled = true;
     updateErrorMessage("");
+    testMessage.textContent = "";
 }
 
 //after files are uploaded, run this function
@@ -63,8 +64,10 @@ function uploadFiles() {
     const xhr = new XMLHttpRequest();
     const data = new FormData(form);
 
+    testMessage.textContent = 'uploading...';
+
     xhr.addEventListener('loadend', () => {
-        if (xhr.satus === 200) {
+        if (xhr.status === 200) {
             testMessage.textContent = 'Successful upload';
         } else {
             testMessage.textContent = 'Failed upload';
