@@ -1,0 +1,91 @@
+{
+    "name": "Dire Wolf",
+    "size": "large",
+    "type": "Beast",
+    "tag": "",
+    "alignment": "unaligned",
+    "hitDice": 5,
+    "armorName": "natural armor",
+    "shieldBonus": 0,
+    "natArmorBonus": 2,
+    "otherArmorDesc": "14 (natural armor)",
+    "speed": 50,
+    "burrowSpeed": 0,
+    "climbSpeed": 0,
+    "flySpeed": 0,
+    "hover": false,
+    "swimSpeed": 0,
+    "customHP": false,
+    "customSpeed": false,
+    "hpText": "5",
+    "speedDesc": "50 ft.",
+    "strPoints": 17,
+    "dexPoints": 15,
+    "conPoints": 15,
+    "intPoints": 3,
+    "wisPoints": 12,
+    "chaPoints": 7,
+    "blindsight": 0,
+    "blind": false,
+    "darkvision": 0,
+    "tremorsense": 0,
+    "truesight": 0,
+    "telepathy": 0,
+    "cr": "1",
+    "customCr": "1 (200 XP)",
+    "customProf": 2,
+    "isLegendary": false,
+    "legendariesDescription": "The dire wolf can take 3 legendary actions, choosing from the options below. Only one legendary action option can be used at a time and only at the end of another creature's turn. The dire wolf regains spent legendary actions at the start of its turn.",
+    "isLair": false,
+    "lairDescription": "When fighting inside its lair, the dire wolf can invoke the ambient magic to take lair actions. On initiative count 20 (losing initiative ties), the dire wolf can take one lair action to cause one of the following effects:",
+    "lairDescriptionEnd": "The dire wolf can't repeat an effect until they have all been used, and it can't use the same effect two rounds in a row.",
+    "isMythic": false,
+    "mythicDescription": "If the dire wolf's mythic trait is active, it can use the options below as legendary actions for 1 hour after using {Some Ability}.",
+    "isRegional": false,
+    "regionalDescription": "The region containing the dire wolf's lair is warped by the creature's presence, which creates one or more of the following effects:",
+    "regionalDescriptionEnd": "If the dire wolf dies, the first two effects fade over the course of 3d10 days.",
+    "properties": [],
+    "abilities": [
+        {
+            "name": "Keen Hearing and Smell",
+            "desc": "The wolf has advantage on Wisdom (Perception) checks that rely on hearing or smell."
+        },
+        {
+            "name": "Pack Tactics",
+            "desc": "The wolf has advantage on an attack roll against a creature if at least one of the wolf's allies is within 5 ft. of the creature and the ally isn't incapacitated."
+        }
+    ],
+    "actions": [
+        {
+            "name": "Bite",
+            "desc": "_Melee Weapon Attack:_ +5 to hit, reach 5 ft., one target. _Hit:_ 10 (2d6 + 3) piercing damage. If the target is a creature, it must succeed on a DC 13 Strength saving throw or be knocked prone."
+        }
+    ],
+    "bonusActions": [],
+    "reactions": [],
+    "legendaries": [],
+    "mythics": [],
+    "lairs": [],
+    "regionals": [],
+    "sthrows": [],
+    "skills": [
+        {
+            "name": "perception",
+            "stat": "wis"
+        },
+        {
+            "name": "stealth",
+            "stat": "dex"
+        }
+    ],
+    "damagetypes": [],
+    "specialdamage": [],
+    "conditions": [],
+    "languages": [],
+    "understandsBut": "",
+    "shortName": "",
+    "pluralName": "",
+    "doubleColumns": false,
+    "separationPoint": 1,
+    "damage": []
+}
