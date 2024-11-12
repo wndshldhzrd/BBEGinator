@@ -1,5 +1,7 @@
 //Function which takes in various parameters and then gets a json of all
 //monsters that match that criteria
+import subprocess
+
 function searchMonster() {
 
     //building the json
