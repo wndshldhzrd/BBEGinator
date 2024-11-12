@@ -1,6 +1,3 @@
-from ast import Mult
-from audioop import mul
-
 spellcasters = {"wizard", "sorcerer", "bard", "cleric", "druid"}
 healers = {"cleric", "druid", "paladin"}
 
