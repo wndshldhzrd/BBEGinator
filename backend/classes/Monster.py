@@ -75,9 +75,9 @@ class Monster():
                     if action["name"].lower() == attack[1]:
                         dice = action["damage_dice"].split('d')
                         bonus = action["damage_bonus"]
-                        dmgMax = dice[0] * dice[1] + bonus
+                        dmgMax += dice[0] * dice[1] + bonus
                         avgRoll = (dice[1] - 1) / 2
-                        dmgAvg = dice[0] * avgRoll + bonus
+                        dmgAvg += dice[0] * avgRoll + bonus
         else: # no multiattack, we calculate in another way
             dmgAvgTotal = 0
             dmgMaxTotal = 0

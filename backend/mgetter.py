@@ -18,10 +18,19 @@ def get_data(url, payload):
     response = requests.get(url, payload)
     return response.json()
 
-def write_to_json(data, filename="output.json"):
-    with open(filename, 'w') as f:
-        json.dump(data['results'], f)
-        f.write('\n')
+
+def write_to_json(data, filename, comma):
+    with open(filename, 'a') as f:
+        results = data['results']  
+        if comma:
+            f.write(json.dumps(results) + ',')
+            f.flush()
+        else:
+            f.write(json.dumps(results))
+            f.flush()
+        
+
+
 
 
 def main():
@@ -79,21 +88,27 @@ def main():
 }
     url = 'https://api.open5e.com/v1/monsters/'
     filename = "output.json"
+    with open(filename, 'a') as f:
+        f.write("[")
+        f.flush()
+        
+    
     while True:
         try:
             data = get_data(url, payload)
             if data['next']:
-                write_to_json(data, filename)
+                write_to_json(data, filename, True)
                 url = data['next']
                 
             else:
-                write_to_json(data, filename)
+                write_to_json(data, filename, False)
                 break
         except Exception as e:
             print(f"An error occurred: {e}")
             break
+    with open(filename, 'a') as f:
+        f.write("]")
+        f.flush()
         
 if __name__ == "__main__":
     main()
-                
-    
