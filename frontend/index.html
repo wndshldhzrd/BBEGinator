@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"> 
+    <!-- d11149, 0a0757, f5f2ed -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,27 +11,33 @@
     <script type="module" src="src/js/abilities-block.js"></script>
     <script type="module" src="src/js/property-line.js"></script>
     <script type="module" src="src/js/property-block.js"></script>
-    <script defer src="js/script.js"></script>
+    <script defer src="js/index.js"></script>
     <title>BBEGinator Home</title>
 </head>
 <body>
-    <div class="header">
-        <ul>
-            <li><img src="img/BBEG_1-modified.png"></li>
-        </ul>
-        <div class = "nav-bar">
-            <a>Home</a>
-            <a href="/BBEGinator/search">Search Monsters</a>
-            <a href = "/BBEGinator/reccMonsters">Reccomend Monsters</a>
-            <a href = "/BBEGinator/about">About</a>
+    <div class="header"> <img class = "logo" src = "img/LogoDefault.png"></div>
+    <div class="main">
+        <div class = "menu">
+            <a href="index.html">Home</a><hr>
+            <a href="createEncounter.html">Create Encounter</a><hr>
+            <a href="search.html">Search Monsters</a><hr>
+            <a href="reccMonsters.html">Recommend Monsters</a><hr>
+            <a href="about.html">About</a>
+        </div>
+        <div class="content">
+            <div class = "title">HOME</div>
+            <div class = "flavor-Text">
+                BBEGinator is a tool designed to make better DnD 5th Edition combat encounters (because CR sucks)<br><br>
+                Create encounters: create an encounter with as many monsters as you'd like. Select, display, and download your monster stat blocks<br><br>
+                Search for monsters: filter for monsters matching your desired criteria<br><br>
+                Recommend monsters by party: input some basic information about your DnD party (class and level), as well as your desired combat encounter difficulty, to receive monster encounter suggestions<br><br>
+                Want to add homebrew? We support that :). Choose the "download as a monster" option and upload to tetra-cube's DnD 5e Statblock Generator!
+            </div>
+            <!-- Testing area -->
+            <button id="create">create monster</button>
+            <div id="monster-display"></div>
+            <!-- End testing area -->
         </div>
     </div>
-
-    <button id="create-monster">Create a monster</button>
-    <button onclick="sendData();">Send player info</button>
-    <div class="monster-display">
-            
-    </div>
-
 </body>
 </html>

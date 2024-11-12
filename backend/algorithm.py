@@ -55,18 +55,16 @@ def monsterReader(JSON):
                  "int": monster["intpoints"],
                  "wis": monster["wispoints"],
                  "cha": monster["chapoints"]}
-        saves = {"str": monster["sthrows"].get("str"),
-                 "dex": monster["sthrows"].get("dex"),
-                 "con": monster["sthrows"].get("con"),
-                 "int": monster["sthrows"].get("int"),
-                 "wis": monster["sthrows"].get("wis"),
-                 "cha": monster["sthrows"].get("cha")}
-        vulnerabilities = monster["vulnerabilities"]
-        resistances = monster["resistances"]
-        immunities = monster["immunities"]
+        saves = []#list of saves, actual points calculated inside monster class
+        for statSave in monster["sthrows"]:
+            saves.append(statSave["name"])
+        vulnerabilities = monster["damage_vulnerabilities"]
+        resistances = monster["damage_resistances"]
+        immunities = monster["damage_immunities"]
+        abilities = monster["abilities"]
         actions = monster["actions"]
         
-        monsterDatabase.append()
+        monsterDatabase.append(Monster(slug,name, ac, hp, speeds, stats, saves, vulnerabilities, resistances, immunities, actions, abilities))
 
         return monsterDatabase
 
@@ -78,6 +76,14 @@ class EncounterType(Enum):
     HARD = 3
     UNFAIR = 4
     # BULLSHIT
+
+def WordToNum(word):
+    if word == "one": return 1
+    elif word == "two": return 2
+    elif word == "three": return 3
+    elif word == "four": return 4
+    elif word == "five": return 5
+    else: return -69420
 
     #parses each monster from the mgetter and calulates its dmg/health ranges
 def Algorithm(party, difficulty, monsterList, lair, guys, mode):
@@ -104,8 +110,6 @@ def Algorithm(party, difficulty, monsterList, lair, guys, mode):
         totalDmg += p.dmg
         partyDmgMax += p.dmgMax
     
-    partyHealthAvg = totalHealth // len(party)
-    partyDmgAvg = totalDmg // len(party)
     partyDmgMaxAvg = partyDmgMax // len(party)
     
     points = (totalDmg+totalHealth+ (partyDmgMaxAvg/4)) * (float(difficulty.value) * (3 / 2))      #calculation for the point pool
@@ -119,37 +123,53 @@ def Algorithm(party, difficulty, monsterList, lair, guys, mode):
             if(i < guys - 1):
                 toSpend = randint(int(points * 0.1), int(points * 0.67))
                 print(f"I want to spend {toSpend} points")
+                found = False
                 for x, y in monsterList:
                     if y.points > toSpend - 5 and y.points < toSpend + 5:
                         tempList.append(x)
-                monsters.append(choice(tempList))
+                if not found:
+                    print("I couldn't find a monster. In the actual thing that would be a problem but this is just testing")
+                else:
+                    monsters.append(choice(tempList))
                 points -= toSpend
             else:
                 print(f"This is the last monster, using my last {points} points")
     elif(mode == "sameMonster"):
         toSpend = points / guys
         print(f"I want to buy {guys} of the same monster with a point value around {toSpend}")
+        found = False
         for x, y in monsterList:
             if y.points > toSpend - 5 and y.points < toSpend + 5:
                 tempList.append(x)
-        myGuy = choice(tempList)
+        if not found:
+            print("I couldn't find a monster. In the actual thing that would be a problem but this is just testing")
+        else:
+            myGuy = choice(tempList)
         for i in range(guys - 1): monsters.append(myGuy)
     elif(mode == "balanced"):
         toSpend = points / guys
         print(f"I want to buy {guys} monsters with point values around {toSpend}")
+        found = False
         for x, y in monsterList:
             if y.points > toSpend - 5 and y.points < toSpend + 5:
                 tempList.append(x)
-        for i in range(guys - 1): monsters.append(choice(tempList))
+        if not found:
+            print("I couldn't find a monster. In the actual thing that would be a problem but this is just testing")
+        else:
+            for i in range(guys - 1): monsters.append(choice(tempList))
     elif(mode == "boss"):
         print(f"This is a boss encounter, I will spend most of my points on a boss")
         toSpend = points if guys == 1 else randint(int(points * 0.67), int(points * 0.8))
         print(f"Generating monster 1 of {guys}")
         print(f"I want to spend {toSpend} points on the boss")
+        found = False
         for x, y in monsterList:
             if y.points > toSpend - 5 and y.points < toSpend + 5:
                 tempList.append(x)
-        monsters.append(choice(tempList))
+        if not found:
+            print("I couldn't find a monster. In the actual thing that would be a problem but this is just testing")
+        else:
+            monsters.append(choice(tempList))
         points -= toSpend
         for i in range(guys - 1):
             print(f"Generating monster {i + 2} of {guys}")
@@ -158,18 +178,22 @@ def Algorithm(party, difficulty, monsterList, lair, guys, mode):
                 toSpend = randint(int(points * 0.1), int(points * 0.67))
                 print(f"I want to spend {toSpend} points")
                 tempList = []
+                found = False
                 for x, y in monsterList:
                     if y.points > toSpend - 5 and y.points < toSpend + 5:
                         tempList.append(x)
-                monsters.append(choice(tempList))
+                if not found:
+                    print("I couldn't find a monster. In the actual thing that would be a problem but this is just testing")
+                else:
+                    monsters.append(choice(tempList))
                 points -= toSpend
             else: print(f"This is the last monster, using my last {points} points")
     elif(mode == "bossBalanced"):
         print(f"This is a boss encounter, I will spend most of my points on a boss")
         toSpend = points if guys == 1 else randint(int(points * 0.67), int(points * 0.8))
         print(f"I want to spend {toSpend} points on the boss")
+        found = False
         for x, y in monsterList:
-            found = False
             if y.points > toSpend - 5 and y.points < toSpend + 5:
                 tempList.append(x)
         if not found:
@@ -193,9 +217,11 @@ def Algorithm(party, difficulty, monsterList, lair, guys, mode):
     return monsters
 
 #self, slug, ac, hp, speeds, stats, saves, vulnerabilities, resistances, immunities, actions, cr
-georgeBush = Monster("georgie", "George W. Bush", 5, 45, 300, [0,5,30,2,5,6], [None,None,None,None,None,None],[],[],[],[],4)
-jackson = Monster("jackie", "Michael Jackson", 5, 45, 300, [0,5,30,2,5,6], [None,None,None,None,None,None],[],[],[],[],4)
-barry = Monster("bartholomew", "Bartholemew", 5, 45, 300, [0,5,30,2,5,6], [None,None,None,None,None,None],[],[],[],[],4)
+georgeBush = Monster("georgie", "George W. Bush", 5, 45, [0,5,30,2,5,6], [None,None,None,None,None,None],[],[],[],[],[],[],4)
+jackson = Monster("jackie", "Michael Jackson", 5, 45, [0,5,30,2,5,6], [None,None,None,None,None,None],[],[],[],[],[],[],4)
+barry = Monster("bartholomew", "Bartholemew", 5, 45, [0,5,30,2,5,6], [None,None,None,None,None,None],[],[],[],[],[],[],4)
+
+print(georgeBush.points, jackson.points, barry.points)
 
 database = {georgeBush.slug:georgeBush, jackson.slug : jackson, barry.slug:barry}
 #party = partyReader('''party.json''')
@@ -206,4 +232,4 @@ for x, y in database.items():
     monsterList.append((y.points, x))
 
 
-monsterList = Algorithm(party, EncounterType.MEDIUM, database.items(), None, 4, "bossBalanced")
+monsterList = Algorithm(party, EncounterType.MEDIUM, database.items(), None, 4, "boss")

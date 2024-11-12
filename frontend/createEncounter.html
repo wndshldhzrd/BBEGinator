@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <script defer src="js/createEncounter.js"></script>
+    <title>BBEGinator</title>
+</head>
+<body>
+    <div class="header"><img class = "logo" src = "img/LogoDefault.png"></div>
+    <div class="main">
+        <div class = "menu">
+            <a href="index.html">Home</a><hr>
+            <a href="createEncounter.html">Create Encounter</a><hr>
+            <a href="search.html">Search Monsters</a><hr>
+            <a href="reccMonsters.html">Recommend Monsters</a><hr>
+            <a href="about.html">About</a>
+        </div>
+
+        <div class="content">
+            <div class = "title">CREATE ENCOUNTER</div>
+
+            <!--button to upload .monster files-->
+            <form action="https://httpbin.org/post" method="post" enctype="multipart/form-data">
+                <input name="file" type="file" multiple accept = ".monster">
+                <div class = "flavor-Text"></div>
+                <button name="submitMonsters" type="submit">Submit Monsters</button>
+            </form>
+            <div class = "flavor-Text">
+                Select .monster files above to upload and view your encounter's statblocks.<br>
+                <span id="errorMessage"></span>
+                <span id="uploadMessage"></span>
+            </div>
+
+            <div class = "flavor-Text">
+                <br><br>Uploaded results:
+                <ul id="fileData"></ul>
+            </div>
+
+
+            <!--This div is where player stat blocks get added to the page for the end user to fill out-->
+            <div id="monsterStatBlocks"></div>
+            
+        <!--<div id = "results"></div> -->
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,18 +1,24 @@
-from ast import Mult
-from audioop import mul
+spellcasters = {"wizard", "sorcerer", "bard", "cleric", "druid"}
+healers = {"cleric", "druid", "paladin"}
+
+#class was stored as tuple?
 
 
 class PartyMember():
     health = 1
     theClass = 0
-    def __init__(self, health, theClass, level):
+    #for each class run this and +=
+    def __init__(self, health, theClass, level, stats):
         self.health = health
         self.theClass = theClass
+        self.stats = stats
+        
         self.healer = False
         self.spellcaster = False
         self.dmg = 0
-        self.dmgMax =0
-        if (self.theClass == "wizard" or self.theClass == "sorcerer" or self.theClass == "bard" or self.theClass == "cleric" or self.theClass == "druid"):
+        self.dmgMax = 0
+        
+        if self.theClass in spellcasters:
             self.spellcaster = True
             self.dmg = (level//2)*10 + 5  #spell levels 
             self.dmgMax = self.dmg * 2 #double dmg
@@ -89,7 +95,11 @@ class PartyMember():
                     spells+= 1
                 self.dmg = (((level)//2)*spells)*10 + 7
 
-        self.dmgMax = self.dmg * 2    
+        self.dmgMax = self.dmg * 2
         
-        if (theClass == "cleric" or theClass == "druid" or theClass == "paladin"):    #designated healer point calculations
+        if theClass in healers:    #designated healer point calculations
             self.health += (self.health//2)
+
+        for stat in range(6):   #for each stat
+            if(stats[stat]) > 10:
+                self.points += ((stats[stat] - 10)//2 * 5)  #if the stat is greater than 10, then add to points
