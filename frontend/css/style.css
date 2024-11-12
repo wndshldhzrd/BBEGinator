@@ -158,14 +158,14 @@ button {
     border-radius: 5px;
 }
 
-#recsContain{
+.monstersContain{
     width: 45%;
     margin-left: 2.5%;
     min-height: 500px;
     float:left;
 }
 
-#recs{
+.monsters{
     min-height: 500px;
     background-color: #0a0757;
 }
@@ -213,7 +213,14 @@ button {
 .playerContent{
   background-color: #eee1cc;
   color:#0a0757;
+  border-width: 0px;
   font-size: large;
   padding-left: 10px;
   font-style: bolder;
+}
+
+#monsterStatBlocks{
+    background-color: #d11149;
+    color: #eee1cc;
+    padding-top: 5px;
 }
