@@ -20,8 +20,10 @@ class PartyMember():
         self.dmgMax = 0
         self.stats = stats
         self.saves = [0,0,0,0,0,0]
+        
         self.proficiency = 2
         self.resistances = 0
+        self.points = 0
         
         #proficiency calc
         if (level > 16): self.proficiency = 6
@@ -119,8 +121,8 @@ class PartyMember():
         for i in range(len(classes)):
             if (classes[i] == theClass):  self.saves[0] + self.proficiency, self.saves[2] + self.proficiency    #barbarian
             if (classes[i] == theClass):  self.saves[1] + self.proficiency, self.saves[1] + self.proficiency    #bard
-            if (classes[i] == theClass):  self.saves[5] + self.proficiency, self.saves[6] + self.proficiency    #cleric
-            if (classes[i] == theClass):  self.saves[4] + self.proficiency, self.saves[5] + self.proficiency    #druid
+            if (classes[i] == theClass):  self.saves[4] + self.proficiency, self.saves[5] + self.proficiency    #cleric
+            if (classes[i] == theClass):  self.saves[3] + self.proficiency, self.saves[4] + self.proficiency    #druid
             if (classes[i] == theClass):  self.saves[0] + self.proficiency, self.saves[2] + self.proficiency    #fighter
             if (classes[i] == theClass):  self.saves[0] + self.proficiency, self.saves[1] + self.proficiency    #monk
             if (classes[i] == theClass):  self.saves[4] + self.proficiency, self.saves[5] + self.proficiency    #paladin
@@ -135,4 +137,5 @@ class PartyMember():
             if(stats[stat]) > 10:
                 self.points += ((stats[stat] - 10)//2 * 5)  #if the stat is greater than 10, then add to points
 
+        self.points += self.dmg + self.dmgMax
         self.points *= (1.1 ** self.resistances)
