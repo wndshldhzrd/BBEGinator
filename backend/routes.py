@@ -15,6 +15,16 @@ app = Flask(__name__)
 def landing():
     return "hello"
 
+@app.route("/test-script")
+def test_script():
+    @after_this_request
+    def add_header(response):
+        response.headers.add('Access-Control-Allow-Origin', "*")
+        return response
+    
+    jsonResp = {"test": "test"}
+    return jsonify(jsonResp)
+
 #api call for searching for monsters by their stats
 #check the searchMonster function in frontend/js/script.js to see how the front end call is being made to the backend
 #check mgetter.py to see the call the backend will make to open5e
@@ -38,7 +48,7 @@ def searchMonster(info):
 
 #api call for getting a recommended list of monsters based on the stats of the entire party
 #check the getRecommendedMonsters function in frontend/js/script.js to see how the front end call is being made to the backend
-@app.route("getRecommendation/<string:info>")
+@app.route("/getRecommendation/<string:info>")
 def getRecommendation(info):
       
     #boilerplate code don't touch this  

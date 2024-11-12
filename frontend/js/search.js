@@ -65,8 +65,14 @@ function downloadMonster() {
 }
 
 //test function
+const testMessage = document.getElementById('testMsg');
 function testRunningPython() {
-    var xhr = new XMLHttpRequest();
-    xhr.open("GET", "backend/test_script.py", true);
-    xhr.send();
+    testMessage.textContent = "Button clicked, awaiting result... ";
+    const url = "http://localhost:5000/test-script";
+    fetch(url)
+    .then(response => response.json())
+    .then(json => {
+        console.log(json);
+        testMessage.textContent += JSON.stringify(json);
+    })
 }
