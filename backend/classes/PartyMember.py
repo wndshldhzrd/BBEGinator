@@ -1,5 +1,6 @@
 spellcasters = {"wizard", "sorcerer", "bard", "cleric", "druid"}
 healers = {"cleric", "druid", "paladin"}
+classes = ["barbarian", "bard", "cleric", "druid", "fighter" , "monk", "paladin", "ranger", "rogue", "sorcerer", "warlock", "wizard"]
 
 #class was stored as tuple?
 
@@ -17,10 +18,23 @@ class PartyMember():
         self.spellcaster = False
         self.dmg = 0
         self.dmgMax = 0
+        self.stats = stats
+        self.saves = [0,0,0,0,0,0]
         
+        self.proficiency = 2
+        self.resistances = 0
+        self.points = 0
+        
+        #proficiency calc
+        if (level > 16): self.proficiency = 6
+        if (level > 12): self.proficiency = 5
+        if (level > 8): self.proficiency = 4
+        if (level > 4): self.proficiency = 3
+
+
         if self.theClass in spellcasters:
             self.spellcaster = True
-            self.dmg = (level//2)*10 + 5  #spell levels 
+            self.dmg = (level+1//2)*10 + 5  #spell levels 
             self.dmgMax = self.dmg * 2 #double dmg
         else:
             if (theClass == "fighter"):     #im making so many if statements im so sorry
@@ -79,6 +93,8 @@ class PartyMember():
                     rageDmg += 1
                 if(level > 5):
                     multiattack+= 1
+                if(level > 2):
+                    self.resistances += 1
                 self.dmg = multiattack * (rageDmg + 11)
             elif(theClass == "warlock"):            #how the hell? use base spell slots and then add after level 11, additionally, need to keep eldritch blast updated
 
@@ -100,6 +116,26 @@ class PartyMember():
         if theClass in healers:    #designated healer point calculations
             self.health += (self.health//2)
 
-        for stat in range(6):   #for each stat
+
+        #save caluclation setup
+        for i in range(len(classes)):
+            if (classes[i] == theClass):  self.saves[0] + self.proficiency, self.saves[2] + self.proficiency    #barbarian
+            if (classes[i] == theClass):  self.saves[1] + self.proficiency, self.saves[1] + self.proficiency    #bard
+            if (classes[i] == theClass):  self.saves[4] + self.proficiency, self.saves[5] + self.proficiency    #cleric
+            if (classes[i] == theClass):  self.saves[3] + self.proficiency, self.saves[4] + self.proficiency    #druid
+            if (classes[i] == theClass):  self.saves[0] + self.proficiency, self.saves[2] + self.proficiency    #fighter
+            if (classes[i] == theClass):  self.saves[0] + self.proficiency, self.saves[1] + self.proficiency    #monk
+            if (classes[i] == theClass):  self.saves[4] + self.proficiency, self.saves[5] + self.proficiency    #paladin
+            if (classes[i] == theClass):  self.saves[0] + self.proficiency, self.saves[1] + self.proficiency    #ranger
+            if (classes[i] == theClass):  self.saves[1] + self.proficiency, self.saves[3] + self.proficiency    #rogue
+            if (classes[i] == theClass):  self.saves[2] + self.proficiency, self.saves[5] + self.proficiency    #sorcere
+            if (classes[i] == theClass):  self.saves[4] + self.proficiency, self.saves[5] + self.proficiency    #warlock
+            if (classes[i] == theClass):  self.saves[3] + self.proficiency, self.saves[4] + self.proficiency    #wizard
+        for stat in range(6):   #for each stat and saves
+            if (stats[stat] + self.saves[stat] > 10):
+                self.points += ((stats[stat]+self.saves[stat] - 10)//2 * 5)  #if the stat is greater than 10, then add to points
             if(stats[stat]) > 10:
                 self.points += ((stats[stat] - 10)//2 * 5)  #if the stat is greater than 10, then add to points
+
+        self.points += self.dmg + self.dmgMax
+        self.points *= (1.1 ** self.resistances)

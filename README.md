@@ -1,5 +1,6 @@
 # Description
 sans undertale
+goat
 
 The aim of this project is to provide a tool for which players of the game Dungeons & Dragons Fifth Edition can create combat encounters swiftly and with less confusion. Rather than have them go through the current “CR” (Challenge Rating) rating system, we aim to build a website for users to tailor encounters to their needs: sorting by monster types, themes, and a difficulty level that scales to their DnD party (using an algorithm that scales better than CR), etc. This project will initially take the form of a website with hopes for developing an app in the future.
 We intend to make our project compatible with this open-source website to create and export DnD monsters as a special .monster file. This will allow users to edit the monster suggestions they are given, should they choose to export it as a .monster file from our program.

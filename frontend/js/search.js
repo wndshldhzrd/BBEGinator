@@ -1,5 +1,6 @@
 //Function which takes in various parameters and then gets a json of all
 //monsters that match that criteria
+
 function searchMonster() {
 
     //building the json
@@ -65,9 +66,9 @@ function downloadMonster() {
 }
 
 //test function
-function testRunningPython() {
+function runPythonScript(){
     var xhr = new XMLHttpRequest();
-    xhr.open("GET", "backend/test_script.py", true);
+    xhr.open(“GET”, “test.py”, true);
     xhr.send();
 }
 

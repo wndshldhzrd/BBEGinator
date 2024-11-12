@@ -25,6 +25,7 @@ def partyReader(JSON):
         health = int(player["health"])
         theClass = player["class"]
         level = int(player["level"])
+        #stats = player["stats"]
 
         partyMembers.append(PartyMember(health, theClass, level))
     
@@ -217,19 +218,19 @@ def Algorithm(party, difficulty, monsterList, lair, guys, mode):
     return monsters
 
 #self, slug, ac, hp, speeds, stats, saves, vulnerabilities, resistances, immunities, actions, cr
-georgeBush = Monster("georgie", "George W. Bush", 5, 45, [0,5,30,2,5,6], [None,None,None,None,None,None],[],[],[],[],[],[],4)
-jackson = Monster("jackie", "Michael Jackson", 5, 45, [0,5,30,2,5,6], [None,None,None,None,None,None],[],[],[],[],[],[],4)
-barry = Monster("bartholomew", "Bartholemew", 5, 45, [0,5,30,2,5,6], [None,None,None,None,None,None],[],[],[],[],[],[],4)
+georgeBush = Monster("georgie", "George W. Bush", 5, 45,[{"ground":30,"flying":0,"burrow":0}], {"str":0,"dex":5,"con":30,"int":2,"wis":5,"cha":6}, [{"name": "str", "order":"0"},{"name": "int", "order":"3"}],"","","","","",4)
+jackson = Monster("jackie", "Michael Jackson", 5, 45,[{"ground":30,"flying":0,"burrow":0}],  {"str":0,"dex":5,"con":30,"int":2,"wis":5,"cha":6}, [{"name": "int", "order":"3"},{"name": "wis", "order":"4"}],"","","","","",4)
+barry = Monster("bartholomew", "Bartholemew", 5, 45,[{"ground":30,"flying":0,"burrow":0}],  {"str":0,"dex":5,"con":30,"int":2,"wis":5,"cha":6}, [{"name": "con", "order":"2"},{"name": "cha", "order":"5"}],"","","","","",4)
 
 print(georgeBush.points, jackson.points, barry.points)
 
 database = {georgeBush.slug:georgeBush, jackson.slug : jackson, barry.slug:barry}
 #party = partyReader('''party.json''')
-party = {PartyMember(17, "fighter", 2), PartyMember(12, "cleric", 2), PartyMember(12, "rogue", 2)}
+party = {PartyMember(12, "fighter", 1, [17, 14, 14, 8, 12, 10])}
 
 print(database)
 for x, y in database.items():
     monsterList.append((y.points, x))
 
 
-monsterList = Algorithm(party, EncounterType.MEDIUM, database.items(), None, 4, "boss")
+monsterList = Algorithm(party, EncounterType.MEDIUM, database.items(), None, 3, "balanced")

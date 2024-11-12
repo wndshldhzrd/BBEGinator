@@ -31,4 +31,7 @@ goat = Monster("goat", "Goat", 10, 4, {"walk": 40},
     0
     )
 
+rick = PartyMember(12, "fighter", 1, [17, 14, 14, 8, 10, 12])
+
 print(goat.points)
+print(rick.points)
