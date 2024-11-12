@@ -1,4 +1,6 @@
 import json
+import sys
+from Monster import Monster
 
 
 def parse_monster_class(input_file):
@@ -23,13 +25,12 @@ def parse_monster_class(input_file):
             actions = data[i]['actions']
             cr = data[i]['cr']
             
-            monsterInfo.append([slug, name, ac, hp, speeds, stats, saves, vulnerabilities, resistances, immunities, actions, cr])
+            monster = Monster(slug, name, ac, hp, speeds, stats, saves, vulnerabilities, resistances, immunities, actions, cr)
+            monsterInfo.append(monster)
     return monsterInfo
 
 input_file = 'output.json'
 parsed_data = parse_monster_class(input_file)
-for val in parsed_data:
-    print(val)
-    print("-----------------------")
+
 
 
