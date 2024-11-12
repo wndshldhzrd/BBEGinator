@@ -65,8 +65,7 @@ function downloadMonster() {
 }
 
 //test function
-function testRunningPython() {
-    var xhr = new XMLHttpRequest();
-    xhr.open("GET", "backend/test_script.py", true);
-    xhr.send();
+function runPythonScript(){
+    var pythonScriptPath = "test.py";
+    subprocess.run(["python", pythonScriptPath]);
 }
