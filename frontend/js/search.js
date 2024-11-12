@@ -1,6 +1,5 @@
 //Function which takes in various parameters and then gets a json of all
 //monsters that match that criteria
-import subprocess
 
 function searchMonster() {
 
@@ -68,6 +67,7 @@ function downloadMonster() {
 
 //test function
 function runPythonScript(){
-    var pythonScriptPath = "test.py";
-    subprocess.run(["python", pythonScriptPath]);
+    var xhr = new XMLHttpRequest();
+    xhr.open(“GET”, “test.py”, true);
+    xhr.send();
 }
