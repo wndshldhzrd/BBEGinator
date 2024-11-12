@@ -77,3 +77,13 @@ function testRunningPython() {
         testMessage.textContent += JSON.stringify(json);
     })
 }
+
+//Opening/closing filter options
+function toggleFilter(){
+    const filters = document.getElementById("inputs");
+    if(filters.style.display === "block"){
+        filters.style.display = "none";
+    }else{
+        filters.style.display = "block";
+    }
+}

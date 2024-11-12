@@ -21,6 +21,10 @@
 
       <div class="content">
         <div class = "title">SEARCH FOR MONSTERS</div>
+
+        <!-- <button id = "filter" style = "font-size: large;" onclick = "toggleFilter()">
+          Filter by... &emsp;</button> -->
+
         <div id = "inputs">
           <label for="input-size">Size:</label>
             <select class = "dropdown"  id="size-dropdown">      
@@ -32,7 +36,7 @@
             <option value="huge">Huge</option>
             <option value="Gargantuan">Gargantuan</option>
           </select>
-          <br>
+
           <label for="input-type">Type:</label>
           <select class = "dropdown" id="type-dropdown">        
             <option value="unknown"></option>      
@@ -51,7 +55,7 @@
             <option value="plant">Plant</option>
             <option value="undead">Undead</option>
           </select>
-          <br>
+        
           <label for="input-type">Alignment:</label>
           <select class = "dropdown" id="alignmment-dropdown">        
             <option value="unknow"></option>      
@@ -73,31 +77,34 @@
                 <th>Max</th>
               </tr>
               <tr>
-                <td>&nbsp&nbsp AC &nbsp&nbsp</td>
+                <td> AC </td>
                 <td><input class = "stat-Input" id = "acMin" type = "number" min = "0" value = 0></td>
                 <td><input class = "stat-Input" id = "acMax"  type = "number" min = "0" value = 100></td>
-              </tr>
-              <tr>
+              
                 <td>HP</td>
                 <td><input class = "stat-Input" id = "hpMin" type = "number" min = "0" value = 0></td>
                 <td><input class = "stat-Input" id = "hpMax"  type = "number" min = "0" value = 676></td>
-              </tr>
-              <tr>
+              
                 <td>Speed</td>
                 <td><input class = "stat-Input" id = "speedMin" type = "number" min = "0" value = 0></td>
                 <td><input class = "stat-Input" id = "speedMax"  type = "number" min = "0" value = 300></td>
+
+                <td>CR</td>
+                <td><input class = "stat-Input" id = "crMin"  type = "number" min = "1" max = "30" value = 1></td>
+                <td><input class = "stat-Input" id = "crMax"  type = "number" min = "1" max = "30" value = 30></td>
+              </tr>
+              <tr>
+                <td><hr></td>
               </tr>
               <tr>
                 <td>Str</td>
                 <td><input class = "stat-Input" id = "strMin" type = "number" min = "0" max = "30" value = 0></td>
                 <td><input class = "stat-Input" id = "strMax"  type = "number" min = "0" max = "30" value = 30></td>
-              </tr>
-              <tr>
+              
                 <td>Dex</td>
                 <td><input class = "stat-Input" id = "dexMin"  type = "number" min = "0" max = "30" value = 0></td>
                 <td><input class = "stat-Input" id = "dexMax"  type = "number" min = "0" max = "30" value = 30></td>
-              </tr>
-              <tr>
+              
                 <td>Con</td>
                 <td><input class = "stat-Input" id = "conMin"  type = "number" min = "0" max = "30" value = 0></td>
                 <td><input class = "stat-Input" id = "conMax"  type = "number" min = "0" max = "30" value = 30></td>
@@ -106,24 +113,21 @@
                 <td>Int</td>
                 <td><input class = "stat-Input" id = "intMin"  type = "number" min = "0" max = "30" value = 0></td>
                 <td><input class = "stat-Input" id = "intMax"  type = "number" min = "0" max = "30" value = 30></td>
-              </tr>
-              <tr>
+              
                 <td>Wis</td>
                 <td><input class = "stat-Input" id = "wisMin"  type = "number" min = "0" max = "30" value = 0></td>
                 <td><input class = "stat-Input" id = "wisMax"  type = "number" min = "0" max = "30" value = 30> </td>
-              </tr>
-              <tr>
+              
                 <td>Cha</td>
                 <td><input class = "stat-Input" id = "chaMin"  type = "number" min = "0" max = "30" value = 0></td>
                 <td><input class = "stat-Input" id = "chaMax"  type = "number" min = "0" max = "30" value = 30></td>
               </tr><tr>
-                <td>CR</td>
-                <td><input class = "stat-Input" id = "crMin"  type = "number" min = "1" max = "30" value = 1></td>
-                <td><input class = "stat-Input" id = "crMax"  type = "number" min = "1" max = "30" value = 30></td>
+                
               </tr>
             </table> 
+            </div> 
             <button onclick="searchMonster();">SEARCH FOR MONSTER!</button>
-            </div>
+            <br><br>
             <div style><a class="subheader">Results</a>
               <select class = "dropdown" id="Sort-dropdown">
                 <option value="name">Name </option>
