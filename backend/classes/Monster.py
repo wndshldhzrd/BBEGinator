@@ -41,7 +41,7 @@ class Monster():
         statCalc = stats.keys()
         for stat in statCalc:   #for each stat
             if(stats[stat]) > 10:
-                self.points += ((stats[stat] - 10)//2 * 5)  #if the stat is greater than 10, then add to points
+                self.points += ((stats[stat] - 10)//2 * 2)  #if the stat is greater than 10, then add to points
             for SaveProficiency in saves:
                 if (stats[stat] == SaveProficiency):Saves[stat] = stats[stat]//2 + prof # for each stat, find if its proficient in that save and then add respectively
                 else:Saves[stat] = stats[stat]//2
@@ -87,8 +87,14 @@ class Monster():
                 dmgMaxTotal += int(dice[0]) * int(dice[1]) + int(bonus)
                 avgRoll = (int(dice[1]) - 1) / 2
                 dmgAvgTotal += int(dice[0]) * avgRoll + int(bonus)
-            dmgAvg = dmgAvgTotal // len(coolActions)
-            dmgMax = dmgMaxTotal // len(coolActions)
+            if (len(coolActions) > 0): dmgAvg = dmgAvgTotal // len(coolActions)
+            else: dmgAvg = dmgAvgTotal
+            if (len(coolActions) > 0): dmgMax = dmgMaxTotal // len(coolActions)
+            else: dmgMax = dmgMaxTotal
+
+        
+        #spell calculation, how tf we do this?
+
 
         self.points += dmgAvg + dmgMax
         

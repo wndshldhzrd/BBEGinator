@@ -121,8 +121,8 @@ class PartyMember():
         for i in range(len(classes)):
             if (classes[i] == theClass):  self.saves[0] + self.proficiency, self.saves[2] + self.proficiency    #barbarian
             if (classes[i] == theClass):  self.saves[1] + self.proficiency, self.saves[1] + self.proficiency    #bard
-            if (classes[i] == theClass):  self.saves[5] + self.proficiency, self.saves[6] + self.proficiency    #cleric
-            if (classes[i] == theClass):  self.saves[4] + self.proficiency, self.saves[5] + self.proficiency    #druid
+            if (classes[i] == theClass):  self.saves[4] + self.proficiency, self.saves[5] + self.proficiency    #cleric
+            if (classes[i] == theClass):  self.saves[3] + self.proficiency, self.saves[4] + self.proficiency    #druid
             if (classes[i] == theClass):  self.saves[4] + self.proficiency, self.saves[5] + self.proficiency    #cleric
             if (classes[i] == theClass):  self.saves[3] + self.proficiency, self.saves[4] + self.proficiency    #druid
             if (classes[i] == theClass):  self.saves[0] + self.proficiency, self.saves[2] + self.proficiency    #fighter
@@ -135,9 +135,9 @@ class PartyMember():
             if (classes[i] == theClass):  self.saves[3] + self.proficiency, self.saves[4] + self.proficiency    #wizard
         for stat in range(6):   #for each stat and saves
             if (stats[stat] + self.saves[stat] > 10):
-                self.points += ((stats[stat]+self.saves[stat] - 10)//2 * 5)  #if the stat is greater than 10, then add to points
+                self.points += ((stats[stat]+self.saves[stat] - 10)//2 * 2)  #if the stat is greater than 10, then add to points
             if(stats[stat]) > 10:
-                self.points += ((stats[stat] - 10)//2 * 5)  #if the stat is greater than 10, then add to points
+                self.points += ((stats[stat] - 10)//2 * 2)  #if the stat is greater than 10, then add to points
 
         self.points += self.dmg + self.dmgMax
         self.points *= (1.1 ** self.resistances)
