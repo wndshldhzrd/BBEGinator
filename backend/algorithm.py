@@ -107,15 +107,13 @@ def Algorithm(party, difficulty, monsterList, lair, guys, mode):
     partyTags = [] # important bits about party members which may be useful for calculation
     
     for p in party:             #parses the party for information and to generate a points pool for the monsters to be generated from
-        totalHealth += p.health
-        totalDmg += p.dmg
-        partyDmgMax += p.dmgMax
+        points += p.points
     
-    partyDmgMaxAvg = partyDmgMax // len(party)
-    
-    points = (totalDmg+totalHealth+ (partyDmgMaxAvg/4)) * (float(difficulty.value) * (3 / 2))      #calculation for the point pool
+    #points *= difficulty
     print(points)
     print(f"I have {points} points to spend")
+    
+    
     tempList = []
     if(mode == "random"):
         for i in range(guys):
@@ -218,15 +216,15 @@ def Algorithm(party, difficulty, monsterList, lair, guys, mode):
     return monsters
 
 #self, slug, ac, hp, speeds, stats, saves, vulnerabilities, resistances, immunities, actions, cr
-georgeBush = Monster("georgie", "George W. Bush", 5, 45,[{"ground":30,"flying":0,"burrow":0}], {"str":0,"dex":5,"con":30,"int":2,"wis":5,"cha":6}, [{"name": "str", "order":"0"},{"name": "int", "order":"3"}],"","","","","",4)
-jackson = Monster("jackie", "Michael Jackson", 5, 45,[{"ground":30,"flying":0,"burrow":0}],  {"str":0,"dex":5,"con":30,"int":2,"wis":5,"cha":6}, [{"name": "int", "order":"3"},{"name": "wis", "order":"4"}],"","","","","",4)
-barry = Monster("bartholomew", "Bartholemew", 5, 45,[{"ground":30,"flying":0,"burrow":0}],  {"str":0,"dex":5,"con":30,"int":2,"wis":5,"cha":6}, [{"name": "con", "order":"2"},{"name": "cha", "order":"5"}],"","","","","",4)
+georgeBush = Monster("georgie", "George W. Bush", 10, 4,[{"ground":40,"flying":0,"burrow":0}], {"str":12,"dex":10,"con":11,"int":2,"wis":10,"cha":5}, [],"","","","","Ram. Melee Weapon Attack: +3 to hit, reach 5 ft., one target. Hit: (1d4 + 1) bludgeoning damage",0)
+jackson = Monster("jackie", "Michael Jackson", 5, 45,[{"ground":30,"flying":0,"burrow":0}],  {"str":0,"dex":5,"con":30,"int":2,"wis":5,"cha":6}, [],"","","","","Ram. Melee Weapon Attack: +3 to hit, reach 5 ft., one target. Hit: (1d4 + 1) bludgeoning damage",0)
+barry = Monster("bartholomew", "Bartholemew", 5, 45,[{"ground":30,"flying":0,"burrow":0}],  {"str":0,"dex":5,"con":30,"int":2,"wis":5,"cha":6}, [],"","","","","Ram. Melee Weapon Attack: +3 to hit, reach 5 ft., one target. Hit: (1d4 + 1) bludgeoning damage",0)
 
 print(georgeBush.points, jackson.points, barry.points)
 
 database = {georgeBush.slug:georgeBush, jackson.slug : jackson, barry.slug:barry}
 #party = partyReader('''party.json''')
-party = {PartyMember(12, "fighter", 1, [17, 14, 14, 8, 12, 10])}
+party = {PartyMember(12, "fighter", 1, [16, 14, 16, 10, 12, 10])}
 
 print(database)
 for x, y in database.items():
