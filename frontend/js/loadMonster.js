@@ -384,12 +384,11 @@ function damageTypesMonsterPropLine(damageTypes) {
         const header = createEleWithText("h4", type.name + " " + type.note);
         propLine.appendChild(header);
     }
-
     return propLine;
 }
 
 function languagesMonsterPropLine(languages) {
-    let propLine = null;
+    let propLine = document.createElement("property-line");
     const languageHeader = createEleWithText("h4", "Languages");
     propLine.appendChild(languageHeader);
 
@@ -445,7 +444,7 @@ function loadMonsterMonster (monster) {
     const topStats = document.createElement("top-stats");
 
     //ac
-    topStats.appendChild(createBasicMonsterPropLineerPropLine("Armor Class", monster.otherArmorDesc));
+    topStats.appendChild(createBasicMonsterPropLine("Armor Class", monster.otherArmorDesc));
 
 
     //hp
@@ -566,8 +565,7 @@ function loadMonsterMonster (monster) {
         makeMonsterPropBlock(monster.regionals, statBlock)
     }   
 
-    const monsterDisplay = document.querySelector(".monster-display");
-    monsterDisplay.innerHTML = "";
+    const monsterDisplay = document.querySelector("#monster-display");
     monsterDisplay.appendChild(statBlock);
 }
 
@@ -581,7 +579,7 @@ async function fetchMonster(monsterName) {
     // Currently local only, need to change this for backend fetch calls when set up
     const response = await fetch(`data/${monsterName}.json`)
     .then (response => response.json())
-    .then (monster => loadJSONMonster(monster));
+    .then (monster => loadMonsterMonster(monster));
 }
 
 const createMonsterButton = document.querySelector("#create");
@@ -589,9 +587,9 @@ createMonsterButton.addEventListener("click", () => {
     const monsterDisplay = document.querySelector('#monster-display');
     monsterDisplay.innerHTML = "";
     fetchMonster("goat");
-    fetchMonster("goat");
-    fetchMonster("goat");
-    fetchMonster("goat");
-    fetchMonster("goat");
-    fetchMonster("goat");
+    // fetchMonster("goat");
+    // fetchMonster("goat");
+    // fetchMonster("goat");
+    // fetchMonster("goat");
+    // fetchMonster("goat");
 });
