@@ -122,3 +122,12 @@ class Monster():
                     
         if(self.points < 1): self.points = 1
         self.points = int(self.points)
+
+
+
+        #abilities points
+        multiplier = 1.0
+        for a in self.abilities:
+            multiplier += .1
+
+        self.points *= multiplier
