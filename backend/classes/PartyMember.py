@@ -139,5 +139,6 @@ class PartyMember():
             if(stats[stat]) > 10:
                 self.points += ((stats[stat] - 10)//2 * 2)  #if the stat is greater than 10, then add to points
 
+        self.points += self.health
         self.points += self.dmg + self.dmgMax
         self.points *= (1.1 ** self.resistances)
