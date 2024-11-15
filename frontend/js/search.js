@@ -67,15 +67,25 @@ function downloadMonster() {
 
 //test function
 const testMessage = document.getElementById('testMsg');
-function testRunningPython() {
+const testMessage2 = document.getElementById('testMsg2');
+async function testRunningPython() {
     testMessage.textContent = "Button clicked, awaiting result... ";
     const url = "http://localhost:5000/test-script";
-    fetch(url)
+
+    await fetch(url, {signal: AbortSignal.timeout(10000000) })
     .then(response => response.json())
     .then(json => {
-        console.log(json);
-        testMessage.textContent += JSON.stringify(json);
-    })
+        testMessage2.textContent = "TEST";
+    });
+
+    //console.log(json);
+    //testMessage.textContent = "";
+    /*testMessage.innerHTML = "Search results:<br>";
+        results = json["results"];
+        for (r of results) {
+            const name = r["name"];
+            testMessage.innerHTML += name + "<br>";
+        }*/
 }
 
 //Opening/closing filter options
