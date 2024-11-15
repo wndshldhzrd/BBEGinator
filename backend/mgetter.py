@@ -1,17 +1,5 @@
 import json
 import requests
-import time
-
-'''
-this is most definitely not how this script will look in final form. its just existing here temporarily until
-we know exactly how we want to query. i'll turn it into a function later where the param will be a payload and
-we'll just plug it in and then scoop out the json information
-
-'''
-
-
-
-
 
 
 def get_data(url, payload):
@@ -24,8 +12,7 @@ def write_to_json(data, filename="output.json"):
         f.write('\n')
 
 
-def main():
-    payload = {
+def getMonsters(params = {
     
     #slug also contains where the creature is from(document) so it isn't exactly the name btw sometimes(its complicated)
 
@@ -76,7 +63,8 @@ def main():
     'document__slug': '',
     'document__slug__in': '',
     'document__slug__not_in': ''
-}
+}):
+    payload = params
     url = 'https://api.open5e.com/v1/monsters/'
     filename = "output.json"
     while True:
@@ -92,8 +80,3 @@ def main():
         except Exception as e:
             print(f"An error occurred: {e}")
             break
-        
-if __name__ == "__main__":
-    main()
-                
-    
