@@ -53,7 +53,7 @@ function throwsJSONPropLine(monster, name, keys, printKeys) {
 
 //Used for implementing property blocks w/ the input of a monster category (ex: monster.actions)
 //and statBlock (for appendChild)
-function makeJsonPropBlock(category, statBlock){
+function makeJSONPropBlock(category, statBlock){
     //names are based off monster.actions (hence "actions"), works w/ other categories.
     let actions = [];
     for(i in category){
@@ -232,8 +232,7 @@ function loadJSONMonster (monster) {
         makeJSONPropBlock(monster.legendary_actions, statBlock)
     }
 
-    const monsterDisplay = document.querySelector(".monster-display");
-    monsterDisplay.innerHTML = "";
+    const monsterDisplay = document.querySelector("#monster-display");
     monsterDisplay.appendChild(statBlock);
 }
 
@@ -293,9 +292,9 @@ function getHP (monsterSize, numDice, constMod) {
 function acMonsterPropLine(ac) {
     const propLine = document.createElement("property-line");
     const acHeader = createEleWithText("h4", "Armor Class");
-    const ac = createEleWithText("p", ` ${ac}`);
+    const acEle = createEleWithText("p", ` ${ac}`);
     propLine.appendChild(acHeader);
-    propLine.appendChild(ac);
+    propLine.appendChild(acEle);
     return propLine;
 }
 
@@ -405,8 +404,8 @@ function languagesMonsterPropLine(languages) {
         }
         languages += ", ";
     }
-    const languages = createEleWithText("p", languageDesc);
-    propLine.appendChild(languages);
+    const languagesEle = createEleWithText("p", languageDesc);
+    propLine.appendChild(languagesEle);
 
     return propLine;
 }
@@ -582,7 +581,7 @@ async function fetchMonster(monsterName) {
     // Currently local only, need to change this for backend fetch calls when set up
     const response = await fetch(`data/${monsterName}.json`)
     .then (response => response.json())
-    .then (monster => loadMonster(monster));
+    .then (monster => loadJSONMonster(monster));
 }
 
 const createMonsterButton = document.querySelector("#create");
@@ -590,9 +589,9 @@ createMonsterButton.addEventListener("click", () => {
     const monsterDisplay = document.querySelector('#monster-display');
     monsterDisplay.innerHTML = "";
     fetchMonster("goat");
-    //fetchMonster("goat");
-    //fetchMonster("goat");
-    //fetchMonster("goat");
-    //fetchMonster("goat");
-    //fetchMonster("goat");
+    fetchMonster("goat");
+    fetchMonster("goat");
+    fetchMonster("goat");
+    fetchMonster("goat");
+    fetchMonster("goat");
 });
