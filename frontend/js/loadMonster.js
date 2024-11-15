@@ -52,8 +52,8 @@ function throwsJSONPropLine(monster, name, keys, printKeys) {
 }
 
 //Used for implementing property blocks w/ the input of a monster category (ex: monster.actions)
-//and statBlock (for appendChild)
-function makeJSONPropBlock(category, statBlock){
+//and statBlock (for appendChild), is the same function for both .monster and .json files
+function makePropBlock(category, statBlock){
     //names are based off monster.actions (hence "actions"), works w/ other categories.
     let actions = [];
     for(i in category){
@@ -200,14 +200,14 @@ function loadJSONMonster (monster) {
     
     //special abilities
     if (monster.special_abilities != null && monster.special_abilities != []) {
-        makeJSONPropBlock(monster.special_abilities, statBlock)
+        makePropBlock(monster.special_abilities, statBlock)
     }
 
     //actions
     const actionHeader = createEleWithText("h3", "Actions");
     if(monster.actions != null && monster.actions != []){
         statBlock.appendChild(actionHeader);
-        makeJSONPropBlock(monster.actions, statBlock)
+        makePropBlock(monster.actions, statBlock)
     }
     
 
@@ -215,21 +215,21 @@ function loadJSONMonster (monster) {
     const bonusactionHeader = createEleWithText("h3", "Bonus Actions")
     if(monster.bonus_actions != null && monster.bonus_actions != []){
         statBlock.appendChild(bonusactionHeader);
-        makeJSONPropBlock(monster.bonus_actions, statBlock)
+        makePropBlock(monster.bonus_actions, statBlock)
     }
 
     //reactions
     const reactionHeader = createEleWithText("h3", "Reactions");
     if(monster.reactions != null && monster.reactions != []){
         statBlock.appendChild(reactionHeader);
-        makeJSONPropBlock(monster.reactions, statBlock)
+        makePropBlock(monster.reactions, statBlock)
     }
 
     //legendary actions
     const legactionHeader = createEleWithText("h3", "Legendary Actions");
     if(monster.legendary_actions != null && monster.legendary_actions != []){
         statBlock.appendChild(legactionHeader);
-        makeJSONPropBlock(monster.legendary_actions, statBlock)
+        makePropBlock(monster.legendary_actions, statBlock)
     }
 
     const monsterDisplay = document.querySelector("#monster-display");
@@ -286,25 +286,6 @@ function getHP (monsterSize, numDice, constMod) {
         default:
             return `Error`;
     }
-}
-
-
-function acMonsterPropLine(ac) {
-    const propLine = document.createElement("property-line");
-    const acHeader = createEleWithText("h4", "Armor Class");
-    const acEle = createEleWithText("p", ` ${ac}`);
-    propLine.appendChild(acHeader);
-    propLine.appendChild(acEle);
-    return propLine;
-}
-
-function hpMonsterPropLine(monster) {
-    const propLine = document.createElement("property-line");
-    const hpHeader = createEleWithText("h4", "Hit Points");
-    const hp = createEleWithText("p", getHP(monster.size, monster.hitDice, getModifier(monster.conPoints)) + ` (${monster.hitDice})`);
-    propLine.appendChild(hpHeader);
-    propLine.appendChild(hp);
-    return propLine;
 }
 
 function createBasicMonsterPropLine(stat, desc) {
@@ -409,28 +390,6 @@ function languagesMonsterPropLine(languages) {
     return propLine;
 }
 
-//Used for implementing property blocks w/ the input of a monster category (ex: monster.actions)
-//and statBlock (for appendChild)
-function makeMonsterPropBlock(category, statBlock){
-    //names are based off monster.actions (hence "actions"), works w/ other categories.
-    let actions = [];
-    for(i in category){
-            const actionProp = document.createElement("property-block");
-            const prop = category[i];
-            const name = createEleWithText("h4", `${prop.name}. `);
-            actionProp.appendChild(name);
-
-            const desc = createEleWithText("p", `${prop.desc} `);
-            actionProp.appendChild(desc);
-
-            actions.push(actionProp);
-        }
-        for(i in actions){
-            statBlock.appendChild(actions[i]);
-        }
-    return;
-}
-
 // Creates a div containing moster information and adds it to the monster display div
 //USING A .MONSTER FILE
 function loadMonsterMonster (monster) {
@@ -446,17 +405,11 @@ function loadMonsterMonster (monster) {
     //ac
     topStats.appendChild(createBasicMonsterPropLine("Armor Class", monster.otherArmorDesc));
 
-
     //hp
-    topStats.appendChild(hpMonsterPropLine(monster));
+    topStats.appendChild(createBasicMonsterPropLine("Hit Points", getHP(monster.size, monster.hitDice, getModifier(monster.conPoints)) + ` (${monster.hitDice})`));
 
     //speed
-    const propLine3 = document.createElement("property-line");
-    const speedHeader = createEleWithText("h4", "Speed");
-    const speed = createEleWithText("p", ` ${monster.speed} ft.`);
-    propLine3.appendChild(speedHeader);
-    propLine3.appendChild(speed);
-    topStats.appendChild(propLine3);
+    topStats.appendChild(createBasicMonsterPropLine("Speed", ` ${monster.speed} ft.`))
 
     //abilities-block
     const abilitiesBlock = document.createElement("abilities-block");
@@ -512,14 +465,14 @@ function loadMonsterMonster (monster) {
     
     //special abilities
     if (monster.abilities != null && monster.abilities != []) {
-        makeMonsterPropBlock(monster.abilities, statBlock)
+        makePropBlock(monster.abilities, statBlock)
     }
 
     //actions
     const actionHeader = createEleWithText("h3", "Actions");
     if(monster.actions != null && monster.actions != []){
         statBlock.appendChild(actionHeader);
-        makeMonsterPropBlock(monster.actions, statBlock)
+        makePropBlock(monster.actions, statBlock)
     }
     
 
@@ -527,42 +480,42 @@ function loadMonsterMonster (monster) {
     const bonusactionHeader = createEleWithText("h3", "Bonus Actions")
     if(monster.bonusActions != null && monster.bonusActions != []){
         statBlock.appendChild(bonusactionHeader);
-        makeMonsterPropBlock(monster.bonusActions, statBlock)
+        makePropBlock(monster.bonusActions, statBlock)
     }
 
     //reactions
     const reactionHeader = createEleWithText("h3", "Reactions");
     if(monster.reactions != null && monster.reactions != []){
         statBlock.appendChild(reactionHeader);
-        makeMonsterPropBlock(monster.reactions, statBlock)
+        makePropBlock(monster.reactions, statBlock)
     }
 
     //legendary actions
     const legactionHeader = createEleWithText("h3", "Legendary Actions");
     if(monster.legendaries != null && monster.legendaries != []){
         statBlock.appendChild(legactionHeader);
-        makeMonsterPropBlock(monster.legendaries, statBlock)
+        makePropBlock(monster.legendaries, statBlock)
     }
 
     //mythic actions
     const mythActHeader = createEleWithText("h3", "Mythic Actions");
     if(monster.mythics != null && monster.mythics != []){
         statBlock.appendChild(mythActHeader);
-        makeMonsterPropBlock(monster.mythics, statBlock)
+        makePropBlock(monster.mythics, statBlock)
     }
 
     //lair actions
     const lairActHeader = createEleWithText("h3", "Lair Actions");
     if(monster.lairs != null && monster.lairs != []){
         statBlock.appendChild(lairActHeader);
-        makeMonsterPropBlock(monster.lairs, statBlock)
+        makePropBlock(monster.lairs, statBlock)
     }
 
     //regional actions
     const rgnActHeader = createEleWithText("h3", "Regional Actions");
     if(monster.regionals != null && monster.regionals != []){
         statBlock.appendChild(rgnActHeader);
-        makeMonsterPropBlock(monster.regionals, statBlock)
+        makePropBlock(monster.regionals, statBlock)
     }   
 
     const monsterDisplay = document.querySelector("#monster-display");
@@ -575,9 +528,16 @@ function loadMonsterMonster (monster) {
 *    TESTING AREA  *
 ********************/
 
-async function fetchMonster(monsterName) {
+async function fetchJSONMonster(monsterName) {
     // Currently local only, need to change this for backend fetch calls when set up
     const response = await fetch(`data/${monsterName}.json`)
+    .then (response => response.json())
+    .then (monster => loadMonsterMonster(monster));
+}
+
+async function fetchMonsterMonster(monsterName) {
+    // Currently local only, need to change this for backend fetch calls when set up
+    const response = await fetch(`data/${monsterName}.monster`)
     .then (response => response.json())
     .then (monster => loadMonsterMonster(monster));
 }
@@ -586,7 +546,8 @@ const createMonsterButton = document.querySelector("#create");
 createMonsterButton.addEventListener("click", () => {
     const monsterDisplay = document.querySelector('#monster-display');
     monsterDisplay.innerHTML = "";
-    fetchMonster("goat");
+    fetchJSONMonster("goat");
+    fetchMonsterMonster("goat");
     // fetchMonster("goat");
     // fetchMonster("goat");
     // fetchMonster("goat");
