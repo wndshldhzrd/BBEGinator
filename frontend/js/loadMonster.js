@@ -291,7 +291,7 @@ function getHP (monsterSize, numDice, constMod) {
 function createBasicMonsterPropLine(stat, desc) {
     const propLine = document.createElement("property-line");
     const headerEle = createEleWithText("h4", stat);
-    const statEle = createEleWithText("p", desc);
+    const statEle = createEleWithText("p", " " + desc);
     propLine.appendChild(headerEle);
     propLine.appendChild(statEle);
     return propLine;
@@ -409,16 +409,16 @@ function loadMonsterMonster (monster) {
     topStats.appendChild(createBasicMonsterPropLine("Hit Points", getHP(monster.size, monster.hitDice, getModifier(monster.conPoints)) + ` (${monster.hitDice})`));
 
     //speed
-    topStats.appendChild(createBasicMonsterPropLine("Speed", ` ${monster.speed} ft.`))
+    topStats.appendChild(createBasicMonsterPropLine("Speed", `${monster.speed} ft.`))
 
     //abilities-block
     const abilitiesBlock = document.createElement("abilities-block");
-    abilitiesBlock.setAttribute("data-cha", `${monster.chaPoints}`);
-    abilitiesBlock.setAttribute("data-con", `${monster.conPoints}`);
-    abilitiesBlock.setAttribute("data-dex", `${monster.dexPoints}`);
-    abilitiesBlock.setAttribute("data-int", `${monster.intPoints}`);
-    abilitiesBlock.setAttribute("data-str", `${monster.strPoints}`);
-    abilitiesBlock.setAttribute("data-wis", `${monster.wisPoints}`);
+    abilitiesBlock.setAttribute("data-cha", monster.chaPoints);
+    abilitiesBlock.setAttribute("data-con", monster.conPoints);
+    abilitiesBlock.setAttribute("data-dex", monster.dexPoints);
+    abilitiesBlock.setAttribute("data-int", monster.intPoints);
+    abilitiesBlock.setAttribute("data-str", monster.strPoints);
+    abilitiesBlock.setAttribute("data-wis", monster.wisPoints);
     topStats.appendChild(abilitiesBlock);
 
     //saving throws
@@ -532,7 +532,7 @@ async function fetchJSONMonster(monsterName) {
     // Currently local only, need to change this for backend fetch calls when set up
     const response = await fetch(`data/${monsterName}.json`)
     .then (response => response.json())
-    .then (monster => loadMonsterMonster(monster));
+    .then (monster => loadJSONMonster(monster));
 }
 
 async function fetchMonsterMonster(monsterName) {
@@ -546,7 +546,7 @@ const createMonsterButton = document.querySelector("#create");
 createMonsterButton.addEventListener("click", () => {
     const monsterDisplay = document.querySelector('#monster-display');
     monsterDisplay.innerHTML = "";
-    fetchJSONMonster("goat");
+    //fetchJSONMonster("goat");
     fetchMonsterMonster("goat");
     // fetchMonster("goat");
     // fetchMonster("goat");
