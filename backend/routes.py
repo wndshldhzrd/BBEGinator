@@ -14,21 +14,21 @@ app = Flask(__name__)
 @app.route('/index')
 def landing():
     return "hello"
+    
 
 @app.route("/test-script")
 def test_script():
+    mgetter.getMonsters()
+    output = open("output.json").read()
+    #print(output)
+    print("mgetter done")
+
     @after_this_request
     def add_header(response):
         response.headers.add('Access-Control-Allow-Origin', "*")
         return response
 
-    mgetter.getMonsters()
-    output = open("output.json").read()
-    print(output)
-
-    #return jsonify(output)
-    #results = json.loads(data)
-    return jsonify({"test": "test"})
+    return jsonify(output)
 
 #api call for searching for monsters by their stats
 #check the searchMonster function in frontend/js/script.js to see how the front end call is being made to the backend
