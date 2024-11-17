@@ -72,10 +72,10 @@ def monsterReader(JSON):
 
 # ENCOUNTER DIFFICULTY
 class EncounterType(Enum):
-    EASY = 1
-    MEDIUM = 2
-    HARD = 3
-    UNFAIR = 4
+    EASY = 0.75
+    MEDIUM = 1
+    HARD = 1.25
+    UNFAIR = 1.5
     # BULLSHIT
 
 def WordToNum(word):
@@ -95,21 +95,10 @@ def Algorithm(party, difficulty, monsterList, lair, guys, mode):
     monsters = []
     #when buying a monster, create a range of +- 5 of our point, and find all slugs within that range, pick one of those randomly
     #randomPoint -> parses monster list for a temp list of slugs
-    #random[listofSlugs]
-
-
     
-    totalHealth = 0 # finds max health of the party
-    totalDmg = 0
-    partyHealthAvg = 0
-    partyDmgAvg = 0
-    partyDmgMax = 0
-    partyTags = [] # important bits about party members which may be useful for calculation
+    for p in party: points += p.points
+    points *= difficulty.value    #calculation for the point pool
     
-    for p in party:             #parses the party for information and to generate a points pool for the monsters to be generated from
-        points += p.points
-    
-    #points *= difficulty
     print(points)
     print(f"I have {points} points to spend")
     
@@ -119,12 +108,13 @@ def Algorithm(party, difficulty, monsterList, lair, guys, mode):
         for i in range(guys):
             print(f"Generating monster {i + 1} of {guys}")
             toSpend = 0
-            if(i < guys - 1):
+            if(i < guys):
                 toSpend = randint(int(points * 0.1), int(points * 0.67))
                 print(f"I want to spend {toSpend} points")
                 found = False
                 for x, y in monsterList:
                     if y.points > toSpend - 5 and y.points < toSpend + 5:
+                        found = True
                         tempList.append(x)
                 if not found:
                     print("I couldn't find a monster. In the actual thing that would be a problem but this is just testing")
@@ -139,23 +129,25 @@ def Algorithm(party, difficulty, monsterList, lair, guys, mode):
         found = False
         for x, y in monsterList:
             if y.points > toSpend - 5 and y.points < toSpend + 5:
+                found = True
                 tempList.append(x)
         if not found:
             print("I couldn't find a monster. In the actual thing that would be a problem but this is just testing")
         else:
             myGuy = choice(tempList)
-        for i in range(guys - 1): monsters.append(myGuy)
+        for i in range(guys): monsters.append(myGuy)
     elif(mode == "balanced"):
         toSpend = points / guys
         print(f"I want to buy {guys} monsters with point values around {toSpend}")
         found = False
         for x, y in monsterList:
             if y.points > toSpend - 5 and y.points < toSpend + 5:
+                found = True
                 tempList.append(x)
         if not found:
             print("I couldn't find a monster. In the actual thing that would be a problem but this is just testing")
         else:
-            for i in range(guys - 1): monsters.append(choice(tempList))
+            for i in range(guys): monsters.append(choice(tempList))
     elif(mode == "boss"):
         print(f"This is a boss encounter, I will spend most of my points on a boss")
         toSpend = points if guys == 1 else randint(int(points * 0.67), int(points * 0.8))
@@ -164,6 +156,7 @@ def Algorithm(party, difficulty, monsterList, lair, guys, mode):
         found = False
         for x, y in monsterList:
             if y.points > toSpend - 5 and y.points < toSpend + 5:
+                found = True
                 tempList.append(x)
         if not found:
             print("I couldn't find a monster. In the actual thing that would be a problem but this is just testing")
@@ -180,6 +173,7 @@ def Algorithm(party, difficulty, monsterList, lair, guys, mode):
                 found = False
                 for x, y in monsterList:
                     if y.points > toSpend - 5 and y.points < toSpend + 5:
+                        found = True
                         tempList.append(x)
                 if not found:
                     print("I couldn't find a monster. In the actual thing that would be a problem but this is just testing")
@@ -194,6 +188,7 @@ def Algorithm(party, difficulty, monsterList, lair, guys, mode):
         found = False
         for x, y in monsterList:
             if y.points > toSpend - 5 and y.points < toSpend + 5:
+                found = True
                 tempList.append(x)
         if not found:
             print("I couldn't find a monster. In the actual thing that would be a problem but this is just testing")
@@ -206,6 +201,7 @@ def Algorithm(party, difficulty, monsterList, lair, guys, mode):
             for x, y in monsterList:
                 found = False
                 if y.points > toSpend - 5 and y.points < toSpend + 5:
+                    found = True
                     tempList.append(x)
             if not found:
                 print("I couldn't find any monsters. In the actual thing that would be a problem but this is just testing")
@@ -215,19 +211,42 @@ def Algorithm(party, difficulty, monsterList, lair, guys, mode):
     print(f"Returning monster list: {monsters}")
     return monsters
 
-#self, slug, ac, hp, speeds, stats, saves, vulnerabilities, resistances, immunities, actions, cr
-georgeBush = Monster("georgie", "George W. Bush", 10, 4,[{"ground":40,"flying":0,"burrow":0}], {"str":12,"dex":10,"con":11,"int":2,"wis":10,"cha":5}, [],"","","","","Ram. Melee Weapon Attack: +3 to hit, reach 5 ft., one target. Hit: (1d4 + 1) bludgeoning damage",0)
-jackson = Monster("jackie", "Michael Jackson", 5, 45,[{"ground":30,"flying":0,"burrow":0}],  {"str":0,"dex":5,"con":30,"int":2,"wis":5,"cha":6}, [],"","","","","Ram. Melee Weapon Attack: +3 to hit, reach 5 ft., one target. Hit: (1d4 + 1) bludgeoning damage",0)
-barry = Monster("bartholomew", "Bartholemew", 5, 45,[{"ground":30,"flying":0,"burrow":0}],  {"str":0,"dex":5,"con":30,"int":2,"wis":5,"cha":6}, [],"","","","","Ram. Melee Weapon Attack: +3 to hit, reach 5 ft., one target. Hit: (1d4 + 1) bludgeoning damage",0)
+goat = Monster("goat", "Goat", 10, 4, {"walk": 40}, 
+    {"strPoints": 12,
+    "dexPoints": 10,
+    "conPoints": 11,
+    "intPoints": 2,
+    "wisPoints": 10,
+    "chaPoints": 5},
+    [],
+    "",
+    "",
+    "",
+    [
+        {
+            "name": "Ram",
+            "desc": "_Melee Weapon Attack:_ +3 to hit, reach 5 ft., one target. _Hit:_ 3 (1d4 + 1) bludgeoning damage."
+        },
+    ],
+    [
+        {
+            "name": "Charge",
+            "desc": "If the goat moves at least 20 ft. straight toward a target and then hits it with a ram attack on the same turn, the target takes an extra 2 (1d4) bludgeoning damage. If the target is a creature, it must succeed on a DC 10 Strength saving throw or be knocked prone."
+        },
+        {
+            "name": "Sure-Footed",
+            "desc": "The goat has advantage on Strength and Dexterity saving throws made against effects that would knock it prone."
+        }
+    ],
+    0
+    )
 
-print(georgeBush.points, jackson.points, barry.points)
-
-database = {georgeBush.slug:georgeBush, jackson.slug : jackson, barry.slug:barry}
-#party = partyReader('''party.json''')
-party = {PartyMember(12, "fighter", 1, [16, 14, 16, 10, 12, 10])}
+database = {goat.slug:goat}
+rick = PartyMember(12, "fighter", 1, [17, 14, 14, 8, 10, 12])
+party.append(rick)
 
 print(database)
 for x, y in database.items():
     monsterList.append((y.points, x))
 
-monsterList = Algorithm(party, EncounterType.MEDIUM, database.items(), None, 3, "balanced")
+monsterList = Algorithm(party, EncounterType.MEDIUM, database.items(), None, 4, "balanced")

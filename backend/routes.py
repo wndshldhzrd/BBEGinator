@@ -1,7 +1,7 @@
 import json
+import mgetter
 from flask import Flask, after_this_request, jsonify, request
 app = Flask(__name__)
-
 
 #NOTE: CHANGES MADE HERE AND PUSHED TO THE GITHUB WILL NOT UPDATE THE ACTUAL BACKEND
 #OF THE WEBSITE, AFTER YOU HAVE PUSHED YOUR CODE PLEASE TALK TO ME (ZEV) AND I WILL
@@ -14,16 +14,21 @@ app = Flask(__name__)
 @app.route('/index')
 def landing():
     return "hello"
+    
 
 @app.route("/test-script")
 def test_script():
+    mgetter.getMonsters()
+    output = open("output.json").read()
+    #print(output)
+    print("mgetter done")
+
     @after_this_request
     def add_header(response):
         response.headers.add('Access-Control-Allow-Origin', "*")
         return response
-    
-    jsonResp = {"test": "test"}
-    return jsonify(jsonResp)
+
+    return jsonify(output)
 
 #api call for searching for monsters by their stats
 #check the searchMonster function in frontend/js/script.js to see how the front end call is being made to the backend

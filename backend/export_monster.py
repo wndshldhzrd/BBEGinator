@@ -298,14 +298,14 @@ if __name__ == "__main__":
 	monSlug = "angel-psychopomp"
 	print("This is a test to convert a monster from the JSON file " +
 	 "format we get from mgetter.py to a .monster file")
-	print("This test depends on the monster data being stored in data.json, as we search " +
+	print("This test depends on the monster data being stored in output.json, as we search " +
 		"for a specific slug. The actual function export_monster, however, simply requires " +
 		"a dictionary containing the json data for the desired monster")
 	print("\nCurrent monster slug: " + monSlug)
 
 	#for testing purposes, we used the current mgetter to find a specific test monster,
 	#with the goal of converting that data to .monster format in our code
-	monsters = open("data.json").read()
+	monsters = open("output.json").read()
 	mon = ""
 	start = monsters.find('{"slug": "' + monSlug + '"')
 	end = monsters.find('}, {"slug"', start)
