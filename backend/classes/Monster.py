@@ -1,3 +1,5 @@
+import math
+
 def WordToNum(word):
     if word == "one": return 1
     elif word == "two": return 2
@@ -7,7 +9,7 @@ def WordToNum(word):
     else: return -69420
 
 class Monster():
-    def __init__(self, slug, name, ac, hp, speeds, stats, saves, vulnerabilities, resistances, immunities, actions, abilities, cr):
+    def __init__(self, slug, name, ac, hp, speeds, stats, saves, vulnerabilities, resistances, immunities, actions, abilities, cr, spells):
         self.slug = slug
         self.name = name
         self.ac = ac
@@ -21,6 +23,7 @@ class Monster():
         self.actions = actions
         self.abilities = abilities
         self.cr = cr
+        self.spells = spells
         self.points = 0
         
         self.points += hp
@@ -94,6 +97,14 @@ class Monster():
 
         
         #spell calculation, how tf we do this?
+        #if cantrip, add 2
+        #if lvl 1, add 4 per charge
+        #if lvl 2, add 10 per charge
+        #multiply by 2.5 per level?
+        #for L in level???
+            #for spell in spells
+                #((4.75 * 1.55**L)-2) * spell.charge 
+
 
 
         self.points += dmgAvg + dmgMax
@@ -127,7 +138,10 @@ class Monster():
 
         #abilities points
         multiplier = 1.0
+        if len(self.abilities) > 0:
+            self.points += 3
         for a in self.abilities:
             multiplier += .1
 
         self.points *= multiplier
+        self.points = math.floor(self.points)
