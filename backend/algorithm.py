@@ -68,17 +68,8 @@ def monsterReader(JSON):
         spelldesc = []
         for ability in monster["special_abilities"]:
             if ability["name"] == "Spellcasting":
-                spelldesc = ability["desc"].split()
+                spells = ability["desc"]
                 break
-        
-        i = 0
-        for word in spelldesc:
-            if word == "level":
-                print(word[i - 1][0])
-            i += 1
-        #spellcasting parsing
-
-
         
         monsterDatabase.append(Monster(slug,name, ac, hp, speeds, stats, saves, vulnerabilities, resistances, immunities, actions, abilities, spells))
 
