@@ -19,7 +19,7 @@ function addPlayer() {
     //ideally refactor into an html template page, but good enough for now
     playerStatBlock.innerHTML =
     `<div class="playerInput">
-        <button type = "button" class="playerName">Player ${players.length}</button>
+        <button class="playerName">Player ${players.length}</button>
         <div class = "playerContent">
             <hr>
             Class <select class="dropdown">

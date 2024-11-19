@@ -151,11 +151,12 @@ button {
 .searchResult{
     background-color: #0a0757;
     color: #eee1cc;
+    font-size: 20px;
 }
 
 .searchResultData{
     background-color: #d11149;
-    display: none;
+    /* display: none; */
 }
 
 #recsContain{
@@ -186,6 +187,20 @@ button {
     border-style: solid;
     border-width: 1px;
     padding: 1px;
+}
+
+.submission{
+    background-color: #d11149;
+    color: #eee1cc;
+    border-radius: 0px;
+    margin-right: 5%;
+    font-size: 20px;
+}
+
+.submissionData{
+    background-color: #0a0757;
+    width: 100%;
+    display:none;
 }
 
 /* Monster display */
