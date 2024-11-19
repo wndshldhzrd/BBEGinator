@@ -1,3 +1,4 @@
+export {loadJSONMonster} from './loadMonster.js'
 //Function which takes in various parameters and then gets a json of all
 //monsters that match that criteria
 
@@ -198,6 +199,7 @@ function nextResults() {
         r = data[i];
         const name = r["name"];
         testMessage2.innerHTML += name + "<br>";
+        loadJSONMonster(name);
     }
 }
 
