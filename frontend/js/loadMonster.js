@@ -266,7 +266,6 @@ function getModifier (score) {
     return Math.floor((score - 10) / 2);
 }
 
-
 // Returns the average HP of a monster using the formula
 // HP = Floor(<Size Modifier> * <Number of dice>) + modifier
 function getHP (monsterSize, numDice, constMod) {
@@ -288,13 +287,26 @@ function getHP (monsterSize, numDice, constMod) {
     }
 }
 
-function createBasicMonsterPropLine(stat, desc) {
+//for displaying: speep, hp, ac
+function basicMonsterPropLine(stat, desc) {
     const propLine = document.createElement("property-line");
     const headerEle = createEleWithText("h4", stat);
     const statEle = createEleWithText("p", " " + desc);
     propLine.appendChild(headerEle);
     propLine.appendChild(statEle);
     return propLine;
+}
+
+//for displaying statblock
+function monsterStatBlock(monster) {
+    const abilitiesBlock = document.createElement("abilities-block");
+    abilitiesBlock.setAttribute("data-cha", monster.chaPoints);
+    abilitiesBlock.setAttribute("data-con", monster.conPoints);
+    abilitiesBlock.setAttribute("data-dex", monster.dexPoints);
+    abilitiesBlock.setAttribute("data-int", monster.intPoints);
+    abilitiesBlock.setAttribute("data-str", monster.strPoints);
+    abilitiesBlock.setAttribute("data-wis", monster.wisPoints);
+    return abilitiesBlock;
 }
 
 //creates a PropLine used for saving throws
@@ -327,6 +339,7 @@ function sThrowsMonsterPropLine(sThrows) {
     return throwsPropLine;
 }
 
+//creates a propline for skills
 function skillsMonsterPropLine(skills) {
     let throws = "";
     let throwsPropLine = null;
@@ -390,9 +403,25 @@ function languagesMonsterPropLine(languages) {
     return propLine;
 }
 
+function crMonsterPropLine(cr) {
+    const propLine = document.createElement("property-line");
+    const challengeHeader = createEleWithText("h4", "Challenge");
+    const xpDict = {"0": "10", "1/8": "25", "1/4": "50", "1/2": "100", "1": "200", "2": "450", "3": "700", "4": "1,100", "5": "1,800", 
+        "6": "2,300", "7": "2,900", "8": "3,900", "9": "5,000", "10": "5,900", "11": "7,200", "12": "8,400", "13": "10,000", 
+        "14": "11,500", "15": "13,000", "16": "15,000", "17": "18,000", "18": "20,000", "19": "22,000", "20": "25,000",
+        "21": "33,000", "22": "41,000", "23": "50,000", "24": "62,000", "25": "75,000", "26": "90,000", "27": "105,000",
+        "28": "120,000", "29": "135,000", "30": "155,000"
+    };
+    const challenge = ` ${cr} (${xpDict[cr]} XP)`;
+    const challengeDesc = createEleWithText("p", challenge);
+    propLine.appendChild(challengeHeader);
+    propLine.appendChild(challengeDesc);
+    return propLine;
+}
+
 // Creates a div containing moster information and adds it to the monster display div
 //USING A .MONSTER FILE
-function loadMonsterMonster (monster) {
+export function loadMonsterMonster (monster) {
     //create statblock variable
     const statBlock = document.createElement("stat-block");
 
@@ -403,117 +432,97 @@ function loadMonsterMonster (monster) {
     const topStats = document.createElement("top-stats");
 
     //ac
-    topStats.appendChild(createBasicMonsterPropLine("Armor Class", monster.otherArmorDesc));
+    topStats.appendChild(basicMonsterPropLine("Armor Class", monster.otherArmorDesc));
 
     //hp
-    topStats.appendChild(createBasicMonsterPropLine("Hit Points", getHP(monster.size, monster.hitDice, getModifier(monster.conPoints)) + ` (${monster.hitDice})`));
+    topStats.appendChild(basicMonsterPropLine("Hit Points", getHP(monster.size, monster.hitDice, getModifier(monster.conPoints)) + ` (${monster.hitDice})`));
 
     //speed
-    topStats.appendChild(createBasicMonsterPropLine("Speed", `${monster.speed} ft.`))
+    topStats.appendChild(basicMonsterPropLine("Speed", `${monster.speed} ft.`))
 
-    //abilities-block
-    const abilitiesBlock = document.createElement("abilities-block");
-    abilitiesBlock.setAttribute("data-cha", monster.chaPoints);
-    abilitiesBlock.setAttribute("data-con", monster.conPoints);
-    abilitiesBlock.setAttribute("data-dex", monster.dexPoints);
-    abilitiesBlock.setAttribute("data-int", monster.intPoints);
-    abilitiesBlock.setAttribute("data-str", monster.strPoints);
-    abilitiesBlock.setAttribute("data-wis", monster.wisPoints);
-    topStats.appendChild(abilitiesBlock);
+    //stat block
+    topStats.appendChild(monsterStatBlock(monster));
 
     //saving throws
-    const propLine4 = sThrowsMonsterPropLine(monster.sthrows);
-    if (propLine4 != null) {
-        topStats.appendChild(propLine4);
+    const sThrowsPropLine = sThrowsMonsterPropLine(monster.sthrows);
+    if (sThrowsPropLine != null) {
+        topStats.appendChild(sThrowsPropLine);
     }
 
     //skills
-    const propLine5 = skillsMonsterPropLine(monster.skills);
-    if (propLine5 != null) {
-        topStats.appendChild(propLine5);
+    const skillsPropLine = skillsMonsterPropLine(monster.skills);
+    if (skillsPropLine != null) {
+        topStats.appendChild(skillsPropLine);
     }
 
     //damage types, condition immunities, senses
     //will need to test further later, for now focusing on MVP
-    const propLine6 = damageTypesMonsterPropLine(monster.damagetypes);
-    if(propLine6 != null) {
-        topStats.appendChild(propLine6);
+    const damageTypePropLine = damageTypesMonsterPropLine(monster.damagetypes);
+    if(damageTypePropLine != null) {
+        topStats.appendChild(damageTypePropLine);
     }
 
     //languages
-    const propLines7 = languagesMonsterPropLine(monster.languages);
-    topStats.appendChild(propLines7);
+    const languagePropLine = languagesMonsterPropLine(monster.languages);
+    topStats.appendChild(languagePropLine);
 
     //cr
-    const propLine8 = document.createElement("property-line");
-    const challengeHeader = createEleWithText("h4", "Challenge");
-    const xpDict = {"0": "10", "1/8": "25", "1/4": "50", "1/2": "100", "1": "200", "2": "450", "3": "700", "4": "1,100", "5": "1,800", 
-        "6": "2,300", "7": "2,900", "8": "3,900", "9": "5,000", "10": "5,900", "11": "7,200", "12": "8,400", "13": "10,000", 
-        "14": "11,500", "15": "13,000", "16": "15,000", "17": "18,000", "18": "20,000", "19": "22,000", "20": "25,000",
-        "21": "33,000", "22": "41,000", "23": "50,000", "24": "62,000", "25": "75,000", "26": "90,000", "27": "105,000",
-        "28": "120,000", "29": "135,000", "30": "155,000"
-    };
-    const challenge = ` ${monster.cr} (${xpDict[monster.cr]} XP)`;
-    const challengeDesc = createEleWithText("p", challenge);
-    propLine8.appendChild(challengeHeader);
-    propLine8.appendChild(challengeDesc);
-    topStats.appendChild(propLine8);
+    topStats.appendChild(crMonsterPropLine(monster.cr));
 
     statBlock.appendChild(creatureHeading);
     statBlock.appendChild(topStats);
     //End of topstats, below are all property-blocks
     
     //special abilities
-    if (monster.abilities != null && monster.abilities != []) {
+    if (monster.abilities != null && monster.abilities.size > 0) {
         makePropBlock(monster.abilities, statBlock)
     }
 
     //actions
     const actionHeader = createEleWithText("h3", "Actions");
-    if(monster.actions != null && monster.actions != []){
+    if(monster.actions != null && monster.actions.size > 0){
         statBlock.appendChild(actionHeader);
         makePropBlock(monster.actions, statBlock)
     }
-    
 
     //bonus actions 
     const bonusactionHeader = createEleWithText("h3", "Bonus Actions")
-    if(monster.bonusActions != null && monster.bonusActions != []){
+    if(monster.bonusActions != null && monster.bonusActions.size > 0){
         statBlock.appendChild(bonusactionHeader);
         makePropBlock(monster.bonusActions, statBlock)
     }
 
     //reactions
     const reactionHeader = createEleWithText("h3", "Reactions");
-    if(monster.reactions != null && monster.reactions != []){
+    if(monster.reactions != null && monster.reactions.size > 0){
         statBlock.appendChild(reactionHeader);
         makePropBlock(monster.reactions, statBlock)
     }
 
     //legendary actions
     const legactionHeader = createEleWithText("h3", "Legendary Actions");
-    if(monster.legendaries != null && monster.legendaries != []){
+    if(monster.legendaries != null && monster.legendaries.size > 0){
         statBlock.appendChild(legactionHeader);
         makePropBlock(monster.legendaries, statBlock)
     }
 
     //mythic actions
     const mythActHeader = createEleWithText("h3", "Mythic Actions");
-    if(monster.mythics != null && monster.mythics != []){
+    if(monster.mythics != null && monster.mythics.size > 0){
         statBlock.appendChild(mythActHeader);
         makePropBlock(monster.mythics, statBlock)
     }
 
     //lair actions
     const lairActHeader = createEleWithText("h3", "Lair Actions");
-    if(monster.lairs != null && monster.lairs != []){
+    if(monster.lairs != null && monster.lairs.size > 0){
         statBlock.appendChild(lairActHeader);
         makePropBlock(monster.lairs, statBlock)
     }
 
     //regional actions
     const rgnActHeader = createEleWithText("h3", "Regional Actions");
-    if(monster.regionals != null && monster.regionals != []){
+    if(monster.regionals != null && monster.regionals.size > 0) {
         statBlock.appendChild(rgnActHeader);
         makePropBlock(monster.regionals, statBlock)
     }   
