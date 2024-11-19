@@ -67,15 +67,45 @@ function downloadMonster() {
 
 //test function
 const testMessage = document.getElementById('testMsg');
-function testRunningPython() {
+const testMessage2 = document.getElementById('testMsg2');
+
+async function testRunningPython() {
     testMessage.textContent = "Button clicked, awaiting result... ";
     const url = "http://localhost:5000/test-script";
-    fetch(url)
-    .then(response => response.json())
-    .then(json => {
-        console.log(json);
-        testMessage.textContent += JSON.stringify(json);
-    })
+
+    console.log("fetching");
+
+    try {
+        const response = await fetch(url);
+        console.log("response received, supposedly");
+        if (response.status == 200) {
+            const json = await response.json();
+            //const data = json.split('"{slug":')
+            const data = JSON.parse(json);
+            //console.log(data);
+            console.log("let's not print the whole json...");
+            testMessage.innerHTML = "Search results (first 5 monsters):<br>";
+
+            let i = 0;
+            for (r of data) {
+                const name = r["name"];
+                testMessage.innerHTML += name + "<br>";
+                i++;
+                if (i > 5) {
+                    break;
+                }
+            }
+        }
+        else {
+            console.log("response.status error");
+        }
+    }
+    catch (error) {
+        console.error("ERROR! ", error);
+        testMessage2.textContent = "ERROR";
+    }
+
+    console.log("fetched");
 }
 
 //Opening/closing filter options
