@@ -416,6 +416,9 @@ function languagesMonsterPropLine(languages) {
         }
         languages += ", ";
     }
+    if(languageDesc == "") {
+        languageDesc = " None"
+    }
     const languagesEle = createEleWithText("p", languageDesc);
     propLine.appendChild(languagesEle);
 
@@ -440,7 +443,7 @@ function crMonsterPropLine(cr) {
 
 // Creates a div containing moster information and adds it to the monster display div
 //USING A .MONSTER FILE
-export function loadMonsterMonster (monster) {
+function loadMonsterMonster (monster) {
     //create statblock variable
     const statBlock = document.createElement("stat-block");
 
@@ -493,55 +496,55 @@ export function loadMonsterMonster (monster) {
     //End of topstats, below are all property-blocks
     
     //special abilities
-    if (monster.abilities != null && monster.abilities.size > 0) {
+    if (monster.abilities != null && monster.abilities.length > 0) {
         makePropBlock(monster.abilities, statBlock)
     }
 
     //actions
     const actionHeader = createEleWithText("h3", "Actions");
-    if(monster.actions != null && monster.actions.size > 0){
+    if(monster.actions != null && monster.actions.length > 0){
         statBlock.appendChild(actionHeader);
         makePropBlock(monster.actions, statBlock)
     }
 
     //bonus actions 
     const bonusactionHeader = createEleWithText("h3", "Bonus Actions")
-    if(monster.bonusActions != null && monster.bonusActions.size > 0){
+    if(monster.bonusActions != null && monster.bonusActions.length > 0){
         statBlock.appendChild(bonusactionHeader);
         makePropBlock(monster.bonusActions, statBlock)
     }
 
     //reactions
     const reactionHeader = createEleWithText("h3", "Reactions");
-    if(monster.reactions != null && monster.reactions.size > 0){
+    if(monster.reactions != null && monster.reactions.length > 0){
         statBlock.appendChild(reactionHeader);
         makePropBlock(monster.reactions, statBlock)
     }
 
     //legendary actions
     const legactionHeader = createEleWithText("h3", "Legendary Actions");
-    if(monster.legendaries != null && monster.legendaries.size > 0){
+    if(monster.legendaries != null && monster.legendaries.length > 0){
         statBlock.appendChild(legactionHeader);
         makePropBlock(monster.legendaries, statBlock)
     }
 
     //mythic actions
     const mythActHeader = createEleWithText("h3", "Mythic Actions");
-    if(monster.mythics != null && monster.mythics.size > 0){
+    if(monster.mythics != null && monster.mythics.length > 0){
         statBlock.appendChild(mythActHeader);
         makePropBlock(monster.mythics, statBlock)
     }
 
     //lair actions
     const lairActHeader = createEleWithText("h3", "Lair Actions");
-    if(monster.lairs != null && monster.lairs.size > 0){
+    if(monster.lairs != null && monster.lairs.length > 0){
         statBlock.appendChild(lairActHeader);
         makePropBlock(monster.lairs, statBlock)
     }
 
     //regional actions
     const rgnActHeader = createEleWithText("h3", "Regional Actions");
-    if(monster.regionals != null && monster.regionals.size > 0) {
+    if(monster.regionals != null && monster.regionals.length > 0) {
         statBlock.appendChild(rgnActHeader);
         makePropBlock(monster.regionals, statBlock)
     }   
