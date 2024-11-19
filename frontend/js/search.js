@@ -1,4 +1,7 @@
-export {loadJSONMonster} from './loadMonster.js'
+//import {loadJSONMonster} from './loadMonster.js';
+
+// import { test } from './test.js';
+
 //Function which takes in various parameters and then gets a json of all
 //monsters that match that criteria
 
@@ -199,7 +202,7 @@ function nextResults() {
         r = data[i];
         const name = r["name"];
         testMessage2.innerHTML += name + "<br>";
-        loadJSONMonster(name);
+        //loadJSONMonster(r);
     }
 }
 
@@ -212,3 +215,9 @@ function toggleFilter(){
         filters.style.display = "block";
     }
 }
+
+// Temp maybe?
+// const createMonsterButton = document.querySelector("#TEMP");
+// createMonsterButton.addEventListener("click", () => {
+//     testRunningPython();
+// });

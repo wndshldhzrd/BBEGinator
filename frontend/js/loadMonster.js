@@ -75,7 +75,7 @@ function makePropBlock(category, statBlock){
 
 // Creates a div containing moster information and adds it to the monster display div
 //USING A .JSON FILE
-function loadJSONMonster (monster) {
+export function loadJSONMonster (monster) {
     //create statblock variable
     const statBlock = document.createElement("stat-block");
 
