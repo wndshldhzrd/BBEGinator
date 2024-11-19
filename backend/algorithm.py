@@ -64,8 +64,9 @@ def monsterReader(JSON):
         immunities = monster["damage_immunities"]
         abilities = monster["abilities"]
         actions = monster["actions"]
+        spells = []
         
-        monsterDatabase.append(Monster(slug,name, ac, hp, speeds, stats, saves, vulnerabilities, resistances, immunities, actions, abilities))
+        monsterDatabase.append(Monster(slug,name, ac, hp, speeds, stats, saves, vulnerabilities, resistances, immunities, actions, abilities, spells))
 
         return monsterDatabase
 
@@ -238,7 +239,7 @@ goat = Monster("goat", "Goat", 10, 4, {"walk": 40},
             "desc": "The goat has advantage on Strength and Dexterity saving throws made against effects that would knock it prone."
         }
     ],
-    0
+    0, []
     )
 
 database = {goat.slug:goat}
