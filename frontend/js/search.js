@@ -2,7 +2,6 @@
 //monsters that match that criteria
 
 function searchMonster() {
-
     //building the json
     payload = {
         'hit_points__gte': document.getElementById("hpMax").value, //max hp
@@ -69,6 +68,10 @@ function downloadMonster() {
 const testMessage = document.getElementById('testMsg');
 const testMessage2 = document.getElementById('testMsg2');
 
+//store our search results here
+let data = null;
+let dataIndex = 0;
+
 async function testRunningPython() {
     testMessage.textContent = "Button clicked, awaiting result... ";
     const url = "http://localhost:5000/test-script";
@@ -80,18 +83,27 @@ async function testRunningPython() {
         console.log("response received, supposedly");
         if (response.status == 200) {
             const json = await response.json();
-            //const data = json.split('"{slug":')
-            const data = JSON.parse(json);
+
+            //get the new data, reset index to 0
+            data = JSON.parse(json);
+            dataIndex = 0;
+
             //console.log(data);
             console.log("let's not print the whole json...");
-            testMessage.innerHTML = "Search results (first 5 monsters):<br>";
+            if (data.length == 0) {
+                testMessage.innerHTML = "No monsters found. Please try other filters.";
+                return;
+            }
+
+            testMessage.innerHTML = "Search results:<br>";
+            testMessage2.innerHTML = "";
 
             let i = 0;
             for (r of data) {
                 const name = r["name"];
-                testMessage.innerHTML += name + "<br>";
+                testMessage2.innerHTML += name + "<br>";
                 i++;
-                if (i > 5) {
+                if (i > 3) {
                     break;
                 }
             }
@@ -106,6 +118,40 @@ async function testRunningPython() {
     }
 
     console.log("fetched");
+}
+
+//get previous 4 monsters
+function prevResults() {
+    if (data == null || dataIndex == 0 || data.length == 0) {
+        return;
+    }
+
+    dataIndex = dataIndex - 4;
+    if (dataIndex < 0) {
+        dataIndex = 0;
+    }
+
+    testMessage2.innerHTML = "";
+    for (let i = dataIndex; i < data.length && i < dataIndex + 4; i++) {
+        r = data[i];
+        const name = r["name"];
+        testMessage2.innerHTML += name + "<br>";
+    }
+}
+
+//get next 4 monsters
+function nextResults() {
+    if (data == null || dataIndex + 4 >= data.length || data.length == 0) {
+        return;
+    }
+
+    dataIndex += 4;
+    testMessage2.innerHTML = "";
+    for (let i = dataIndex; i < data.length && i < dataIndex + 4; i++) {
+        r = data[i];
+        const name = r["name"];
+        testMessage2.innerHTML += name + "<br>";
+    }
 }
 
 //Opening/closing filter options
