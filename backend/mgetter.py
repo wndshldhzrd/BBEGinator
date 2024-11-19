@@ -64,7 +64,10 @@ def getMonsters(order="no", params = {
     'document__slug__in': '',
     'document__slug__not_in': ''
 }):
-    temp = order
+    if order != "no":
+        payload['ordering'] = order
+    
+    
     payload = params
     url = 'https://api.open5e.com/v1/monsters/'
     filename = "output.json"
