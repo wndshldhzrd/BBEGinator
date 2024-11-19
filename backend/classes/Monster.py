@@ -9,7 +9,7 @@ def WordToNum(word):
     else: return -69420
 
 class Monster():
-    def __init__(self, slug, name, ac, hp, speeds, stats, saves, vulnerabilities, resistances, immunities, actions, abilities, cr, spells="NO"):
+    def __init__(self, slug, name, ac, hp, speeds, stats, saves, vulnerabilities, resistances, immunities, actions, abilities, cr, spells):
         self.slug = slug
         self.name = name
         self.ac = ac
