@@ -12,7 +12,7 @@ def write_to_json(data, filename="output.json"):
         f.close()
 
 
-def getMonsters(order, params = {
+def getMonsters(order="no", params = {
     
     #slug also contains where the creature is from(document) so it isn't exactly the name btw sometimes(its complicated)
 
