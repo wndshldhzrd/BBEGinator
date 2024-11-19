@@ -96,6 +96,16 @@ class Monster():
             else: dmgMax = dmgMaxTotal
 
         
+
+        self.spells = self.spells[0].split()
+        i = 0
+        for word in self.spells:
+            if word == "level":
+                print(word[i - 1][0])
+            i += 1
+        #spellcasting parsing
+
+
         #spell calculation, how tf we do this?
         #if cantrip, add 2
         #if lvl 1, add 4 per charge

@@ -89,25 +89,22 @@ export function loadJSONMonster (monster) {
     const propLine = document.createElement("property-line");
     const acHeader = createEleWithText("h4", "Armor Class");
     let acDesc = ` ${monster.armor_class}`;
+
+function j_createAC(appendTo, monster) {
+    const acDesc = ` ${monster.armor_class}`;
     if (monster.armor_desc != null) {
         acDesc += ` (${monster.armor_desc})`;
     }
     const ac = createEleWithText("p", acDesc);
-    propLine.appendChild(acHeader);
-    propLine.appendChild(ac);
-    topStats.appendChild(propLine);
+    appendTo.appendChild(ac);
+}
 
-    //hp
-    const propLine2 = document.createElement("property-line");
-    const hpHeader = createEleWithText("h4", "Hit Points");
+function j_createHP(appendTo, monster) {
     const hp = createEleWithText("p", ` ${monster.hit_points} (${monster.hit_dice})`);
-    propLine2.appendChild(hpHeader);
-    propLine2.appendChild(hp);
-    topStats.appendChild(propLine2);
+    appendTo.appendChild(hp);
+}
 
-    //speed
-    const propLine3 = document.createElement("property-line");
-    const speedHeader = createEleWithText("h4", "Speed");
+function j_createSpeed(appendTo, monster) {
     const speedDesc = ` ${monster.speed["walk"]} ft.`;
     for (const s in monster.speed) {
         if (s != "walk") {
@@ -115,11 +112,30 @@ export function loadJSONMonster (monster) {
         }
     }
     const speed = createEleWithText("p", speedDesc);
-    propLine3.appendChild(speedHeader);
-    propLine3.appendChild(speed);
-    topStats.appendChild(propLine3);
+    appendTo.appendChild(speed);
+}
 
-    //abilities-block
+function j_createBasicPropLine(headerText, appendTo, monster) {
+    const propLine = document.createElement("property-line");
+    const header = createEleWithText("h4", headerText);
+    propLine.appendChild(header);
+
+    if (headerText == "Armor Class") {
+        j_createAC(propLine, monster);
+    }
+
+    if (headerText == "Hit Points") {
+        j_createHP(propLine, monster);
+    }
+
+    if (headerText == "Speed") {
+        j_createSpeed(propLine, monster);
+    }
+
+    appendTo.appendChild(propLine);
+}
+
+function j_createAbilitiesBlock(appendTo, monster) {
     const abilitiesBlock = document.createElement("abilities-block");
     abilitiesBlock.setAttribute("data-cha", `${monster.charisma}`);
     abilitiesBlock.setAttribute("data-con", `${monster.constitution}`);
@@ -127,7 +143,27 @@ export function loadJSONMonster (monster) {
     abilitiesBlock.setAttribute("data-int", `${monster.intelligence}`);
     abilitiesBlock.setAttribute("data-str", `${monster.strength}`);
     abilitiesBlock.setAttribute("data-wis", `${monster.wisdom}`);
-    topStats.appendChild(abilitiesBlock);
+    appendTo.appendChild(abilitiesBlock);
+}
+
+// Creates a div containing moster information and adds it to the monster display div
+//USING A .JSON FILE
+function loadJSONMonster (monster) {
+    const statBlock = document.createElement("stat-block"); //create statblock variable
+    const creatureHeading = createCreatureHeading(monster); //creature-heading
+    const topStats = document.createElement("top-stats"); //top-stats
+
+    //ac
+    j_createBasicPropLine("Armor Class", topStats, monster);
+
+    //hp
+    j_createBasicPropLine("Hit Points", topStats, monster);
+
+    //speed
+    j_createBasicPropLine("Speed", topStats, monster);
+
+    //abilities-block
+    j_createAbilitiesBlock(topStats, monster);
 
     //saving throws
     const saveVars = ["strength_save", "dexterity_save", "constitution_save", "intelligence_save", "wisdom_save", "charisma_save"];
@@ -397,6 +433,9 @@ function languagesMonsterPropLine(languages) {
         }
         languages += ", ";
     }
+    if(languageDesc == "") {
+        languageDesc = " None"
+    }
     const languagesEle = createEleWithText("p", languageDesc);
     propLine.appendChild(languagesEle);
 
@@ -421,7 +460,7 @@ function crMonsterPropLine(cr) {
 
 // Creates a div containing moster information and adds it to the monster display div
 //USING A .MONSTER FILE
-export function loadMonsterMonster (monster) {
+function loadMonsterMonster (monster) {
     //create statblock variable
     const statBlock = document.createElement("stat-block");
 
@@ -474,55 +513,55 @@ export function loadMonsterMonster (monster) {
     //End of topstats, below are all property-blocks
     
     //special abilities
-    if (monster.abilities != null && monster.abilities.size > 0) {
+    if (monster.abilities != null && monster.abilities.length > 0) {
         makePropBlock(monster.abilities, statBlock)
     }
 
     //actions
     const actionHeader = createEleWithText("h3", "Actions");
-    if(monster.actions != null && monster.actions.size > 0){
+    if(monster.actions != null && monster.actions.length > 0){
         statBlock.appendChild(actionHeader);
         makePropBlock(monster.actions, statBlock)
     }
 
     //bonus actions 
     const bonusactionHeader = createEleWithText("h3", "Bonus Actions")
-    if(monster.bonusActions != null && monster.bonusActions.size > 0){
+    if(monster.bonusActions != null && monster.bonusActions.length > 0){
         statBlock.appendChild(bonusactionHeader);
         makePropBlock(monster.bonusActions, statBlock)
     }
 
     //reactions
     const reactionHeader = createEleWithText("h3", "Reactions");
-    if(monster.reactions != null && monster.reactions.size > 0){
+    if(monster.reactions != null && monster.reactions.length > 0){
         statBlock.appendChild(reactionHeader);
         makePropBlock(monster.reactions, statBlock)
     }
 
     //legendary actions
     const legactionHeader = createEleWithText("h3", "Legendary Actions");
-    if(monster.legendaries != null && monster.legendaries.size > 0){
+    if(monster.legendaries != null && monster.legendaries.length > 0){
         statBlock.appendChild(legactionHeader);
         makePropBlock(monster.legendaries, statBlock)
     }
 
     //mythic actions
     const mythActHeader = createEleWithText("h3", "Mythic Actions");
-    if(monster.mythics != null && monster.mythics.size > 0){
+    if(monster.mythics != null && monster.mythics.length > 0){
         statBlock.appendChild(mythActHeader);
         makePropBlock(monster.mythics, statBlock)
     }
 
     //lair actions
     const lairActHeader = createEleWithText("h3", "Lair Actions");
-    if(monster.lairs != null && monster.lairs.size > 0){
+    if(monster.lairs != null && monster.lairs.length > 0){
         statBlock.appendChild(lairActHeader);
         makePropBlock(monster.lairs, statBlock)
     }
 
     //regional actions
     const rgnActHeader = createEleWithText("h3", "Regional Actions");
-    if(monster.regionals != null && monster.regionals.size > 0) {
+    if(monster.regionals != null && monster.regionals.length > 0) {
         statBlock.appendChild(rgnActHeader);
         makePropBlock(monster.regionals, statBlock)
     }   
@@ -555,8 +594,8 @@ const createMonsterButton = document.querySelector("#create");
 createMonsterButton.addEventListener("click", () => {
     const monsterDisplay = document.querySelector('#monster-display');
     monsterDisplay.innerHTML = "";
-    //fetchJSONMonster("goat");
-    fetchMonsterMonster("goat");
+    fetchJSONMonster("goat");
+    // fetchMonsterMonster("goat");
     // fetchMonster("goat");
     // fetchMonster("goat");
     // fetchMonster("goat");

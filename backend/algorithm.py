@@ -65,6 +65,11 @@ def monsterReader(JSON):
         abilities = monster["abilities"]
         actions = monster["actions"]
         spells = []
+        spelldesc = []
+        for ability in monster["special_abilities"]:
+            if ability["name"] == "Spellcasting":
+                spells = ability["desc"]
+                break
         
         monsterDatabase.append(Monster(slug,name, ac, hp, speeds, stats, saves, vulnerabilities, resistances, immunities, actions, abilities, spells))
 
