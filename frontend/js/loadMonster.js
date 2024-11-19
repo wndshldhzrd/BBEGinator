@@ -73,41 +73,21 @@ function makePropBlock(category, statBlock){
     return;
 }
 
-// Creates a div containing moster information and adds it to the monster display div
-//USING A .JSON FILE
-function loadJSONMonster (monster) {
-    //create statblock variable
-    const statBlock = document.createElement("stat-block");
-
-    //creature-heading
-    const creatureHeading = createCreatureHeading(monster);
-
-    //top-stats
-    const topStats = document.createElement("top-stats");
-
-    //ac
-    const propLine = document.createElement("property-line");
-    const acHeader = createEleWithText("h4", "Armor Class");
-    let acDesc = ` ${monster.armor_class}`;
+function j_createAC(appendTo, monster) {
+    const acDesc = ` ${monster.armor_class}`;
     if (monster.armor_desc != null) {
         acDesc += ` (${monster.armor_desc})`;
     }
     const ac = createEleWithText("p", acDesc);
-    propLine.appendChild(acHeader);
-    propLine.appendChild(ac);
-    topStats.appendChild(propLine);
+    appendTo.appendChild(ac);
+}
 
-    //hp
-    const propLine2 = document.createElement("property-line");
-    const hpHeader = createEleWithText("h4", "Hit Points");
+function j_createHP(appendTo, monster) {
     const hp = createEleWithText("p", ` ${monster.hit_points} (${monster.hit_dice})`);
-    propLine2.appendChild(hpHeader);
-    propLine2.appendChild(hp);
-    topStats.appendChild(propLine2);
+    appendTo.appendChild(hp);
+}
 
-    //speed
-    const propLine3 = document.createElement("property-line");
-    const speedHeader = createEleWithText("h4", "Speed");
+function j_createSpeed(appendTo, monster) {
     const speedDesc = ` ${monster.speed["walk"]} ft.`;
     for (const s in monster.speed) {
         if (s != "walk") {
@@ -115,11 +95,30 @@ function loadJSONMonster (monster) {
         }
     }
     const speed = createEleWithText("p", speedDesc);
-    propLine3.appendChild(speedHeader);
-    propLine3.appendChild(speed);
-    topStats.appendChild(propLine3);
+    appendTo.appendChild(speed);
+}
 
-    //abilities-block
+function j_createBasicPropLine(headerText, appendTo, monster) {
+    const propLine = document.createElement("property-line");
+    const header = createEleWithText("h4", headerText);
+    propLine.appendChild(header);
+
+    if (headerText == "Armor Class") {
+        j_createAC(propLine, monster);
+    }
+
+    if (headerText == "Hit Points") {
+        j_createHP(propLine, monster);
+    }
+
+    if (headerText == "Speed") {
+        j_createSpeed(propLine, monster);
+    }
+
+    appendTo.appendChild(propLine);
+}
+
+function j_createAbilitiesBlock(appendTo, monster) {
     const abilitiesBlock = document.createElement("abilities-block");
     abilitiesBlock.setAttribute("data-cha", `${monster.charisma}`);
     abilitiesBlock.setAttribute("data-con", `${monster.constitution}`);
@@ -127,7 +126,27 @@ function loadJSONMonster (monster) {
     abilitiesBlock.setAttribute("data-int", `${monster.intelligence}`);
     abilitiesBlock.setAttribute("data-str", `${monster.strength}`);
     abilitiesBlock.setAttribute("data-wis", `${monster.wisdom}`);
-    topStats.appendChild(abilitiesBlock);
+    appendTo.appendChild(abilitiesBlock);
+}
+
+// Creates a div containing moster information and adds it to the monster display div
+//USING A .JSON FILE
+function loadJSONMonster (monster) {
+    const statBlock = document.createElement("stat-block"); //create statblock variable
+    const creatureHeading = createCreatureHeading(monster); //creature-heading
+    const topStats = document.createElement("top-stats"); //top-stats
+
+    //ac
+    j_createBasicPropLine("Armor Class", topStats, monster);
+
+    //hp
+    j_createBasicPropLine("Hit Points", topStats, monster);
+
+    //speed
+    j_createBasicPropLine("Speed", topStats, monster);
+
+    //abilities-block
+    j_createAbilitiesBlock(topStats, monster);
 
     //saving throws
     const saveVars = ["strength_save", "dexterity_save", "constitution_save", "intelligence_save", "wisdom_save", "charisma_save"];
@@ -546,8 +565,8 @@ const createMonsterButton = document.querySelector("#create");
 createMonsterButton.addEventListener("click", () => {
     const monsterDisplay = document.querySelector('#monster-display');
     monsterDisplay.innerHTML = "";
-    //fetchJSONMonster("goat");
-    fetchMonsterMonster("goat");
+    fetchJSONMonster("goat");
+    // fetchMonsterMonster("goat");
     // fetchMonster("goat");
     // fetchMonster("goat");
     // fetchMonster("goat");
