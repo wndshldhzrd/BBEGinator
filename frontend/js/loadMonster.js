@@ -20,7 +20,7 @@ function createCreatureHeading(monster) {
 function throwsJSONPropLine(monster, name, keys, printKeys) {
     let throws = "";
     let throwsPropLine = null;
-    for (key in keys) {
+    for (let key = 0; key < keys.length; key++) {
         let k = keys[key];
 
         //create the property line if it hasn't been initialized
@@ -44,7 +44,7 @@ function throwsJSONPropLine(monster, name, keys, printKeys) {
         }
     }
     if (throwsPropLine != null) {
-        throwsText = createEleWithText("p", throws);
+        const throwsText = createEleWithText("p", throws);
         throwsPropLine.appendChild(throwsText);
     }
 
@@ -56,7 +56,7 @@ function throwsJSONPropLine(monster, name, keys, printKeys) {
 function makePropBlock(category, statBlock){
     //names are based off monster.actions (hence "actions"), works w/ other categories.
     let actions = [];
-    for(i in category){
+    for (let i in category){
             const actionProp = document.createElement("property-block");
             const prop = category[i];
             const name = createEleWithText("h4", `${prop.name}. `);
@@ -67,7 +67,7 @@ function makePropBlock(category, statBlock){
 
             actions.push(actionProp);
         }
-        for(i in actions){
+        for (let i in actions){
             statBlock.appendChild(actions[i]);
         }
     return;
@@ -97,7 +97,7 @@ export function loadJSONMonster(monster) {
     */
 
 function j_createAC(appendTo, monster) {
-    const acDesc = ` ${monster.armor_class}`;
+    let acDesc = ` ${monster.armor_class}`;
     if (monster.armor_desc != null) {
         acDesc += ` (${monster.armor_desc})`;
     }
@@ -111,7 +111,7 @@ function j_createHP(appendTo, monster) {
 }
 
 function j_createSpeed(appendTo, monster) {
-    const speedDesc = ` ${monster.speed["walk"]} ft.`;
+    let speedDesc = ` ${monster.speed["walk"]} ft.`;
     for (const s in monster.speed) {
         if (s != "walk") {
             speedDesc += `, ${s} ${monster.speed[s]} ft.`
@@ -156,7 +156,7 @@ function j_createAbilitiesBlock(appendTo, monster) {
 //USING A .JSON FILE
 //currently leaving this version of loadJSONMonster as the one uncommented
 //may the web dev gods have mercy
-export const loadJSONMonster = (monster) => {
+export function loadJSONMonster(monster) {
     const statBlock = document.createElement("stat-block"); //create statblock variable
     const creatureHeading = createCreatureHeading(monster); //creature-heading
     const topStats = document.createElement("top-stats"); //top-stats
@@ -191,12 +191,12 @@ export const loadJSONMonster = (monster) => {
 
     //damage types, condition immunities, senses
     const damageTypes = ["damage_vulnerabilities", "damage_resistances", "damage_immunities", "condition_immunities", "senses"];
-    for (type in damageTypes) {
+    for (let type = 0; type < damageTypes.length; type++) {
         let d = damageTypes[type];
 
         let damageNameArr = d.split("_");
         let damageName = "";
-        for (i in damageNameArr) {
+        for (let i in damageNameArr) {
             let dName = damageNameArr[i];
             damageName += dName[0].toUpperCase() + dName.slice(1) + " ";
         }

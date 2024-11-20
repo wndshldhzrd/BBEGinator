@@ -116,6 +116,7 @@ function downloadMonster() {
 //test function
 const testMessage = document.getElementById('testMsg');
 const testMessage2 = document.getElementById('testMsg2');
+const statBlockDiv = document.getElementById('monster-display')
 
 //store our search results here
 let data = null;
@@ -148,11 +149,13 @@ export async function testRunningPython() {
 
             testMessage.innerHTML = "Search results:<br>";
             testMessage2.innerHTML = "";
+            statBlockDiv.innerHTML = "";
 
             for (let i = 0; i < data.length && i < 4; i++) {
                 const r = data[i];
                 const name = r["name"];
                 testMessage2.innerHTML += name + "<br>";
+                loadJSONMonster(r);
             }
         }
         else {
@@ -178,11 +181,13 @@ function prevResults() {
         dataIndex = 0;
     }
 
+    statBlockDiv.innerHTML = "";
     testMessage2.innerHTML = "";
     for (let i = dataIndex; i < data.length && i < dataIndex + 4; i++) {
         const r = data[i];
         const name = r["name"];
         testMessage2.innerHTML += name + "<br>";
+        loadJSONMonster(r);
     }
 }
 
@@ -194,6 +199,7 @@ function nextResults() {
 
     dataIndex += 4;
     testMessage2.innerHTML = "";
+    statBlockDiv.innerHTML = "";
     for (let i = dataIndex; i < data.length && i < dataIndex + 4; i++) {
         const r = data[i];
         const name = r["name"];
