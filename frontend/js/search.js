@@ -1,6 +1,5 @@
-//import {loadJSONMonster} from './loadMonster.js';
-
-// import { test } from './test.js';
+import { loadJSONMonster } from './loadMonster.js';
+import { test } from './test.js';
 
 //Function which takes in various parameters and then gets a json of all
 //monsters that match that criteria
@@ -122,11 +121,13 @@ const testMessage2 = document.getElementById('testMsg2');
 let data = null;
 let dataIndex = 0;
 
-async function testRunningPython() {
+export async function testRunningPython() {
     testMessage.textContent = "Button clicked, awaiting result... ";
+    testMessage2.textcontent = "";
     const url = "http://localhost:5000/test-script";
 
     console.log("fetching");
+    test();
 
     try {
         const response = await fetch(url);
@@ -148,15 +149,10 @@ async function testRunningPython() {
             testMessage.innerHTML = "Search results:<br>";
             testMessage2.innerHTML = "";
 
-            let i = 0;
-            for (r of data) {
+            for (let i = 0; i < data.length && i < 4; i++) {
+                const r = data[i];
                 const name = r["name"];
                 testMessage2.innerHTML += name + "<br>";
-                i++;
-                
-                if (i > 3) {
-                    break;
-                }
             }
         }
         else {
@@ -184,7 +180,7 @@ function prevResults() {
 
     testMessage2.innerHTML = "";
     for (let i = dataIndex; i < data.length && i < dataIndex + 4; i++) {
-        r = data[i];
+        const r = data[i];
         const name = r["name"];
         testMessage2.innerHTML += name + "<br>";
     }
@@ -199,10 +195,10 @@ function nextResults() {
     dataIndex += 4;
     testMessage2.innerHTML = "";
     for (let i = dataIndex; i < data.length && i < dataIndex + 4; i++) {
-        r = data[i];
+        const r = data[i];
         const name = r["name"];
         testMessage2.innerHTML += name + "<br>";
-        //loadJSONMonster(r);
+        loadJSONMonster(r);
     }
 }
 
@@ -215,6 +211,11 @@ function toggleFilter(){
         filters.style.display = "block";
     }
 }
+
+//make module functions globally accessible (search.html can access)
+window.testRunningPython = testRunningPython;
+window.nextResults = nextResults;
+window.prevResults = prevResults;
 
 // Temp maybe?
 // const createMonsterButton = document.querySelector("#TEMP");

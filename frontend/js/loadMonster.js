@@ -75,7 +75,11 @@ function makePropBlock(category, statBlock){
 
 // Creates a div containing moster information and adds it to the monster display div
 //USING A .JSON FILE
-export function loadJSONMonster (monster) {
+//Hey, Vicky here
+//Why are there two loadJSONMonster functions?
+//I have commented this one out
+/*
+export function loadJSONMonster(monster) {
     //create statblock variable
     const statBlock = document.createElement("stat-block");
 
@@ -89,6 +93,8 @@ export function loadJSONMonster (monster) {
     const propLine = document.createElement("property-line");
     const acHeader = createEleWithText("h4", "Armor Class");
     let acDesc = ` ${monster.armor_class}`;
+}
+    */
 
 function j_createAC(appendTo, monster) {
     const acDesc = ` ${monster.armor_class}`;
@@ -148,7 +154,9 @@ function j_createAbilitiesBlock(appendTo, monster) {
 
 // Creates a div containing moster information and adds it to the monster display div
 //USING A .JSON FILE
-function loadJSONMonster (monster) {
+//currently leaving this version of loadJSONMonster as the one uncommented
+//may the web dev gods have mercy
+export const loadJSONMonster = (monster) => {
     const statBlock = document.createElement("stat-block"); //create statblock variable
     const creatureHeading = createCreatureHeading(monster); //creature-heading
     const topStats = document.createElement("top-stats"); //top-stats
@@ -271,31 +279,6 @@ function loadJSONMonster (monster) {
     const monsterDisplay = document.querySelector("#monster-display");
     monsterDisplay.appendChild(statBlock);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // Calculates the modifier of a stat
 function getModifier (score) {
@@ -590,6 +573,9 @@ async function fetchMonsterMonster(monsterName) {
     .then (monster => loadMonsterMonster(monster));
 }
 
+//commenting this out because it was causing issues when I was trying to
+//export loadJSONMonster into search.js
+/*
 const createMonsterButton = document.querySelector("#create");
 createMonsterButton.addEventListener("click", () => {
     const monsterDisplay = document.querySelector('#monster-display');
@@ -601,4 +587,4 @@ createMonsterButton.addEventListener("click", () => {
     // fetchMonster("goat");
     // fetchMonster("goat");
     // fetchMonster("goat");
-});
+});*/
