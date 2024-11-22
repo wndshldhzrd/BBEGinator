@@ -554,7 +554,6 @@ function loadMonsterMonster (monster) {
 }
 
 
-
 /*******************
 *    TESTING AREA  *
 ********************/
