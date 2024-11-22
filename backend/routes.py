@@ -18,16 +18,16 @@ def landing():
 
 @app.route("/test-script/<string:params>")
 def test_script(params):
+    @after_this_request
+    def add_header(response):
+        response.headers.add('Access-Control-Allow-Origin', "*")
+        return response
+
     testDict2 = json.loads(params)
     mgetter.getMonsters("no", testDict2)
     output = open("output.json").read()
     #print(output)
     print("mgetter done")
-
-    @after_this_request
-    def add_header(response):
-        response.headers.add('Access-Control-Allow-Origin', "*")
-        return response
 
     return jsonify(output)
 

@@ -6,7 +6,7 @@ import { test } from './test.js';
 
 function searchMonster() {
     //building the json
-    payload = {
+    let payload = {
         //most comments copy/pasted from mgetter
     'slug__in': '', //allows you to search for specific slugs, can do multiple at a time but formatting awkward
     'slug__iexact': '', //allows you to search for 1 slug specifically
@@ -56,8 +56,9 @@ function searchMonster() {
     'document__slug__in': '',
     'document__slug__not_in': ''
     }
+
     //everything that's in search and not in mgetter 
-    payload2 = {
+    let payload2 = {
     'alignment': document.getElementById('alignment-dropdown').value, //creature alignment
     //(was misspelled as alignmment-dropdown earlier. leaving this comment incase fixing the typo broke something)
     'swim_speed_lte' : '', //min swimspeed
@@ -86,7 +87,8 @@ function searchMonster() {
     //testing to ensure that parameters are being passed correctly
     console.log(payload);
 
-    const url = 'https://zevce.pythonanywhere.com/searchMonster/' + JSON.stringify(payload);
+    //const url = 'https://zevce.pythonanywhere.com/searchMonster/' + JSON.stringify(payload);
+    const url = 'http://localhost:5000/searchMonster/' + JSON.stringify(payload);
     fetch(url)
     .then(response => response.json())  
     .then(json => {
@@ -123,7 +125,7 @@ let data = null;
 let dataIndex = 0;
 
 export async function testRunningPython() {
-    payload = {
+    let payload = {
         //most comments copy/pasted from mgetter
     'slug__in': '', //allows you to search for specific slugs, can do multiple at a time but formatting awkward
     'slug__iexact': '', //allows you to search for 1 slug specifically
@@ -144,15 +146,15 @@ export async function testRunningPython() {
     'hit_points': '', //hit points of creature
     'hit_points__range': '', //range for hp but annoying to do so i implement later
     'hit_points__gt': '', //number u want hp to be greater than
-    'hit_points__gte': document.getElementById("hpMax").value, //max hp
+    'hit_points__gte': document.getElementById("hpMin").value, //max hp
     'hit_points__lt': '', //number u want hp to be less than
-    'hit_points__lte': document.getElementById("hpMin").value, //min hp
+    'hit_points__lte': document.getElementById("hpMax").value, //min hp
     'armor_class': '', //exact ac
     'armor_class__range': '', //range for ac but annoying to do so i implement later
     'armor_class__gt': '', //number u want ac to be greater than
-    'armor_class__gte': document.getElementById("acMax").value, //max ac
+    'armor_class__gte': document.getElementById("acMin").value, //max ac
     'armor_class__lt': '', //number u want ac to be less than
-    'armor_class__lte': document.getElementById("acMin").value, //min ac
+    'armor_class__lte': document.getElementById("acMax").value, //min ac
     'type__iexact': document.getElementById("type-dropdown").value,  //creature type
     'type': '', //unsure of difference between ^
     'type__in': '', //disregard
@@ -175,7 +177,9 @@ export async function testRunningPython() {
     }
     testMessage.textContent = "Button clicked, awaiting result... ";
     testMessage2.textcontent = "";
-    const url = "http://localhost:5000/test-script" + JSON.stringify(payload);
+    const url = "http://localhost:5000/test-script/" + JSON.stringify(payload);
+
+    console.log(payload);
 
     console.log("fetching");
     test();
@@ -269,6 +273,7 @@ function toggleFilter(){
 }
 
 //make module functions globally accessible (search.html can access)
+window.searchMonster = searchMonster;
 window.testRunningPython = testRunningPython;
 window.nextResults = nextResults;
 window.prevResults = prevResults;
