@@ -35,6 +35,10 @@ button {
     border-radius: 5px;
 }
 
+stat-block {
+    margin: 30px;
+}
+
 /*
     Header
 */
@@ -210,11 +214,7 @@ button {
     padding: 0p 1em 1em;
 }
 
-.monster-display .stat-block {
-    margin: 30px;
-}
-
-.playerName{
+.playerName {
     border-radius: 0;
     background-color: #0a0757;
     border-color: #0a0757;
@@ -225,7 +225,7 @@ button {
     margin-top: 5px;
 }
 
-.playerContent{
+.playerContent {
   background-color: #eee1cc;
   color:#0a0757;
   font-size: large;
