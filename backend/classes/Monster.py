@@ -96,25 +96,19 @@ class Monster():
             else: dmgMax = dmgMaxTotal
 
         if(len(self.spells) > 0):
-            self.spells = self.spells[0].split()
+            theSpells = self.spells[0]
             i = 0
-            for word in self.spells:
-                if word == "level":
-                    print(word[i - 1][0])
-                i += 1
-        #spellcasting parsing
-
-
-        #spell calculation, how tf we do this?
-        #if cantrip, add 2
-        #if lvl 1, add 4 per charge
-        #if lvl 2, add 10 per charge
-        #multiply by 2.5 per level?
-        #for L in level???
-            #for spell in spells
-                #((4.75 * 1.55**L)-2) * spell.charge 
-
-
+            #spell calculation, how tf we do this?
+            cursor = theSpells.find("Cantrips (at will): ") + 20
+            cantrips = theSpells[cursor:theSpells.find("\n* ", cursor)].split(', ')
+            cursor = theSpells.find("\n* ", cursor) + 3
+            self.points += 2 * len(cantrips)
+            
+            while(cursor > 3):
+                nextSpells = theSpells[cursor:theSpells.find("\n* ", cursor)].split(', ')
+                spellLevel = theSpells[cursor]
+                cursor = theSpells.find("\n* ", cursor) + 3
+                self.points += ((4.75 * 1.55**int(spellLevel)) - 2)
 
         self.points += dmgAvg + dmgMax
         
