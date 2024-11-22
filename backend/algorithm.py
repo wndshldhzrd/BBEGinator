@@ -114,7 +114,7 @@ def Algorithm(party, difficulty, monsterList, lair, guys, mode):
         for i in range(guys):
             print(f"Generating monster {i + 1} of {guys}")
             toSpend = 0
-            if(i < guys):
+            if(i < guys - 1):
                 toSpend = randint(int(points * 0.1), int(points * 0.67))
                 print(f"I want to spend {toSpend} points")
                 found = False
