@@ -229,6 +229,6 @@ stat-block {
   background-color: #eee1cc;
   color:#0a0757;
   font-size: large;
-  padding-left: 10px;
+  padding: 10px;
   font-style: bolder;
 }

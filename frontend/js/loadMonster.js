@@ -157,7 +157,7 @@ function j_createAbilitiesBlock(appendTo, monster) {
 //USING A .JSON FILE
 //currently leaving this version of loadJSONMonster as the one uncommented
 //may the web dev gods have mercy
-function loadJSONMonster(monster) {
+export function loadJSONMonster(monster) {
     const statBlock = document.createElement("stat-block"); //create statblock variable
     const creatureHeading = createCreatureHeading(monster); //creature-heading
     const topStats = document.createElement("top-stats"); //top-stats
@@ -575,7 +575,7 @@ async function fetchMonsterMonster(monsterName) {
 
 //commenting this out because it was causing issues when I was trying to
 //export loadJSONMonster into search.js
-
+/*
 const createMonsterButton = document.querySelector("#create");
 createMonsterButton.addEventListener("click", () => {
     const monsterDisplay = document.querySelector('#monster-display');
@@ -587,4 +587,4 @@ createMonsterButton.addEventListener("click", () => {
     // fetchMonster("goat");
     // fetchMonster("goat");
     // fetchMonster("goat");
-});
+});*/
