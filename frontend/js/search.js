@@ -1,25 +1,6 @@
 import { loadJSONMonster } from './loadMonster.js';
 import { test } from './test.js';
 
-//function for downloading monsters from the webpage
-function downloadMonster() {
-    obj = {"lol" : "lmao"}
-    filename = "goat";
-
-    const blob = new Blob([JSON.stringify(obj, null, 2)], {
-        type: 'application/json',
-      });
-
-
-      const url = URL.createObjectURL(blob);
-      
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `${filename}.monster`;
-      a.click();
-      URL.revokeObjectURL(url);
-}
-
 //test function
 const testMessage = document.getElementById('testMsg');
 const testMessage2 = document.getElementById('testMsg2');
@@ -112,7 +93,8 @@ export async function searchMonster() {
 
     testMessage.textContent = "Button clicked, awaiting result... ";
     testMessage2.textcontent = "";
-    const url = "https://zevce.pythonanywhere.com/searchMonster/" + JSON.stringify(payload);
+    //const url = "https://zevce.pythonanywhere.com/searchMonster/" + JSON.stringify(payload);
+    const url = "http://localhost:5000/searchMonster/" + JSON.stringify(payload);
 
     console.log("Sending payload to: " + url);
     console.log("payload:");
@@ -197,6 +179,46 @@ function nextResults() {
     }
 }
 
+//function for downloading monsters from the webpage
+async function downloadMonster() {
+    if (data == null || data.length == 0) {
+        return;
+    }
+    let json = data[dataIndex];
+    let filename = json["slug"];
+
+    const exportUrl = "http://localhost:5000/exportMonster/" + JSON.stringify(json);
+    try {
+        const response = await fetch(exportUrl);
+        if (response.status == 200) {
+
+            //get our response
+            const monster = await response.json();
+            const obj = JSON.parse(monster);
+
+            const blob = new Blob([JSON.stringify(obj, null, 2)], {
+                type: 'application/json',
+            });
+        
+              const url = URL.createObjectURL(blob);
+              
+              const a = document.createElement('a');
+              a.href = url;
+              a.download = `${filename}.monster`;
+              a.click();
+              URL.revokeObjectURL(url);
+        }
+        else {
+            console.log("response.status error: " + response.status);
+        }
+    }
+    catch (error) {
+        console.error("ERROR! ", error);
+        testMessage2.textContent = "ERROR";
+    }
+}
+
+
 //Opening/closing filter options
 function toggleFilter(){
     const filters = document.getElementById("inputs");
@@ -211,3 +233,4 @@ function toggleFilter(){
 window.searchMonster = searchMonster;
 window.nextResults = nextResults;
 window.prevResults = prevResults;
+window.downloadMonster = downloadMonster;

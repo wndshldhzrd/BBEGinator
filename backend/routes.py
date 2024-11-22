@@ -1,5 +1,6 @@
 import json
 import mgetter
+import export_monster
 from flask import Flask, after_this_request, jsonify, request
 app = Flask(__name__)
 
