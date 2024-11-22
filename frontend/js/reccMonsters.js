@@ -21,7 +21,6 @@ function addPlayer() {
     `<div class="playerInput">
         <button class="playerName">Player ${players.length}</button>
         <div class = "playerContent">
-            <hr>
             Class <select class="dropdown">
                 <option disabled="" selected="" value=""></option> 
                 <option value="barbarian">Barbarian</option>      
