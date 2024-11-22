@@ -52,3 +52,15 @@ def getRecommendation(info):
     #this is what gets passed back to the front end to be displayed, preferably pass us
     #a json of .monsters with the key being the monster name and the entry being the rest of the .monster file
     return jsonify({"Lol":"Lmao"})
+
+@app.route("/exportMonster/<string:fileContents>")
+def exportMonster(fileContents):
+    @after_this_request
+    def add_header(response):
+        response.headers.add('Access-Control-Allow-Origin', "*")
+        return response
+
+    fileText = json.loads(fileContents)
+    output = export_monster.export(fileText)
+    print("export done")
+    return jsonify(output)

@@ -28,16 +28,12 @@ def get_sense(sense, description):
 		return val
 
 #export a monster's data to a .monster style format
-def export(monster, filename=""):
+def export(monster):
 	#jsonData starts as a .monster-style template to fill in
 	jsonData = json.loads(open('sample_monster.monster').read())
 
 	#keys in monster file and corresponding keys in json as values
 	j2m = json.loads(open("j2m_keys.json").read())
-
-	#default filename is the monster slug
-	if filename == "":
-		filename = monster["slug"] + ".monster"
 
 	#insert data into our template
 	for category in j2m:
@@ -285,41 +281,31 @@ def export(monster, filename=""):
 	#armorName fix--remove mention of shield
 	jsonData["armorName"] = jsonData["armorName"].replace(", shield", "")
 
-	#.monster file (file called monSlug.monster)
-	outfile = open(filename, 'w')
-	json.dump(jsonData, outfile)
-	outfile.close()
-
-	return filename
+	#returns the data for use in the front-end
+	return jsonData
 
 
-#for testing purposes
-if __name__ == "__main__":
-	monSlug = "angel-psychopomp"
-	print("This is a test to convert a monster from the JSON file " +
-	 "format we get from mgetter.py to a .monster file")
-	print("This test depends on the monster data being stored in output.json, as we search " +
-		"for a specific slug. The actual function export_monster, however, simply requires " +
-		"a dictionary containing the json data for the desired monster")
-	print("\nCurrent monster slug: " + monSlug)
+#for testing purposes (note: not really needed anymore so commented out)
+# if __name__ == "__main__":
+# 	monSlug = "angel-psychopomp"
+# 	print("This is a test to convert a monster from the JSON file " +
+# 	 "format we get from mgetter.py to a .monster file")
+# 	print("This test depends on the monster data being stored in output.json, as we search " +
+# 		"for a specific slug. The actual function export_monster, however, simply requires " +
+# 		"a dictionary containing the json data for the desired monster")
+# 	print("\nCurrent monster slug: " + monSlug)
 
-	#for testing purposes, we used the current mgetter to find a specific test monster,
-	#with the goal of converting that data to .monster format in our code
-	monsters = open("output.json").read()
-	mon = ""
-	start = monsters.find('{"slug": "' + monSlug + '"')
-	end = monsters.find('}, {"slug"', start)
+# 	#for testing purposes, we used the current mgetter to find a specific test monster,
+# 	#with the goal of converting that data to .monster format in our code
+# 	monsters = open("output.json").read()
+# 	mon = ""
+# 	start = monsters.find('{"slug": "' + monSlug + '"')
+# 	end = monsters.find('}, {"slug"', start)
 
-	if (end != -1):
-		end = end + 1	#include "}" for the sake of json.loads
-	else:
-		if monsters[-1] == "]":
-			end = monsters.rfind('}') + 1
+# 	if (end != -1):
+# 		end = end + 1	#include "}" for the sake of json.loads
+# 	else:
+# 		if monsters[-1] == "]":
+# 			end = monsters.rfind('}') + 1
 	
-	mon = monsters[start:end]
-	if (start == -1):
-		print("Failed to find monster by that slug")
-		
-	else:
-		outfile = export(json.loads(mon))
-		print("\nFinished conversion, data stored in " + outfile)
+# 	mon = monsters[start:end]
