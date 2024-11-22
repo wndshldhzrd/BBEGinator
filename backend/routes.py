@@ -15,42 +15,23 @@ app = Flask(__name__)
 def landing():
     return "hello"
     
-
-@app.route("/test-script/<string:params>")
-def test_script(params):
+#api call for searching for monsters by their stats
+#check the searchMonster function in frontend/js/script.js to see how the front end call is being made to the backend
+#check mgetter.py to see the call the backend will make to open5e
+@app.route("/searchMonster/<string:params>")
+def searchMonster(params):
     @after_this_request
     def add_header(response):
         response.headers.add('Access-Control-Allow-Origin', "*")
         return response
 
-    testDict2 = json.loads(params)
-    mgetter.getMonsters("no", testDict2)
+    payload = json.loads(params)
+    mgetter.getMonsters("no", payload)
     output = open("output.json").read()
     #print(output)
     print("mgetter done")
 
     return jsonify(output)
-
-#api call for searching for monsters by their stats
-#check the searchMonster function in frontend/js/script.js to see how the front end call is being made to the backend
-#check mgetter.py to see the call the backend will make to open5e
-@app.route("/searchMonster/<string:info>")
-def searchMonster(info):
-    
-    #boilerplate code don't touch this
-    @after_this_request
-    def add_header(response):
-         response.headers.add('Access-Control-Allow-Origin', '*')
-         return response
-    
-    #turning the passed in string into a json which then turns into a python dictionary
-    #feel free to rename this variable and do with it as you need
-    testDict = json.loads(info)
-    print(testDict)
-
-    #this is what gets passed back to the front end to be displayed, preferably pass us
-    #a json of .monsters with the key being the monster name and the entry being the rest of the .monster file
-    return jsonify({"Lol":"Lmao"})
 
 #api call for getting a recommended list of monsters based on the stats of the entire party
 #check the getRecommendedMonsters function in frontend/js/script.js to see how the front end call is being made to the backend
