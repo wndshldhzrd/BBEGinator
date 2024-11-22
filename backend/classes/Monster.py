@@ -95,14 +95,13 @@ class Monster():
             if (len(coolActions) > 0): dmgMax = dmgMaxTotal // len(coolActions)
             else: dmgMax = dmgMaxTotal
 
-        
-
-        self.spells = self.spells[0].split()
-        i = 0
-        for word in self.spells:
-            if word == "level":
-                print(word[i - 1][0])
-            i += 1
+        if(len(self.spells) > 0):
+            self.spells = self.spells[0].split()
+            i = 0
+            for word in self.spells:
+                if word == "level":
+                    print(word[i - 1][0])
+                i += 1
         #spellcasting parsing
 
 

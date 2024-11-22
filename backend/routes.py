@@ -16,9 +16,10 @@ def landing():
     return "hello"
     
 
-@app.route("/test-script")
-def test_script():
-    mgetter.getMonsters()
+@app.route("/test-script/<string:params>")
+def test_script(params):
+    testDict2 = json.loads(params)
+    mgetter.getMonsters("no", testDict2)
     output = open("output.json").read()
     #print(output)
     print("mgetter done")
