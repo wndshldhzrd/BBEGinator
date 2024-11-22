@@ -114,18 +114,18 @@ export async function searchMonster() {
     testMessage2.textcontent = "";
     const url = "https://zevce.pythonanywhere.com/searchMonster/" + JSON.stringify(payload);
 
+    console.log("Sending payload to: " + url);
+    console.log("payload:");
     console.log(payload);
-
-    console.log("fetching");
-    test();
 
     try {
         const response = await fetch(url);
-        console.log("response received, supposedly");
         if (response.status == 200) {
             const json = await response.json();
 
             //get the new data, reset index to 0
+            console.log("Fetch sucessful, returned JSON: ");
+            console.log(json)
             data = JSON.parse(json);
             dataIndex = 0;
 
@@ -148,7 +148,7 @@ export async function searchMonster() {
             }
         }
         else {
-            console.log("response.status error");
+            console.log("response.status error: " + response.status);
         }
     }
     catch (error) {
