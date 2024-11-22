@@ -28,16 +28,12 @@ def get_sense(sense, description):
 		return val
 
 #export a monster's data to a .monster style format
-def export(monster, filename=""):
+def export(monster):
 	#jsonData starts as a .monster-style template to fill in
 	jsonData = json.loads(open('sample_monster.monster').read())
 
 	#keys in monster file and corresponding keys in json as values
 	j2m = json.loads(open("j2m_keys.json").read())
-
-	#default filename is the monster slug
-	if filename == "":
-		filename = monster["slug"] + ".monster"
 
 	#insert data into our template
 	for category in j2m:
@@ -286,11 +282,7 @@ def export(monster, filename=""):
 	jsonData["armorName"] = jsonData["armorName"].replace(", shield", "")
 
 	#.monster file (file called monSlug.monster)
-	outfile = open(filename, 'w')
-	json.dump(jsonData, outfile)
-	outfile.close()
-
-	return filename
+	return jsonData
 
 
 #for testing purposes
