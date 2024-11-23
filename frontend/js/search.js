@@ -187,14 +187,23 @@ async function downloadMonster() {
     let json = data[dataIndex];
     let filename = json["slug"];
 
-    const exportUrl = "http://localhost:5000/exportMonster/" + JSON.stringify(json);
+    console.log(JSON.stringify(json));
+
+    const exportUrl = "http://localhost:5000/exportMonster";
+
     try {
-        const response = await fetch(exportUrl);
+        const response = await fetch(exportUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(json)
+        });
         if (response.status == 200) {
 
             //get our response
-            const monster = await response.json();
-            const obj = JSON.parse(monster);
+            const obj = await response.json();
+            console.log(obj);
 
             const blob = new Blob([JSON.stringify(obj, null, 2)], {
                 type: 'application/json',
@@ -214,10 +223,8 @@ async function downloadMonster() {
     }
     catch (error) {
         console.error("ERROR! ", error);
-        testMessage2.textContent = "ERROR";
     }
 }
-
 
 //Opening/closing filter options
 function toggleFilter(){

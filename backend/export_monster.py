@@ -282,6 +282,9 @@ def export(monster):
 	jsonData["armorName"] = jsonData["armorName"].replace(", shield", "")
 
 	#returns the data for use in the front-end
+	print()
+	print("exportmonster finished")
+	print()
 	return jsonData
 
 

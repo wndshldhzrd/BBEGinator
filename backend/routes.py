@@ -34,6 +34,27 @@ def searchMonster(params):
 
     return jsonify(output)
 
+#takes a json file and returns a .monster output for it
+@app.route("/exportMonster", methods = ['POST', 'OPTIONS'])
+def exportMonster():
+    @after_this_request
+    def add_header(response):
+        response.headers.add('Access-Control-Allow-Origin', "*")
+        response.headers.add('Access-Control-Allow-Methods', "POST, OPTIONS") #allow our request method (POST) and preflight (OPTIONS)
+        response.headers.add('Access-Control-Allow-Headers', "Content-Type")  #allow our request header (Content-Type)
+        return response
+
+    #DO NOT TOUCH THIS--handles preflight request
+    if request.method == 'OPTIONS':
+        #jsonify adds in status=ok and whatnot, so we 
+        #use jsonify({}) as our return value for convenience
+        return jsonify({})
+
+    fileContents = request.get_json()
+    output = export_monster.export(fileContents)
+    print("export done")
+    return jsonify(output)
+
 #api call for getting a recommended list of monsters based on the stats of the entire party
 #check the getRecommendedMonsters function in frontend/js/script.js to see how the front end call is being made to the backend
 @app.route("/getRecommendation/<string:info>")
@@ -53,15 +74,3 @@ def getRecommendation(info):
     #this is what gets passed back to the front end to be displayed, preferably pass us
     #a json of .monsters with the key being the monster name and the entry being the rest of the .monster file
     return jsonify({"Lol":"Lmao"})
-
-@app.route("/exportMonster/<string:fileContents>")
-def exportMonster(fileContents):
-    @after_this_request
-    def add_header(response):
-        response.headers.add('Access-Control-Allow-Origin', "*")
-        return response
-
-    fileText = json.loads(fileContents)
-    output = export_monster.export(fileText)
-    print("export done")
-    return jsonify(output)
