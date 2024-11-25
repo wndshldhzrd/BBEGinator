@@ -276,10 +276,15 @@ def export(monster):
 	natArmorBonusCheck = ac - (10 + dexBonus + jsonData["shieldBonus"])
 	if natArmorBonusCheck > 0:
 		jsonData["natArmorBonus"] = natArmorBonusCheck
+		if (jsonData['armorName'] != "natural armor"):
+			jsonData['armorName'] = "other"
 	jsonData["natArmorBonus"] = int(jsonData["natArmorBonus"])
 
 	#armorName fix--remove mention of shield
+	#also check for empty string
 	jsonData["armorName"] = jsonData["armorName"].replace(", shield", "")
+	if jsonData["armorName"] == "":
+		jsonData["armorName"] = "none"
 
 	#returns the data for use in the front-end
 	print()

@@ -9,6 +9,9 @@ function createEleWithText (type, text) {
 function createCreatureHeading(monster) {
     const creatureHeading = document.createElement("creature-heading");
     const name = createEleWithText("h1", monster.name);
+    if (monster.alignment == null || monster.alignment == "") {
+        monster.alignment = "unaligned";
+    }
     const sizeType = createEleWithText("h2", `${monster.size} ${monster.type}, ${monster.alignment}`);
     creatureHeading.appendChild(name);
     creatureHeading.appendChild(sizeType);
@@ -99,7 +102,7 @@ export function loadJSONMonster(monster) {
 
 function j_createAC(appendTo, monster) {
     let acDesc = ` ${monster.armor_class}`;
-    if (monster.armor_desc != null) {
+    if (monster.armor_desc != null && monster.armor_desc != "") {
         acDesc += ` (${monster.armor_desc})`;
     }
     const ac = createEleWithText("p", acDesc);
