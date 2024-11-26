@@ -21,7 +21,7 @@
 
         <div class="content">
             <div class = "title">RECOMMEND MONSTERS</div>
-            <select class="dropdown">
+            <select id="difficulty" class="dropdown">
                 <option disabled selected value>ENCOUNTER DIFFICULTY</option>
                 <option value="1">Easy</option>      
                 <option value="2">Medium</option>
@@ -29,6 +29,12 @@
                 <option value="4">Extra Hard</option>
                 <!-- <option value="5">Bullshit</option> -->
             </select>
+
+            <td> <br> Desired Number of Monsters: </td>
+            <td><input id = "monCount" class = "stat-Input" type = "number" min = "1" value = 1></td>
+
+            <label for="bossOpt"> <br> Click if this is a boss fight</label>
+            <input type="checkbox" id="bossOpt">
             
             <br><a class = "subheader">Players</a><br>
 
@@ -48,6 +54,7 @@
                 <div id = "recs">
 
                 <div style = "background-color: #d11149; color: #f5f2ed; font-size: 20px; padding: 3px;">Monster Recommendations:</div>
+                <ul id="RecMsg"></ul>
 
                 </div>
 
