@@ -16,12 +16,9 @@ def partyReader(JSON):
     #gg
 
 
-    x = True
-    while x:
+
+    for player in JSON:
         #parseJson nonsense
-        player = JSON(x)
-        if('''   player == 0    '''):
-            break
         health = int(player["health"])
         theClass = player["class"]
         level = int(player["level"])
@@ -39,10 +36,8 @@ def monsterReader(JSON):
     #append monster
     #gg
 
-    x = True
-    while x:
+    for monster in JSON:
         #jsonParsing
-        monster = JSON(x)
         slug = monster["slug"]
         name = monster["name"]
         ac = monster["otherArmorDesc"]
@@ -76,13 +71,15 @@ def monsterReader(JSON):
         return monsterDatabase
 
 
-# ENCOUNTER DIFFICULTY
+# ENCOUNTER DIFFICULTY 
+'''
 class EncounterType(Enum):
     EASY = 0.75
-    MEDIUM = 1
+    MEDIUM = 1              old
     HARD = 1.25
     UNFAIR = 1.5
     # BULLSHIT
+    '''
 
 def WordToNum(word):
     if word == "one": return 1
@@ -94,6 +91,9 @@ def WordToNum(word):
 
     #parses each monster from the mgetter and calulates its dmg/health ranges
 def Algorithm(party, difficulty, monsterList, lair, guys, mode):
+
+    difficulty = .5 + (.25*difficulty)
+
     
     points = 0
 
@@ -103,7 +103,7 @@ def Algorithm(party, difficulty, monsterList, lair, guys, mode):
     #randomPoint -> parses monster list for a temp list of slugs
     
     for p in party: points += p.points
-    points *= difficulty.value    #calculation for the point pool
+    points *= difficulty    #calculation for the point pool
     
     print(points)
     print(f"I have {points} points to spend")
@@ -255,4 +255,7 @@ print(database)
 for x, y in database.items():
     monsterList.append((y.points, x))
 
-monsterList = Algorithm(party, EncounterType.MEDIUM, database.items(), None, 4, "balanced")
+
+
+
+monsterList = Algorithm(party, difficulty, database.items(), None, 4, "balanced")
