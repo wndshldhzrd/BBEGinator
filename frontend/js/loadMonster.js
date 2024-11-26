@@ -409,7 +409,7 @@ function languagesMonsterPropLine(languages) {
     const languageHeader = createEleWithText("h4", "Languages");
     propLine.appendChild(languageHeader);
 
-    languageDesc = "";
+    let languageDesc = "";
     for (language in languages) {
         languageDesc += language.name;
         if (language.speaks) {
@@ -578,16 +578,16 @@ async function fetchMonsterMonster(monsterName) {
 
 //commenting this out because it was causing issues when I was trying to
 //export loadJSONMonster into search.js
-/*
-const createMonsterButton = document.querySelector("#create");
-createMonsterButton.addEventListener("click", () => {
-    const monsterDisplay = document.querySelector('#monster-display');
-    monsterDisplay.innerHTML = "";
-    // fetchJSONMonster("goat");
-    fetchMonsterMonster("goat");
-    // fetchMonster("goat");
-    // fetchMonster("goat");
-    // fetchMonster("goat");
-    // fetchMonster("goat");
-    // fetchMonster("goat");
-});*/
+
+// const createMonsterButton = document.querySelector("#create");
+// createMonsterButton.addEventListener("click", () => {
+//     const monsterDisplay = document.querySelector('#monster-display');
+//     monsterDisplay.innerHTML = "";
+//     fetchJSONMonster("goat");
+//     fetchMonsterMonster("goat");
+//     // fetchMonster("goat");
+//     // fetchMonster("goat");
+//     // fetchMonster("goat");
+//     // fetchMonster("goat");
+//     // fetchMonster("goat");
+// });
