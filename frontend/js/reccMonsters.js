@@ -3,6 +3,8 @@ import { fetchJSONMonster, fetchMonsterMonster } from "./loadMonster.js";
 //variable which keeps track of how many players the page is currently displaying
 let players = [];
 
+const recMsg = document.getElementById('RecMsg');
+const difficultyOption = document.getElementById("difficulty");
 
 function addMonster(monster) {
     //getting the div which players are added to
@@ -92,7 +94,7 @@ function addPlayer() {
                 <option value="warlock">Warlock</option>
             </select>
             <br>
-            Level <input class="stat-Input" type="number" min="1" value="1">
+            Level <input class="stat-Input" type="number" min="1" value="1" max = "20">
             <br>
             Hp <input class="stat-Input" id="playerHealth" type="number" min="1" value="1">
         </div>
@@ -146,11 +148,27 @@ function toggleRemovePlayerButton() {
 //Function which takes in all the currently inputted player data sends
 //it as an api call to our back end and then displays a recommended monster
 //based off of the stats of the party
-function getRecommendedMonster() {
+async function getRecommendedMonster() {
+    recMsg.innerHTML = "";
 
-    //initializing our JSON
-    payload = {}
+    const diff = difficultyOption.value;
+    if (diff == null || diff == "") {
+        recMsg.innerHTML += "Please select a difficulty<br><br>";
+    }
+    console.log(diff);
 
+    const monCount = document.getElementById("monCount").value;
+
+    let bossFight = null;
+    if (document.getElementById("bossOpt").checked) {
+        bossFight = "boss";
+    }
+    else {
+        bossFight = "balanced";
+    }
+    console.log(bossFight);
+    
+    let payload = [];
     //looping through each player and getting the values
     for(let i = 0; i < players.length; i++) {
 
@@ -163,16 +181,17 @@ function getRecommendedMonster() {
         //ensuring all our data is valid, will need to update html page eventually to
         //tell players which fields still need to be filled out
         if(playerClass == "" || playerLevel == "" || playerHealth == "") {
+            recMsg.innerHTML += "Incomplete data provided--please make sure all players have a selected class, HP, and level.";
             console.error("ERROR ERROR INCOMPLETE INPUT DATA");
             return;
         }
         
         //adding values to our payload
-        payload["p" + i] = {
+        payload.push ({
             "class" : playerClass,
             "level" : playerLevel,
             "health" : playerHealth,
-        }
+        });
     }
 
     if(players.length < 1) {
@@ -180,21 +199,50 @@ function getRecommendedMonster() {
         return;
     }
 
-    //adding a terminating player so backend knows when to stop parsing players
-    payload["p" + players.length] = "0";
+    recMsg.innerHTML = "Getting monster recommendations...";
 
+    //no need for this anymore I think
+    //adding a terminating player so backend knows when to stop parsing players
+    //payload["p" + players.length] = "0";
 
     //testing to ensure that parameters are being passed correctly
     console.log(payload);
 
     //making our api call
-    const url = 'https://zevce.pythonanywhere.com/getRecommendation/' + JSON.stringify(payload)
+    //const url = 'https://zevce.pythonanywhere.com/getRecommendation/' + JSON.stringify(payload)
+    const url = "http://localhost:5000/getRecommendation";
     console.log(url);
+
+    data = {"party": payload, "diff": diff, "count": monCount, "isBoss": bossFight};
+
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+        if (response.status == 200) {
+            const results = await response.json();
+            console.log("success!");
+            console.log(results);
+        }
+        else {
+            recMsg.innerHTML = "An error occurred. Try again?";
+            console.log("response.status error: " + response.status);
+        }
+    }
+    catch (error) {
+        console.error("ERROR! ", error);
+    }
+
+    /*
     fetch(url)
     .then(response => response.json())  
     .then(json => {
         console.log(json);
-    })
+    })*/
 }
 
 window.addEventListener("load", addPlayer());
