@@ -8,7 +8,7 @@ party = []
 monsterList = []
 mgetter = "?"
 
-def partyReader(JSON):
+def partyReader(json):
     partyMembers = []
     #read jsonfile
     #create induvidual party member
@@ -17,7 +17,7 @@ def partyReader(JSON):
 
 
 
-    for player in JSON:
+    for player in json:
         #parseJson nonsense
         health = int(player["health"])
         theClass = player["class"]
@@ -29,14 +29,14 @@ def partyReader(JSON):
     return partyMembers
 
 
-def monsterReader(JSON):
+def monsterReader(json):
     monsterDatabase = []
     #read json
     #create induvidual monster
     #append monster
     #gg
 
-    for monster in JSON:
+    for monster in json:
         #jsonParsing
         slug = monster["slug"]
         name = monster["name"]
@@ -90,7 +90,7 @@ def WordToNum(word):
     else: return -69420
 
     #parses each monster from the mgetter and calulates its dmg/health ranges
-def Algorithm(party, difficulty, monsterList, lair, guys, mode):
+def Algorithm(party, difficulty, monsters, guys, mode):
 
     difficulty = .5 + (.25*difficulty)
 
@@ -98,11 +98,15 @@ def Algorithm(party, difficulty, monsterList, lair, guys, mode):
     points = 0
 
         #search monster database to create list of tuples
-    monsters = []
+    recMonsters = []
+
+    monsterList = monsterReader(monsters)
     #when buying a monster, create a range of +- 5 of our point, and find all slugs within that range, pick one of those randomly
     #randomPoint -> parses monster list for a temp list of slugs
     
-    for p in party: points += p.points
+    partymembers = partyReader(party)
+
+    for p in partymembers: points += p.points
     points *= difficulty    #calculation for the point pool
     
     print(points)
@@ -125,7 +129,7 @@ def Algorithm(party, difficulty, monsterList, lair, guys, mode):
                 if not found:
                     print("I couldn't find a monster. In the actual thing that would be a problem but this is just testing")
                 else:
-                    monsters.append(choice(tempList))
+                    recMonsters.append(choice(tempList))
                 points -= toSpend
             else:
                 print(f"This is the last monster, using my last {points} points")
@@ -141,7 +145,7 @@ def Algorithm(party, difficulty, monsterList, lair, guys, mode):
             print("I couldn't find a monster. In the actual thing that would be a problem but this is just testing")
         else:
             myGuy = choice(tempList)
-        for i in range(guys): monsters.append(myGuy)
+        for i in range(guys): recMonsters.append(myGuy)
     elif(mode == "balanced"):
         toSpend = points / guys
         print(f"I want to buy {guys} monsters with point values around {toSpend}")
@@ -153,7 +157,7 @@ def Algorithm(party, difficulty, monsterList, lair, guys, mode):
         if not found:
             print("I couldn't find a monster. In the actual thing that would be a problem but this is just testing")
         else:
-            for i in range(guys): monsters.append(choice(tempList))
+            for i in range(guys): recMonsters.append(choice(tempList))
     elif(mode == "boss"):
         print(f"This is a boss encounter, I will spend most of my points on a boss")
         toSpend = points if guys == 1 else randint(int(points * 0.67), int(points * 0.8))
@@ -184,7 +188,7 @@ def Algorithm(party, difficulty, monsterList, lair, guys, mode):
                 if not found:
                     print("I couldn't find a monster. In the actual thing that would be a problem but this is just testing")
                 else:
-                    monsters.append(choice(tempList))
+                    recMonsters.append(choice(tempList))
                 points -= toSpend
             else: print(f"This is the last monster, using my last {points} points")
     elif(mode == "bossBalanced"):
@@ -199,7 +203,7 @@ def Algorithm(party, difficulty, monsterList, lair, guys, mode):
         if not found:
             print("I couldn't find a monster. In the actual thing that would be a problem but this is just testing")
         else:
-            monsters.append(choice(tempList))
+            recMonsters.append(choice(tempList))
         points -= toSpend
         if(guys > 1):
             toSpend = points / (guys - 1)
@@ -212,10 +216,10 @@ def Algorithm(party, difficulty, monsterList, lair, guys, mode):
             if not found:
                 print("I couldn't find any monsters. In the actual thing that would be a problem but this is just testing")
             else:
-                for i in range(guys - 1): monsters.append(choice(tempList))
+                for i in range(guys - 1): recMonsters.append(choice(tempList))
     
     print(f"Returning monster list: {monsters}")
-    return monsters
+    return recMonsters
 
 goat = Monster("goat", "Goat", 10, 4, {"walk": 40}, 
     {"strPoints": 12,
@@ -258,4 +262,4 @@ for x, y in database.items():
 
 
 
-monsterList = Algorithm(party, difficulty, database.items(), None, 4, "balanced")
+monsterList = Algorithm(party, difficulty, monsterList, 4, "balanced")
