@@ -93,140 +93,19 @@ function getFileContents(fileList) {
 }
 
 //Made into separate function to stop errors from occurring :)
-function readFile(f) {
+//OWEN NOTE - okay so adding the loadmonstermonster implementation presumably goes here.
+//documenting changes so if there's errors you know exactly what's new
+//to start with: the function is now export async
+export async function readFile(f) {
+    loadMonsterMonster(f); //okay i added this but it can't be this easy right
+    //loadMonsterMonster takes in a monster and that's it and f is a monster.
+
+    /*point of loadmonstermonster is to get a statblock visible, so presumably don't need this info??
+    commenting out just in case
     let fr = new FileReader();
     fr.onload = function () {
         let result = fr.result;
         data.innerHTML += `NAME: ${f.name}<br>` + `CONTENTS:<br>` + result + '<br><br><br>';
     }
-    fr.readAsText(f);
-}
-
-//taking the search.js jsonmonster but it has to be a monstermonster
-export async function searchMonster() {
-    let payload = {
-        //most comments copy/pasted from mgetter
-    'slug__in': '', //allows you to search for specific slugs, can do multiple at a time but formatting awkward
-    'slug__iexact': '', //allows you to search for 1 slug specifically
-    'slug': '', //tbh idk dfference between this and prev
-    'name__iexact': '', //specific name
-    'name': '', //SPECIFIC NAME
-    'name__icontains': '', //allows you to search for creatures w names that contain this string. example is dragon will return al dragons
-    'desc__iexact': '', //exact description
-    'desc': '', //idk difference between this and prev
-    'desc__in': '', //unsure rn
-    'desc__icontains': '', //unsure
-    'cr': '', //exact cr
-    'cr__range': '', //range for cr but annoying to do so i implement later
-    'cr__gt': '', //number you want cr to be greater than
-    'cr__gte': '', //number u want cr to be greater than or equal to
-    'cr__lt': '', //number u want cr to be less than
-    'cr__lte': '', //number u want cr to be less than or equal to
-    'hit_points': '', //hit points of creature
-    'hit_points__range': '', //range for hp but annoying to do so i implement later
-    'hit_points__gt': '', //number u want hp to be greater than
-    'hit_points__gte': document.getElementById("hpMin").value, //max hp
-    'hit_points__lt': '', //number u want hp to be less than
-    'hit_points__lte': document.getElementById("hpMax").value, //min hp
-    'armor_class': '', //exact ac
-    'armor_class__range': '', //range for ac but annoying to do so i implement later
-    'armor_class__gt': '', //number u want ac to be greater than
-    'armor_class__gte': document.getElementById("acMin").value, //max ac
-    'armor_class__lt': '', //number u want ac to be less than
-    'armor_class__lte': document.getElementById("acMax").value, //min ac
-    'type__iexact': document.getElementById("type-dropdown").value,  //creature type
-    'type': '', //unsure of difference between ^
-    'type__in': '', //disregard
-    'type__icontains': '', //allows you to search w a term and have results be types that contain that term
-    'size__iexact': document.getElementById("size-dropdown").value, //creature size
-    'size': '', //unsure of difference between^
-    'size__in': '', //unsure
-    'size__icontains': '', //allows you to search w a term and have results be sizes that contain that term, not sure why ud want this
-    'page_no': '', //specific page #
-    'page_no__range': '', //annoying, alr explained this 100x
-    'page_no__gt': '', //page number greater than
-    'page_no__gte': '', //page number greater than or equal to
-    'page_no__lt': '', //page number less than
-    'page_no__lte': '', //page number less than or equal to
-    //all this document slug stuff is for what compendium the content is from, not sure if we will ever really be using
-    'document__slug__iexact': '', 
-    'document__slug': '',
-    'document__slug__in': '',
-    'document__slug__not_in': ''
-    }
-    /*everything that's in search and not in mgetter 
-    let payload2 = {
-    'alignment': document.getElementById('alignment-dropdown').value, //creature alignment
-    //(was misspelled as alignmment-dropdown earlier. leaving this comment incase fixing the typo broke something)
-    'swim_speed_lte' : '', //min swimspeed
-    'swim_speed_gte' : '', //max swimspeed
-    'fly_speed_lte' : '', //min flyspeed
-    'fly_speed_gte' : '', //max flyspeed
-    'walk_speed_lte' : '', //min walkspeed
-    'walk_speed_gte' : '', //max walkspeed
-    'str_lte' : document.getElementById("strMin").value, //min str
-    'str_gte' : document.getElementById("strMax").value, //max str
-    'dex_lte' : document.getElementById("dexMin").value, //min dex
-    'dex_gte' : document.getElementById("dexMax").value, //max dex
-    'con_lte' : document.getElementById("conMin").value, //min con
-    'con_gte' : document.getElementById("conMax").value, //max con
-    'int_lte' : document.getElementById("intMin").value, //min int
-    'int_gte' : document.getElementById("intMax").value, //max int
-    'wis_lte' : document.getElementById("wisMin").value, //min wis
-    'wis_gte' : document.getElementById("wisMax").value, //max wis
-    'cha_lte' : document.getElementById("chaMin").value, //min cha
-    'cha_gte' : document.getElementById("chaMax").value, //max cha
-        //metric which creatures should be ordered by
-    'sort_by': document.getElementById("Sort-dropdown").value + "-" 
-        + document.getElementById("Sort-style").value
-    } */
-
-
-    testMessage.textContent = "Button clicked, awaiting result... ";
-    testMessage2.textcontent = "";
-    const url = "https://zevce.pythonanywhere.com/searchMonster/" + JSON.stringify(payload);
-
-    console.log(payload);
-
-    console.log("fetching");
-    test();
-
-    try {
-        const response = await fetch(url);
-        console.log("response received, supposedly");
-        if (response.status == 200) {
-            const json = await response.json();
-
-            //get the new data, reset index to 0
-            data = JSON.parse(json);
-            dataIndex = 0;
-
-            //console.log(data);
-            console.log("let's not print the whole json...");
-            if (data.length == 0) {
-                testMessage.innerHTML = "No monsters found. Please try other filters.";
-                return;
-            }
-
-            testMessage.innerHTML = "Search results:<br>";
-            testMessage2.innerHTML = "";
-            statBlockDiv.innerHTML = "";
-
-            for (let i = 0; i < data.length && i < 4; i++) {
-                const r = data[i];
-                const name = r["name"];
-                testMessage2.innerHTML += name + "<br>";
-                loadMonsterMonster(r);
-            }
-        }
-        else {
-            console.log("response.status error");
-        }
-    }
-    catch (error) {
-        console.error("ERROR! ", error);
-        testMessage2.textContent = "ERROR";
-    }
-
-    console.log("fetched");
+    fr.readAsText(f);*/
 }
