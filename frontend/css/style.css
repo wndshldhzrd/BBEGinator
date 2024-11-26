@@ -214,6 +214,11 @@ stat-block {
 
 /* Monster display */
 
+#recs {
+    min-width: 480px;
+    max-width: 480px;
+}
+
 .content .monster-display {
     border:  solid 2px;
     padding: 0p 1em 1em;
