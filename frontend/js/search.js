@@ -180,11 +180,11 @@ function nextResults() {
 }
 
 //function for downloading monsters from the webpage
-async function downloadMonster() {
-    if (data == null || data.length == 0) {
+async function downloadMonster(index = 0) {
+    if (data == null || dataIndex + index >= data.length - 1) {
         return;
     }
-    let json = data[dataIndex];
+    let json = data[dataIndex + index];
     let filename = json["slug"];
 
     console.log(JSON.stringify(json));
