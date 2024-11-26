@@ -26,6 +26,11 @@ a:link{
     text-decoration: none;
 }
 
+a:visited{
+    color: #0a0757;
+    text-decoration: none;
+}
+
 button {
     padding: 0.5em;
     border: solid 1px;
@@ -208,6 +213,11 @@ stat-block {
 }
 
 /* Monster display */
+
+#recs {
+    min-width: 480px;
+    max-width: 480px;
+}
 
 .content .monster-display {
     border:  solid 2px;

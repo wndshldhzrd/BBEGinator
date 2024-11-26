@@ -84,10 +84,6 @@
                 <td>Speed</td>
                 <td><input class = "stat-Input" id = "speedMin" type = "number" min = "0" value = 0></td>
                 <td><input class = "stat-Input" id = "speedMax"  type = "number" min = "0" value = 300></td>
-
-                <td>CR</td>
-                <td><input class = "stat-Input" id = "crMin"  type = "number" min = "1" max = "30" value = 1></td>
-                <td><input class = "stat-Input" id = "crMax"  type = "number" min = "1" max = "30" value = 30></td>
               </tr>
               <tr>
                 <td><hr></td>
@@ -119,9 +115,19 @@
                 <td><input class = "stat-Input" id = "chaMax"  type = "number" min = "0" max = "30" value = 30></td>
               </tr><tr>
                 
-              </tr>
+                <tr>
+                  <td><hr></td>
+                </tr>
+
+              <td>CR</td>
+              <td><input class = "stat-Input" id = "crMin"  type = "number" min = "1" max = "30" value = 1></td>
+              <td><input class = "stat-Input" id = "crMax"  type = "number" min = "1" max = "30" value = 30></td>
+
+
             </table> 
             </div> 
+            <br><button onclick="searchMonster();" style = "font-size: large;">Search</button>
+            <!-- <button id="TEMP">TEMPORARY SEARCH BUTTON</button> -->
             <br><br>
             <div style><a class="subheader">Results</a>
               <select class = "dropdown" id="Sort-dropdown">
@@ -148,8 +154,6 @@
             
             </div>
 
-            <button onclick="searchMonster();">Search for Monster</button>
-            <!-- <button id="TEMP">TEMPORARY SEARCH BUTTON</button> -->
 
             
               <div class = "results">temporarily put prev and next buttons up here so they don't get covered by stat blocks

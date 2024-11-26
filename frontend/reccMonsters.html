@@ -4,8 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
+    <script type="module" src="src/js/stat-block.js"></script>
+    <script type="module" src="src/js/creature-heading.js"></script>
+    <script type="module" src="src/js/top-stats.js"></script>
+    <script type="module" src="src/js/abilities-block.js"></script>
+    <script type="module" src="src/js/property-line.js"></script>
+    <script type="module" src="src/js/property-block.js"></script>
     <script defer src="js/reccMonsters.js"></script>
-    <script defer src="js/loadMonster.js"></script>
+    <script type="module" defer src="js/loadMonster.js"></script>
     <title>BBEGinator</title>
 </head>
 <body onload = "addPlayer()">
@@ -52,14 +58,19 @@
 
             <div id = "recsContain">
                 <div id = "recs">
+                <div style = "background-color: #d11149; color: #f5f2ed; font-size: 20px; padding: 3px;">
+                    Monster Recommendations:
+                </div>
+                <div id="monster-display">
 
                 <div style = "background-color: #d11149; color: #f5f2ed; font-size: 20px; padding: 3px;">Monster Recommendations:</div>
                 <ul id="RecMsg"></ul>
-
+                </div>
                 </div>
 
                 <!--Basic control buttons for the user-->
                 <br><button onclick="getRecommendedMonster();">Generate new suggestion</button>
+                <button id="create">Test button</button>
             </div>
         </div>
     </div>
