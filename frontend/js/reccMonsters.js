@@ -1,63 +1,61 @@
+import { fetchJSONMonster, fetchMonsterMonster } from "./loadMonster.js";
+
 //variable which keeps track of how many players the page is currently displaying
 let players = [];
-let monsters = [];
 
 
-function addMonster() {
+function addMonster(monster) {
     //getting the div which players are added to
-    var playerStatBlockDisplay = document.getElementById("playerStatBlocks");
+    var monsterDisplay = document.querySelector("#monster-display");
 
     //creating our player stat block to be added to the page
-    var playerStatBlock = document.createElement("div");
+    var monsterBlock = document.createElement("div");
 
-    //adding our player element to the list of player elements
-    players.push(playerStatBlock)
+    // //setting the inner html of the player statblock
+    // //ideally refactor into an html template page, but good enough for now
+    // playerStatBlock.innerHTML =
+    // `<div class="playerInput">
+    //     <button class="playerName">Player ${players.length}</button>
+    //     <div class = "playerContent">
+    //         Class <select class="dropdown">
+    //             <option disabled="" selected="" value=""></option> 
+    //             <option value="barbarian">Barbarian</option>      
+    //             <option value="bard">Bard</option>
+    //             <option value="cleric">Cleric</option>
+    //             <option value="druid">Druid</option>
+    //             <option value="fighter">Fighter</option>
+    //             <option value="monk">Monk</option>
+    //             <option value="paladin">Paladin</option>
+    //             <option value="ranger">Ranger</option>
+    //             <option value="rogue">Rogue</option>
+    //             <option value="sorcerer">Sorcerer</option>
+    //             <option value="wizard">Wizard</option>
+    //             <option value="warlock">Warlock</option>
+    //         </select>
+    //         <br>
+    //         Level <input class="stat-Input" type="number" min="1" value="1">
+    //         <br>
+    //         Hp <input class="stat-Input" id="playerHealth" type="number" min="1" value="1">
+    //     </div>
+    // </div>`;
 
-    //setting the inner html of the player statblock
-    //ideally refactor into an html template page, but good enough for now
-    playerStatBlock.innerHTML =
-    `<div class="playerInput">
-        <button class="playerName">Player ${players.length}</button>
-        <div class = "playerContent">
-            Class <select class="dropdown">
-                <option disabled="" selected="" value=""></option> 
-                <option value="barbarian">Barbarian</option>      
-                <option value="bard">Bard</option>
-                <option value="cleric">Cleric</option>
-                <option value="druid">Druid</option>
-                <option value="fighter">Fighter</option>
-                <option value="monk">Monk</option>
-                <option value="paladin">Paladin</option>
-                <option value="ranger">Ranger</option>
-                <option value="rogue">Rogue</option>
-                <option value="sorcerer">Sorcerer</option>
-                <option value="wizard">Wizard</option>
-                <option value="warlock">Warlock</option>
-            </select>
-            <br>
-            Level <input class="stat-Input" type="number" min="1" value="1">
-            <br>
-            Hp <input class="stat-Input" id="playerHealth" type="number" min="1" value="1">
-        </div>
-    </div>`;
+    // //displaying our player on the page
+    // playerStatBlockDisplay.appendChild(playerStatBlock);
 
-    //displaying our player on the page
-    playerStatBlockDisplay.appendChild(playerStatBlock);
+    // toggleRemovePlayerButton();
+    // var coll = document.getElementsByClassName("playerName");
 
-    toggleRemovePlayerButton();
-    var coll = document.getElementsByClassName("playerName");
-
-    for (var i = 0; i < coll.length; i++) {
-      coll[i].addEventListener("click", function() {
-        this.classList.toggle("active");
-        var content = this.nextElementSibling;
-        if (content.style.display === "block") {
-          content.style.display = "none";
-        } else {
-          content.style.display = "block";
-        }
-      });
-    }
+    // for (var i = 0; i < coll.length; i++) {
+    //   coll[i].addEventListener("click", function() {
+    //     this.classList.toggle("active");
+    //     var content = this.nextElementSibling;
+    //     if (content.style.display === "block") {
+    //       content.style.display = "none";
+    //     } else {
+    //       content.style.display = "block";
+    //     }
+    //   });
+    // }
 }
 
 //function for adding a player to the recommendMonster page
@@ -198,3 +196,16 @@ function getRecommendedMonster() {
         console.log(json);
     })
 }
+
+window.addEventListener("load", addPlayer());
+
+
+// Testing as it's not hooked up
+const createMonsterButton = document.querySelector("#create");
+createMonsterButton.addEventListener("click", () => {
+    const monsterDisplay = document.querySelector('#monster-display');
+    monsterDisplay.innerHTML = "";
+    monsters = [];
+    addMonster("goat");
+    addMonster("goat");
+});

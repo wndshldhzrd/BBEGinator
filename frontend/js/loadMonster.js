@@ -160,7 +160,7 @@ function j_createAbilitiesBlock(appendTo, monster) {
 //USING A .JSON FILE
 //currently leaving this version of loadJSONMonster as the one uncommented
 //may the web dev gods have mercy
-export function loadJSONMonster(monster) {
+function loadJSONMonster(monster, elementName="") {
     const statBlock = document.createElement("stat-block"); //create statblock variable
     const creatureHeading = createCreatureHeading(monster); //creature-heading
     const topStats = document.createElement("top-stats"); //top-stats
@@ -280,7 +280,12 @@ export function loadJSONMonster(monster) {
         makePropBlock(monster.legendary_actions, statBlock)
     }
 
-    const monsterDisplay = document.querySelector("#monster-display");
+    let monsterDisplay = null;
+    if (elementName == "") {
+        monsterDisplay = document.querySelector("#monster-display");
+    } else {
+        monsterDisplay = document.querySelector(`${elementName}`);
+    }
     monsterDisplay.appendChild(statBlock);
 }
 
@@ -447,7 +452,7 @@ function crMonsterPropLine(cr) {
 
 // Creates a div containing moster information and adds it to the monster display div
 //USING A .MONSTER FILE
-function loadMonsterMonster (monster) {
+function loadMonsterMonster (monster, elementName="") {
     //create statblock variable
     const statBlock = document.createElement("stat-block");
 
@@ -562,18 +567,18 @@ function loadMonsterMonster (monster) {
 *    TESTING AREA  *
 ********************/
 
-async function fetchJSONMonster(monsterName) {
+export async function fetchJSONMonster(monsterName, elementName="") {
     // Currently local only, need to change this for backend fetch calls when set up
     const response = await fetch(`data/${monsterName}.json`)
     .then (response => response.json())
-    .then (monster => loadJSONMonster(monster));
+    .then (monster => loadJSONMonster(monster, elementName));
 }
 
-async function fetchMonsterMonster(monsterName) {
+export async function fetchMonsterMonster(monsterName, elementName="") {
     // Currently local only, need to change this for backend fetch calls when set up
     const response = await fetch(`data/${monsterName}.monster`)
     .then (response => response.json())
-    .then (monster => loadMonsterMonster(monster));
+    .then (monster => loadMonsterMonster(monster, elementName));
 }
 
 //commenting this out because it was causing issues when I was trying to
