@@ -241,3 +241,19 @@ window.searchMonster = searchMonster;
 window.nextResults = nextResults;
 window.prevResults = prevResults;
 window.downloadMonster = downloadMonster;
+
+// // For making results collapsible;
+//TODO: Move to end of prev, next, and search functions once they are working
+// var coll = document.getElementsByClassName("searchResult");
+
+//     for (var i = 0; i < coll.length; i++) {
+//       coll[i].addEventListener("click", function() {
+//         this.classList.toggle("active");
+//         var content = this.nextElementSibling;
+//         if (content.style.display === "block") {
+//           content.style.display = "none";
+//         } else {
+//           content.style.display = "block";
+//         }
+//       });
+//     }

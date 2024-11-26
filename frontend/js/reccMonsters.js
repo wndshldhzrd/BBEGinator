@@ -94,7 +94,7 @@ function addPlayer() {
                 <option value="warlock">Warlock</option>
             </select>
             <br>
-            Level <input class="stat-Input" type="number" min="1" value="1">
+            Level <input class="stat-Input" type="number" min="1" value="1" max = "20">
             <br>
             Hp <input class="stat-Input" id="playerHealth" type="number" min="1" value="1">
         </div>
