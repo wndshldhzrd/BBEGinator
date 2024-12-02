@@ -109,3 +109,13 @@ export async function readFile(f) {
     }
     fr.readAsText(f);*/
 }
+
+//make module functions globally accessible (createEncounter.html can access)
+window.handleSubmit = handleSubmit;
+window.updateErrorMessage = updateErrorMessage;
+window.checkFileType = checkFileType;
+window.handleInputChange = handleInputChange;
+window.resetErrorMessage = resetErrorMessage;
+window.uploadFiles = uploadFiles;
+window.getFileContents = getFileContents;
+window.readFile = readFile;

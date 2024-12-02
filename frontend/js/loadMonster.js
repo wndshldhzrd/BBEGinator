@@ -452,7 +452,7 @@ function crMonsterPropLine(cr) {
 
 // Creates a div containing moster information and adds it to the monster display div
 //USING A .MONSTER FILE
-function loadMonsterMonster (monster, elementName="") {
+export function loadMonsterMonster (monster, elementName="") {
     //create statblock variable
     const statBlock = document.createElement("stat-block");
 
