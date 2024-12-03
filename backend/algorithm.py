@@ -255,7 +255,5 @@ print(database)
 for x, y in database.items():
     monsterList.append((y.points, x))
 
-
-
-
-monsterList = Algorithm(party, difficulty, database.items(), None, 4, "balanced")
+if __name__ == "__main__":
+    monsterList = Algorithm(party, difficulty, database.items(), None, 4, "balanced")
