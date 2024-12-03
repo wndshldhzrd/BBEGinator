@@ -209,8 +209,8 @@ async function getRecommendedMonster() {
     console.log(payload);
 
     //making our api call
-    //const url = 'https://zevce.pythonanywhere.com/getRecommendation/' + JSON.stringify(payload)
-    const url = "http://localhost:5000/getRecommendation";
+    const url = 'https://zevce.pythonanywhere.com/getRecommendation/' //+ JSON.stringify(payload)
+    //const url = "http://localhost:5000/getRecommendation";
     console.log(url);
 
     data = {"party": payload, "diff": diff, "count": monCount, "isBoss": bossFight};

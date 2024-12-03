@@ -189,7 +189,7 @@ async function downloadMonster(index = 0) {
 
     console.log(JSON.stringify(json));
 
-    const exportUrl = "http://localhost:5000/exportMonster";
+    const exportUrl = "http://zevce.pythonanywhere.com/exportMonster";
 
     try {
         const response = await fetch(exportUrl, {
