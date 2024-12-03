@@ -82,11 +82,10 @@ def getRecommendation():
     isBoss = params["isBoss"]
 
     mgetter.getMonsters()
-    monsters = jsonify(open("output.json").read())
+    #monsters = jsonify(open("output.json").read())
+    monsters = json.loads(open("output.json").read())
 
-    print("Difficulty", difficulty)
-
-    recList = algorithm.Algorithm(partyData, difficulty, monsters, "no lair", monCount, isBoss)
+    recList = algorithm.Algorithm(partyData, difficulty, monsters, monCount, isBoss)
 
     #this is what gets passed back to the front end to be displayed, preferably pass us
     #a json of .monsters with the key being the monster name and the entry being the rest of the .monster file

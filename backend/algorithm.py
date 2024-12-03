@@ -50,25 +50,21 @@ def monsterReader(json):
                  "int": monster["intelligence"],
                  "wis": monster["wisdom"],
                  "cha": monster["charisma"]}
+        
         saves = []#list of saves, actual points calculated inside monster class
-        #for statSave in monster["sthrows"]:
-        #   saves.append(statSave["name"])
-        if monster["strength_save"] == NULL: saves[0] = (stats["str"]-10)//2
-        else: saves[0] = monster["strength_save"]
-        if monster["dexterity_save"] == NULL: saves[0] = (stats["dex"]-10)//2
-        else: saves[0] = monster["dexterity_save"]
-        if monster["constitution_save"] == NULL: saves[0] = (stats["con"]-10)//2
-        else: saves[0] = monster["constitution_save"]
-        if monster["intelligence_save"] == NULL: saves[0] = (stats["int"]-10)//2
-        else: saves[0] = monster["intelligence_save"]
-        if monster["wisdom_save"] == NULL: saves[0] = (stats["wis"]-10)//2
-        else: saves[0] = monster["wisdom_save"]
-        if monster["charisma_save"] == NULL: saves[0] = (stats["cha"]-10)//2
-        else: saves[0] = monster["charisma_save"]
+        #  modified to a for loop
+        save_types = ["strength_save", "dexterity_save", "constitution_save", "intelligence_save", "wisdom_save", "charisma_save"]
+        for s in save_types:
+            stat = s[0:3]
+            if monster[s] is None: 
+                saves.append((stats[stat]-10)//2)
+            else: 
+                saves.append(monster[s])
+
         vulnerabilities = monster["damage_vulnerabilities"]
         resistances = monster["damage_resistances"]
         immunities = monster["damage_immunities"]
-        abilities = monster["abilities"]
+        abilities = monster["special_abilities"]  #changed from abilities, which is not a valid key in the json
         actions = monster["actions"]
         spells = []
         spelldesc = []
@@ -76,9 +72,11 @@ def monsterReader(json):
             if ability["name"] == "Spellcasting":
                 spells = ability["desc"]
                 break
+
+        cr = monster["cr"]
         
-        monsterDatabase.append((slug, Monster(slug,name, ac, hp, speeds, stats, saves, vulnerabilities, resistances, immunities, actions, abilities, spells)))
-        tempList.append
+        monsterDatabase.append((slug, Monster(slug,name, ac, hp, speeds, stats, saves, vulnerabilities, resistances, immunities, actions, abilities, cr, spells)))
+        #tempList.append  #?? what is this--I commented it out for now
     
     return monsterDatabase
 

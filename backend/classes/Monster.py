@@ -58,18 +58,37 @@ class Monster():
                 z = x["desc"].find(")")
                 relevant = x["desc"][y + 1:z]
                 diceAndBonus = relevant.split(" + ")
+
+                #some damaging moves are saves and don't have a bonus to damage, account for this
+                #with these if statements
+                if len(diceAndBonus) < 2:
+                    diceAndBonus.append('0')
+                if diceAndBonus[0].find('+') != -1:
+                    split = diceAndBonus[0].split('+')
+                    diceAndBonus[0] = split[0]
+                    diceAndBonus[1] = split[1]
+                elif diceAndBonus[0].find('-') != -1:
+                    split = diceAndBonus[0].split('-')
+                    diceAndBonus[0] = split[0]
+                    diceAndBonus[1] = '-' + split[1]
+                
+                if not diceAndBonus[1].isnumeric() and diceAndBonus[1][0] != '-':
+                    diceAndBonus[1] = 0
                 
                 coolActions.append({"name": x["name"], "desc": x["desc"], "damage_dice": diceAndBonus[0], "damage_bonus": diceAndBonus[1]})
 
         #multiattack calculation
         attacks = []
         for x in coolActions:
-            if x["name"] == "multiattack":
+            if x["name"].lower() == "multiattack":
+                print("MULTIATTACK")
                 desc = x["desc"].split()
                 for position in range(len(desc)):
                     if desc[position] == "one" or desc[position] == "two" or desc[position] == "three" or desc[position] == "four" or desc[position] == "five":
                         if desc[position + 1] == "with":
                             for i in range(WordToNum(desc[position])): attacks.append(desc[position], desc[position + 3])
+            else:
+                print(x["name"], "is not a multiattack")
         if(len(attacks) > 0): # multiattack
             for action in coolActions:
                 #if saving throw then pase as is
@@ -87,6 +106,14 @@ class Monster():
             for action in coolActions:
                 dice = action["damage_dice"].split('d')
                 bonus = action["damage_bonus"]
+                
+                print(slug)
+                print(action["name"])
+                print("welcome to the debugging life")
+                print(dice)
+                print(bonus)
+                print()
+
                 dmgMaxTotal += int(dice[0]) * int(dice[1]) + int(bonus)
                 avgRoll = (int(dice[1]) - 1) / 2
                 dmgAvgTotal += int(dice[0]) * avgRoll + int(bonus)
