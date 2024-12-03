@@ -97,6 +97,14 @@ function addPlayer() {
             Level <input class="stat-Input" type="number" min="1" value="1" max = "20">
             <br>
             Hp <input class="stat-Input" id="playerHealth" type="number" min="1" value="1">
+            <br>
+            Stats <input class="stat-Input" id="str" type="number" min="1" value="1"></input>
+            <input class="stat-Input" id="dex" type="number" min="1" value="1"></input>
+            <input class="stat-Input" id="con" type="number" min="1" value="1"></input>
+            <input class="stat-Input" id="int" type="number" min="1" value="1"></input>
+            <input class="stat-Input" id="wis" type="number" min="1" value="1"></input>
+            <input class="stat-Input" id="cha" type="number" min="1" value="1"></input>
+                    
         </div>
     </div>`;
 

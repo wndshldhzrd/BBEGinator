@@ -2,6 +2,7 @@ from enum import Enum
 from classes.Monster import Monster
 from classes.PartyMember import PartyMember
 from random import *
+import json
 
 # DATA
 party = []
@@ -35,25 +36,35 @@ def monsterReader(json):
     #create induvidual monster
     #append monster
     #gg
-
+    tempList = []
     for monster in json:
         #jsonParsing
         slug = monster["slug"]
         name = monster["name"]
-        ac = monster["otherArmorDesc"]
-        hp = monster["hpText"]
-        speeds = {"ground": monster["speedDesc"],
-                  "flying": monster["flySpeed"],
-                  "swim": monster["swimSpeed"]}
-        stats = {"str": monster["strpoints"],
-                 "dex": monster["dexpoints"],
-                 "con": monster["conpoints"],
-                 "int": monster["intpoints"],
-                 "wis": monster["wispoints"],
-                 "cha": monster["chapoints"]}
+        ac = monster["armor_class"]
+        hp = monster["hit_points"]
+        speeds = {}
+        stats = {"str": monster["strength"],
+                 "dex": monster["dexterity"],
+                 "con": monster["constitution"],
+                 "int": monster["intelligence"],
+                 "wis": monster["wisdom"],
+                 "cha": monster["charisma"]}
         saves = []#list of saves, actual points calculated inside monster class
-        for statSave in monster["sthrows"]:
-            saves.append(statSave["name"])
+        #for statSave in monster["sthrows"]:
+        #   saves.append(statSave["name"])
+        if monster["strength_save"] == NULL: saves[0] = (stats["str"]-10)//2
+        else: saves[0] = monster["strength_save"]
+        if monster["dexterity_save"] == NULL: saves[0] = (stats["dex"]-10)//2
+        else: saves[0] = monster["dexterity_save"]
+        if monster["constitution_save"] == NULL: saves[0] = (stats["con"]-10)//2
+        else: saves[0] = monster["constitution_save"]
+        if monster["intelligence_save"] == NULL: saves[0] = (stats["int"]-10)//2
+        else: saves[0] = monster["intelligence_save"]
+        if monster["wisdom_save"] == NULL: saves[0] = (stats["wis"]-10)//2
+        else: saves[0] = monster["wisdom_save"]
+        if monster["charisma_save"] == NULL: saves[0] = (stats["cha"]-10)//2
+        else: saves[0] = monster["charisma_save"]
         vulnerabilities = monster["damage_vulnerabilities"]
         resistances = monster["damage_resistances"]
         immunities = monster["damage_immunities"]
@@ -66,9 +77,10 @@ def monsterReader(json):
                 spells = ability["desc"]
                 break
         
-        monsterDatabase.append(Monster(slug,name, ac, hp, speeds, stats, saves, vulnerabilities, resistances, immunities, actions, abilities, spells))
-
-        return monsterDatabase
+        monsterDatabase.append((slug, Monster(slug,name, ac, hp, speeds, stats, saves, vulnerabilities, resistances, immunities, actions, abilities, spells)))
+        tempList.append
+    
+    return monsterDatabase
 
 
 # ENCOUNTER DIFFICULTY 
@@ -92,7 +104,7 @@ def WordToNum(word):
     #parses each monster from the mgetter and calulates its dmg/health ranges
 def Algorithm(party, difficulty, monsters, guys, mode):
 
-    difficulty = .5 + (.25*difficulty)
+    difficulty = .5 + (.25*int(difficulty))
 
     
     points = 0
@@ -219,6 +231,11 @@ def Algorithm(party, difficulty, monsters, guys, mode):
                 for i in range(guys - 1): recMonsters.append(choice(tempList))
     
     print(f"Returning monster list: {monsters}")
+
+
+
+
+
     return recMonsters
 
 goat = Monster("goat", "Goat", 10, 4, {"walk": 40}, 
@@ -259,6 +276,7 @@ print(database)
 for x, y in database.items():
     monsterList.append((y.points, x))
 
-if __name__ == "__main__":
-    difficulty = 1
-    monsterList = Algorithm(party, difficulty, database.items(), None, 4, "balanced")
+
+
+difficulty = "2"
+monsterList = Algorithm(party, difficulty, monsterList, 4, "balanced")
