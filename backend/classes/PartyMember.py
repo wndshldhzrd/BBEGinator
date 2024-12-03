@@ -27,9 +27,9 @@ class PartyMember():
         
         #proficiency calc
         if (level > 16): self.proficiency = 6
-        if (level > 12): self.proficiency = 5
-        if (level > 8): self.proficiency = 4
-        if (level > 4): self.proficiency = 3
+        elif (level > 12): self.proficiency = 5
+        elif (level > 8): self.proficiency = 4
+        elif (level > 4): self.proficiency = 3
 
 
         if self.theClass in spellcasters:

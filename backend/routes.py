@@ -58,7 +58,7 @@ def exportMonster():
 
 #api call for getting a recommended list of monsters based on the stats of the entire party
 #check the getRecommendedMonsters function in frontend/js/script.js to see how the front end call is being made to the backend
-@app.route("/getRecommendation/", methods = ['POST', 'OPTIONS'])
+@app.route("/getRecommendation", methods = ['POST', 'OPTIONS'])
 def getRecommendation():
       
     #boilerplate code don't touch this  
@@ -84,7 +84,9 @@ def getRecommendation():
     mgetter.getMonsters()
     monsters = jsonify(open("output.json").read())
 
-    recList = algorithm.Algorithm(party, difficulty, monsters, monCount, isBoss)
+    print("Difficulty", difficulty)
+
+    recList = algorithm.Algorithm(partyData, difficulty, monsters, "no lair", monCount, isBoss)
 
     #this is what gets passed back to the front end to be displayed, preferably pass us
     #a json of .monsters with the key being the monster name and the entry being the rest of the .monster file
