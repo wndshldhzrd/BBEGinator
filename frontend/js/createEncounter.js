@@ -72,6 +72,9 @@ function uploadFiles() {
 
     xhr.addEventListener('loadend', () => {
         if (xhr.status === 200) {
+            //clear the current stat blocks
+            document.querySelector("#monster-display").innerHTML = "";
+            
             uploadMessage.textContent = 'Successful upload';
             getFileContents(fileInput.files);
         } else {
@@ -97,17 +100,14 @@ function getFileContents(fileList) {
 //documenting changes so if there's errors you know exactly what's new
 //to start with: the function is now export async
 export async function readFile(f) {
-    loadMonsterMonster(f); //okay i added this but it can't be this easy right
-    //loadMonsterMonster takes in a monster and that's it and f is a monster.
-
-    /*point of loadmonstermonster is to get a statblock visible, so presumably don't need this info??
-    commenting out just in case
     let fr = new FileReader();
     fr.onload = function () {
         let result = fr.result;
-        data.innerHTML += `NAME: ${f.name}<br>` + `CONTENTS:<br>` + result + '<br><br><br>';
+        console.log(result);
+        loadMonsterMonster(JSON.parse(result)); 
+        //data.innerHTML += `NAME: ${f.name}<br>` + `CONTENTS:<br>` + result + '<br><br><br>';
     }
-    fr.readAsText(f);*/
+    fr.readAsText(f);
 }
 
 //make module functions globally accessible (createEncounter.html can access)

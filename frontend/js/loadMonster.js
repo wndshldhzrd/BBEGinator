@@ -341,7 +341,7 @@ function monsterStatBlock(monster) {
 function sThrowsMonsterPropLine(sThrows) {
     let throws = "";
     let throwsPropLine = null;
-    for (sThrow in sThrows) {
+    for (let sThrow of sThrows) {
         //create the property line if it hasn't been initialized
         if (!throwsPropLine) {
             throwsPropLine = document.createElement("property-line");
@@ -360,7 +360,7 @@ function sThrowsMonsterPropLine(sThrows) {
     
     }
     if (throwsPropLine != null) {
-        throwsText = createEleWithText("p", throws);
+        let throwsText = createEleWithText("p", throws);
         throwsPropLine.appendChild(throwsText);
     }
 
@@ -371,7 +371,7 @@ function sThrowsMonsterPropLine(sThrows) {
 function skillsMonsterPropLine(skills) {
     let throws = "";
     let throwsPropLine = null;
-    for (skill in skills) {
+    for (let skill of skills) {
         //create the property line if it hasn't been initialized
         if (!throwsPropLine) {
             throwsPropLine = document.createElement("property-line");
@@ -385,11 +385,14 @@ function skillsMonsterPropLine(skills) {
 
         //add this new skill/save/etc to the throws text
         throws += skill.name + " +";
-        throws += `${sThrow.order}`;
+
+        //Vicky here: this used to say sThrow.order, but that's not a variable, so
+        //I just substituted in skill--I hope that's right?
+        throws += `${skill.order}`;
     
     }
     if (throwsPropLine != null) {
-        throwsText = createEleWithText("p", throws);
+        let throwsText = createEleWithText("p", throws);
         throwsPropLine.appendChild(throwsText);
     }
 
@@ -399,7 +402,7 @@ function skillsMonsterPropLine(skills) {
 function damageTypesMonsterPropLine(damageTypes) {
    
     let propLine = null; 
-    for (type in damageTypes) {
+    for (let type of damageTypes) {
         if (propLine == null) {
             propLine = document.createElement("property-line");
         }
@@ -415,7 +418,7 @@ function languagesMonsterPropLine(languages) {
     propLine.appendChild(languageHeader);
 
     let languageDesc = "";
-    for (language in languages) {
+    for (let language of languages) {
         languageDesc += language.name;
         if (language.speaks) {
             languageDesc += "speaks"
