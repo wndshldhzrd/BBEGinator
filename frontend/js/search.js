@@ -93,8 +93,8 @@ export async function searchMonster() {
 
     testMessage.textContent = "Button clicked, awaiting result... ";
     testMessage2.textcontent = "";
-    //const url = "https://zevce.pythonanywhere.com/searchMonster/" + JSON.stringify(payload);
-    const url = "http://localhost:5000/searchMonster/" + JSON.stringify(payload);
+    const url = "https://zevce.pythonanywhere.com/searchMonster/" + JSON.stringify(payload);
+    //const url = "http://localhost:5000/searchMonster/" + JSON.stringify(payload);
 
     console.log("Sending payload to: " + url);
     console.log("payload:");
