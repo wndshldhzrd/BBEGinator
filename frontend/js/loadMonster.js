@@ -160,7 +160,7 @@ function j_createAbilitiesBlock(appendTo, monster) {
 //USING A .JSON FILE
 //currently leaving this version of loadJSONMonster as the one uncommented
 //may the web dev gods have mercy
-export function loadJSONMonster(monster) {
+export function loadJSONMonster(monster, elementName="") {
     const statBlock = document.createElement("stat-block"); //create statblock variable
     const creatureHeading = createCreatureHeading(monster); //creature-heading
     const topStats = document.createElement("top-stats"); //top-stats
@@ -280,7 +280,12 @@ export function loadJSONMonster(monster) {
         makePropBlock(monster.legendary_actions, statBlock)
     }
 
-    const monsterDisplay = document.querySelector("#monster-display");
+    let monsterDisplay = null;
+    if (elementName == "") {
+        monsterDisplay = document.querySelector("#monster-display");
+    } else {
+        monsterDisplay = document.querySelector(`${elementName}`);
+    }
     monsterDisplay.appendChild(statBlock);
 }
 
@@ -336,7 +341,7 @@ function monsterStatBlock(monster) {
 function sThrowsMonsterPropLine(sThrows) {
     let throws = "";
     let throwsPropLine = null;
-    for (sThrow in sThrows) {
+    for (let sThrow of sThrows) {
         //create the property line if it hasn't been initialized
         if (!throwsPropLine) {
             throwsPropLine = document.createElement("property-line");
@@ -355,7 +360,7 @@ function sThrowsMonsterPropLine(sThrows) {
     
     }
     if (throwsPropLine != null) {
-        throwsText = createEleWithText("p", throws);
+        let throwsText = createEleWithText("p", throws);
         throwsPropLine.appendChild(throwsText);
     }
 
@@ -366,7 +371,7 @@ function sThrowsMonsterPropLine(sThrows) {
 function skillsMonsterPropLine(skills) {
     let throws = "";
     let throwsPropLine = null;
-    for (skill in skills) {
+    for (let skill of skills) {
         //create the property line if it hasn't been initialized
         if (!throwsPropLine) {
             throwsPropLine = document.createElement("property-line");
@@ -380,11 +385,14 @@ function skillsMonsterPropLine(skills) {
 
         //add this new skill/save/etc to the throws text
         throws += skill.name + " +";
-        throws += `${sThrow.order}`;
+
+        //Vicky here: this used to say sThrow.order, but that's not a variable, so
+        //I just substituted in skill--I hope that's right?
+        throws += `${skill.order}`;
     
     }
     if (throwsPropLine != null) {
-        throwsText = createEleWithText("p", throws);
+        let throwsText = createEleWithText("p", throws);
         throwsPropLine.appendChild(throwsText);
     }
 
@@ -394,7 +402,7 @@ function skillsMonsterPropLine(skills) {
 function damageTypesMonsterPropLine(damageTypes) {
    
     let propLine = null; 
-    for (type in damageTypes) {
+    for (let type of damageTypes) {
         if (propLine == null) {
             propLine = document.createElement("property-line");
         }
@@ -410,7 +418,7 @@ function languagesMonsterPropLine(languages) {
     propLine.appendChild(languageHeader);
 
     let languageDesc = "";
-    for (language in languages) {
+    for (let language of languages) {
         languageDesc += language.name;
         if (language.speaks) {
             languageDesc += "speaks"
@@ -447,7 +455,7 @@ function crMonsterPropLine(cr) {
 
 // Creates a div containing moster information and adds it to the monster display div
 //USING A .MONSTER FILE
-function loadMonsterMonster (monster) {
+export function loadMonsterMonster (monster, elementName="") {
     //create statblock variable
     const statBlock = document.createElement("stat-block");
 
@@ -562,18 +570,18 @@ function loadMonsterMonster (monster) {
 *    TESTING AREA  *
 ********************/
 
-async function fetchJSONMonster(monsterName) {
+export async function fetchJSONMonster(monsterName, elementName="") {
     // Currently local only, need to change this for backend fetch calls when set up
     const response = await fetch(`data/${monsterName}.json`)
     .then (response => response.json())
-    .then (monster => loadJSONMonster(monster));
+    .then (monster => loadJSONMonster(monster, elementName));
 }
 
-async function fetchMonsterMonster(monsterName) {
+export async function fetchMonsterMonster(monsterName, elementName="") {
     // Currently local only, need to change this for backend fetch calls when set up
     const response = await fetch(`data/${monsterName}.monster`)
     .then (response => response.json())
-    .then (monster => loadMonsterMonster(monster));
+    .then (monster => loadMonsterMonster(monster, elementName));
 }
 
 //commenting this out because it was causing issues when I was trying to

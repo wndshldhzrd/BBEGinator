@@ -1,63 +1,63 @@
+import { fetchJSONMonster, fetchMonsterMonster } from "./loadMonster.js";
+
 //variable which keeps track of how many players the page is currently displaying
 let players = [];
-let monsters = [];
 
+const recMsg = document.getElementById('RecMsg');
+const difficultyOption = document.getElementById("difficulty");
 
-function addMonster() {
+function addMonster(monster) {
     //getting the div which players are added to
-    var playerStatBlockDisplay = document.getElementById("playerStatBlocks");
+    var monsterDisplay = document.querySelector("#monster-display");
 
     //creating our player stat block to be added to the page
-    var playerStatBlock = document.createElement("div");
+    var monsterBlock = document.createElement("div");
 
-    //adding our player element to the list of player elements
-    players.push(playerStatBlock)
+    // //setting the inner html of the player statblock
+    // //ideally refactor into an html template page, but good enough for now
+    // playerStatBlock.innerHTML =
+    // `<div class="playerInput">
+    //     <button class="playerName">Player ${players.length}</button>
+    //     <div class = "playerContent">
+    //         Class <select class="dropdown">
+    //             <option disabled="" selected="" value=""></option> 
+    //             <option value="barbarian">Barbarian</option>      
+    //             <option value="bard">Bard</option>
+    //             <option value="cleric">Cleric</option>
+    //             <option value="druid">Druid</option>
+    //             <option value="fighter">Fighter</option>
+    //             <option value="monk">Monk</option>
+    //             <option value="paladin">Paladin</option>
+    //             <option value="ranger">Ranger</option>
+    //             <option value="rogue">Rogue</option>
+    //             <option value="sorcerer">Sorcerer</option>
+    //             <option value="wizard">Wizard</option>
+    //             <option value="warlock">Warlock</option>
+    //         </select>
+    //         <br>
+    //         Level <input class="stat-Input" type="number" min="1" value="1">
+    //         <br>
+    //         Hp <input class="stat-Input" id="playerHealth" type="number" min="1" value="1">
+    //     </div>
+    // </div>`;
 
-    //setting the inner html of the player statblock
-    //ideally refactor into an html template page, but good enough for now
-    playerStatBlock.innerHTML =
-    `<div class="playerInput">
-        <button class="playerName">Player ${players.length}</button>
-        <div class = "playerContent">
-            Class <select class="dropdown">
-                <option disabled="" selected="" value=""></option> 
-                <option value="barbarian">Barbarian</option>      
-                <option value="bard">Bard</option>
-                <option value="cleric">Cleric</option>
-                <option value="druid">Druid</option>
-                <option value="fighter">Fighter</option>
-                <option value="monk">Monk</option>
-                <option value="paladin">Paladin</option>
-                <option value="ranger">Ranger</option>
-                <option value="rogue">Rogue</option>
-                <option value="sorcerer">Sorcerer</option>
-                <option value="wizard">Wizard</option>
-                <option value="warlock">Warlock</option>
-            </select>
-            <br>
-            Level <input class="stat-Input" type="number" min="1" value="1">
-            <br>
-            Hp <input class="stat-Input" id="playerHealth" type="number" min="1" value="1">
-        </div>
-    </div>`;
+    // //displaying our player on the page
+    // playerStatBlockDisplay.appendChild(playerStatBlock);
 
-    //displaying our player on the page
-    playerStatBlockDisplay.appendChild(playerStatBlock);
+    // toggleRemovePlayerButton();
+    // var coll = document.getElementsByClassName("playerName");
 
-    toggleRemovePlayerButton();
-    var coll = document.getElementsByClassName("playerName");
-
-    for (var i = 0; i < coll.length; i++) {
-      coll[i].addEventListener("click", function() {
-        this.classList.toggle("active");
-        var content = this.nextElementSibling;
-        if (content.style.display === "block") {
-          content.style.display = "none";
-        } else {
-          content.style.display = "block";
-        }
-      });
-    }
+    // for (var i = 0; i < coll.length; i++) {
+    //   coll[i].addEventListener("click", function() {
+    //     this.classList.toggle("active");
+    //     var content = this.nextElementSibling;
+    //     if (content.style.display === "block") {
+    //       content.style.display = "none";
+    //     } else {
+    //       content.style.display = "block";
+    //     }
+    //   });
+    // }
 }
 
 //function for adding a player to the recommendMonster page
@@ -94,7 +94,7 @@ function addPlayer() {
                 <option value="warlock">Warlock</option>
             </select>
             <br>
-            Level <input class="stat-Input" type="number" min="1" value="1">
+            Level <input class="stat-Input" type="number" min="1" value="1" max = "20">
             <br>
             Hp <input class="stat-Input" id="playerHealth" type="number" min="1" value="1">
         </div>
@@ -148,33 +148,50 @@ function toggleRemovePlayerButton() {
 //Function which takes in all the currently inputted player data sends
 //it as an api call to our back end and then displays a recommended monster
 //based off of the stats of the party
-function getRecommendedMonster() {
+async function getRecommendedMonster() {
+    recMsg.innerHTML = "";
 
-    //initializing our JSON
-    payload = {}
+    const diff = difficultyOption.value;
+    if (diff == null || diff == "") {
+        recMsg.innerHTML += "Please select a difficulty<br><br>";
+    }
+    console.log(diff);
 
+    const monCount = document.getElementById("monCount").value;
+
+    let bossFight = null;
+    if (document.getElementById("bossOpt").checked) {
+        bossFight = "boss";
+    }
+    else {
+        bossFight = "balanced";
+    }
+    console.log(bossFight);
+    
+    let payload = [];
     //looping through each player and getting the values
     for(let i = 0; i < players.length; i++) {
 
         //ignore the ugly grabbing this was the easiest solution I could think of
-        playerData = players[i];
-        playerClass = playerData.getElementsByClassName("dropdown")[0].value
-        playerLevel = playerData.getElementsByClassName("stat-Input")[0].value
-        playerHealth = playerData.getElementsByClassName("stat-Input")[1].value
+        let playerData = players[i];
+        let playerClass = playerData.getElementsByClassName("dropdown")[0].value
+        let playerLevel = playerData.getElementsByClassName("stat-Input")[0].value
+        let playerHealth = playerData.getElementsByClassName("stat-Input")[1].value
         
         //ensuring all our data is valid, will need to update html page eventually to
         //tell players which fields still need to be filled out
         if(playerClass == "" || playerLevel == "" || playerHealth == "") {
+            recMsg.innerHTML += "Incomplete data provided--please make sure all players have a selected class, HP, and level.";
             console.error("ERROR ERROR INCOMPLETE INPUT DATA");
             return;
         }
         
         //adding values to our payload
-        payload["p" + i] = {
+        payload.push ({
             "class" : playerClass,
             "level" : playerLevel,
             "health" : playerHealth,
-        }
+        });
     }
 
     if(players.length < 1) {
@@ -182,19 +199,68 @@ function getRecommendedMonster() {
         return;
     }
 
-    //adding a terminating player so backend knows when to stop parsing players
-    payload["p" + players.length] = "0";
+    recMsg.innerHTML = "Getting monster recommendations...";
 
+    //no need for this anymore I think
+    //adding a terminating player so backend knows when to stop parsing players
+    //payload["p" + players.length] = "0";
 
     //testing to ensure that parameters are being passed correctly
     console.log(payload);
 
     //making our api call
-    const url = 'https://zevce.pythonanywhere.com/getRecommendation/' + JSON.stringify(payload)
+    const url = 'https://zevce.pythonanywhere.com/getRecommendation/' //+ JSON.stringify(payload)
+    //const url = "http://localhost:5000/getRecommendation";
     console.log(url);
+
+    let data = {"party": payload, "diff": diff, "count": monCount, "isBoss": bossFight};
+
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+        if (response.status == 200) {
+            const results = await response.json();
+            console.log("success!");
+            console.log(results);
+        }
+        else {
+            recMsg.innerHTML = "An error occurred. Try again?";
+            console.log("response.status error: " + response.status);
+        }
+    }
+    catch (error) {
+        console.error("ERROR! ", error);
+    }
+
+    /*
     fetch(url)
     .then(response => response.json())  
     .then(json => {
         console.log(json);
-    })
+    })*/
 }
+
+window.addEventListener("load", addPlayer());
+
+
+// Testing as it's not hooked up
+const createMonsterButton = document.querySelector("#create");
+createMonsterButton.addEventListener("click", () => {
+    const monsterDisplay = document.querySelector('#monster-display');
+    monsterDisplay.innerHTML = "";
+    monsters = [];
+    addMonster("goat");
+    addMonster("goat");
+});
+
+//make module functions globally accessible (createEncounter.html can access)
+window.addMonster = addMonster;
+window.addPlayer = addPlayer;
+window.removePlayer = removePlayer;
+window.toggleRemovePlayerButton = toggleRemovePlayerButton;
+window.getRecommendedMonster = getRecommendedMonster;
