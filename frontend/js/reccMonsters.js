@@ -173,10 +173,10 @@ async function getRecommendedMonster() {
     for(let i = 0; i < players.length; i++) {
 
         //ignore the ugly grabbing this was the easiest solution I could think of
-        playerData = players[i];
-        playerClass = playerData.getElementsByClassName("dropdown")[0].value
-        playerLevel = playerData.getElementsByClassName("stat-Input")[0].value
-        playerHealth = playerData.getElementsByClassName("stat-Input")[1].value
+        let playerData = players[i];
+        let playerClass = playerData.getElementsByClassName("dropdown")[0].value
+        let playerLevel = playerData.getElementsByClassName("stat-Input")[0].value
+        let playerHealth = playerData.getElementsByClassName("stat-Input")[1].value
         
         //ensuring all our data is valid, will need to update html page eventually to
         //tell players which fields still need to be filled out
@@ -213,7 +213,7 @@ async function getRecommendedMonster() {
     const url = "http://localhost:5000/getRecommendation";
     console.log(url);
 
-    data = {"party": payload, "diff": diff, "count": monCount, "isBoss": bossFight};
+    let data = {"party": payload, "diff": diff, "count": monCount, "isBoss": bossFight};
 
     try {
         const response = await fetch(url, {
@@ -257,3 +257,10 @@ createMonsterButton.addEventListener("click", () => {
     addMonster("goat");
     addMonster("goat");
 });
+
+//make module functions globally accessible (createEncounter.html can access)
+window.addMonster = addMonster;
+window.addPlayer = addPlayer;
+window.removePlayer = removePlayer;
+window.toggleRemovePlayerButton = toggleRemovePlayerButton;
+window.getRecommendedMonster = getRecommendedMonster;
