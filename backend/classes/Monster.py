@@ -78,25 +78,48 @@ class Monster():
                 coolActions.append({"name": x["name"], "desc": x["desc"], "damage_dice": diceAndBonus[0], "damage_bonus": diceAndBonus[1]})
 
         #multiattack calculation
+        #Current temporary fix--append x amount of the first non-multiattack action we have
+        #to attacks. There is literally no good way to parse it otherwise, see proof below
+
+        #Here are a few examples of the inconsistent multiattack formatting:
+        #abaasy multiattack: "Three melee attacks only one of which can be a Shield Shove. If it uses two hands to make a Spear attack it can't make an Iron Axe attack that turn."
+        #vs a-mi-kuk: "The a-mi-kuk makes two attacks: one with its bite and one with its grasping claw."
+        #vs abbanith giant: "The abbanith giant makes two thumb claw attacks."
+        #vs aboleth-a5e: "The aboleth attacks three times with its tentacle."
         attacks = []
         for x in coolActions:
             if x["name"].lower() == "multiattack":
                 print("MULTIATTACK")
                 desc = x["desc"].split()
+                print(desc)
                 for position in range(len(desc)):
                     if desc[position] == "one" or desc[position] == "two" or desc[position] == "three" or desc[position] == "four" or desc[position] == "five":
-                        if desc[position + 1] == "with":
-                            for i in range(WordToNum(desc[position])): attacks.append(desc[position], desc[position + 3])
-            else:
-                print(x["name"], "is not a multiattack")
+                        non_multi = [a["name"] for a in coolActions if a["name"].lower() != "multiattack"][0]
+                        for i in range(WordToNum(desc[position])): 
+                            attacks.append(non_multi)
+                        break
+
+                        #if desc[position + 1] == "with":
+                            #for i in range(WordToNum(desc[position])): attacks.append(desc[position], desc[position + 3])
+
         if(len(attacks) > 0): # multiattack
             for action in coolActions:
                 #if saving throw then pase as is
                 #else do this
                 for attack in attacks:
-                    if action["name"].lower() == attack[1]:
+                    if action["name"].lower() == attack[1].lower():
                         dice = action["damage_dice"].split('d')
                         bonus = action["damage_bonus"]
+
+                        if len(dice) < 2:
+                            dice.append(0)
+                        if not dice[0].isnumeric():
+                            continue
+
+                        dice[0] = int(dice[0])
+                        dice[1] = int(dice[1])
+                        bonus = int(bonus)
+
                         dmgMax = dice[0] * dice[1] + bonus
                         avgRoll = (dice[1] - 1) / 2
                         dmgAvg = dice[0] * avgRoll + bonus
@@ -107,16 +130,18 @@ class Monster():
                 dice = action["damage_dice"].split('d')
                 bonus = action["damage_bonus"]
                 
-                print(slug)
-                print(action["name"])
-                print("welcome to the debugging life")
-                print(dice)
-                print(bonus)
-                print()
+                if len(dice) < 2:
+                    dice.append(0)
+                if not dice[0].isnumeric():
+                    continue
 
-                dmgMaxTotal += int(dice[0]) * int(dice[1]) + int(bonus)
-                avgRoll = (int(dice[1]) - 1) / 2
-                dmgAvgTotal += int(dice[0]) * avgRoll + int(bonus)
+                dice[0] = int(dice[0])
+                dice[1] = int(dice[1])
+                bonus = int(bonus)
+
+                dmgMaxTotal += dice[0] * dice[1] + bonus
+                avgRoll = (dice[1] - 1) / 2
+                dmgAvgTotal += dice[0] * avgRoll + bonus
             if (len(coolActions) > 0): dmgAvg = dmgAvgTotal // len(coolActions)
             else: dmgAvg = dmgAvgTotal
             if (len(coolActions) > 0): dmgMax = dmgMaxTotal // len(coolActions)

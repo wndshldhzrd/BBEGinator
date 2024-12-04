@@ -235,6 +235,11 @@ async function getRecommendedMonster() {
             const results = await response.json();
             console.log("success!");
             console.log(results);
+
+            recMsg.innerHTML = "Result:<br>";
+            for (let mon of results) {
+                recMsg.innerHTML += mon + "<br>";
+            }
         }
         else {
             recMsg.innerHTML = "An error occurred. Try again?";

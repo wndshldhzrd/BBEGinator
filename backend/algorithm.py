@@ -16,8 +16,6 @@ def partyReader(json):
     #append to partyList
     #gg
 
-
-
     for player in json:
         #parseJson nonsense
         health = int(player["health"])
@@ -25,7 +23,10 @@ def partyReader(json):
         level = int(player["level"])
         #stats = player["stats"]
 
-        partyMembers.append(PartyMember(health, theClass, level))
+        #a temporary placeholder
+        stats = [10, 10, 10, 10, 10, 10]
+
+        partyMembers.append(PartyMember(health, theClass, level, stats))
     
     return partyMembers
 
@@ -68,7 +69,11 @@ def monsterReader(json):
         actions = monster["actions"]
         spells = []
         spelldesc = []
-        for ability in monster["special_abilities"]:
+
+        if abilities is None:
+            abilities = []
+
+        for ability in abilities:
             if ability["name"] == "Spellcasting":
                 spells = ability["desc"]
                 break

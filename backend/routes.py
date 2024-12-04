@@ -78,7 +78,7 @@ def getRecommendation():
     params = request.get_json()
     partyData = params["party"]
     difficulty = params["diff"]
-    monCount = params["count"]
+    monCount = int(params["count"])
     isBoss = params["isBoss"]
 
     mgetter.getMonsters()
