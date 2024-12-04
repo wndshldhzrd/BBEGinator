@@ -215,14 +215,14 @@ window.addEventListener("load", addPlayer());
 
 
 // Testing as it's not hooked up
-const createMonsterButton = document.querySelector("#create");
+/*const createMonsterButton = document.querySelector("#create");
 createMonsterButton.addEventListener("click", () => {
     const monsterDisplay = document.querySelector('#monster-display');
     monsterDisplay.innerHTML = "";
     monsters = [];
     addMonster("goat");
     addMonster("goat");
-});
+});*/
 
 //make module functions globally accessible (createEncounter.html can access)
 window.addPlayer = addPlayer;
