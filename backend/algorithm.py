@@ -8,6 +8,7 @@ import json
 party = []
 monsterList = []
 mgetter = "?"
+slug_to_index = dict()
 
 def partyReader(json):
     partyMembers = []
@@ -37,10 +38,13 @@ def monsterReader(json):
     #create induvidual monster
     #append monster
     #gg
-    tempList = []
+    index = 0
     for monster in json:
         #jsonParsing
         slug = monster["slug"]
+        slug_to_index[slug] = index
+        index += 1
+
         name = monster["name"]
         ac = monster["armor_class"]
         hp = monster["hit_points"]
@@ -186,7 +190,7 @@ def Algorithm(party, difficulty, monsters, guys, mode):
         if not found:
             print("I couldn't find a monster. In the actual thing that would be a problem but this is just testing")
         else:
-            monsters.append(choice(tempList))
+            recMonsters.append(choice(tempList))
         points -= toSpend
         for i in range(guys - 1):
             print(f"Generating monster {i + 2} of {guys}")
@@ -233,13 +237,15 @@ def Algorithm(party, difficulty, monsters, guys, mode):
             else:
                 for i in range(guys - 1): recMonsters.append(choice(tempList))
     
-    print(f"Returning monster list: {monsters}")
+    #print(f"Returning monster list: {monsters}")
 
+    monster_json = []
+    for slug in recMonsters:
+        index = slug_to_index[slug]
+        monster_json.append(monsters[slug_to_index[slug]])
 
-
-
-
-    return recMonsters
+    #return recMonsters
+    return monster_json
 
 if __name__ == "__main__":
     goat = Monster("goat", "Goat", 10, 4, {"walk": 40}, 

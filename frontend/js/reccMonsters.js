@@ -1,64 +1,10 @@
-import { fetchJSONMonster, fetchMonsterMonster } from "./loadMonster.js";
+import { loadJSONMonster } from "./loadMonster.js";
 
 //variable which keeps track of how many players the page is currently displaying
 let players = [];
 
 const recMsg = document.getElementById('RecMsg');
 const difficultyOption = document.getElementById("difficulty");
-
-function addMonster(monster) {
-    //getting the div which players are added to
-    var monsterDisplay = document.querySelector("#monster-display");
-
-    //creating our player stat block to be added to the page
-    var monsterBlock = document.createElement("div");
-
-    // //setting the inner html of the player statblock
-    // //ideally refactor into an html template page, but good enough for now
-    // playerStatBlock.innerHTML =
-    // `<div class="playerInput">
-    //     <button class="playerName">Player ${players.length}</button>
-    //     <div class = "playerContent">
-    //         Class <select class="dropdown">
-    //             <option disabled="" selected="" value=""></option> 
-    //             <option value="barbarian">Barbarian</option>      
-    //             <option value="bard">Bard</option>
-    //             <option value="cleric">Cleric</option>
-    //             <option value="druid">Druid</option>
-    //             <option value="fighter">Fighter</option>
-    //             <option value="monk">Monk</option>
-    //             <option value="paladin">Paladin</option>
-    //             <option value="ranger">Ranger</option>
-    //             <option value="rogue">Rogue</option>
-    //             <option value="sorcerer">Sorcerer</option>
-    //             <option value="wizard">Wizard</option>
-    //             <option value="warlock">Warlock</option>
-    //         </select>
-    //         <br>
-    //         Level <input class="stat-Input" type="number" min="1" value="1">
-    //         <br>
-    //         Hp <input class="stat-Input" id="playerHealth" type="number" min="1" value="1">
-    //     </div>
-    // </div>`;
-
-    // //displaying our player on the page
-    // playerStatBlockDisplay.appendChild(playerStatBlock);
-
-    // toggleRemovePlayerButton();
-    // var coll = document.getElementsByClassName("playerName");
-
-    // for (var i = 0; i < coll.length; i++) {
-    //   coll[i].addEventListener("click", function() {
-    //     this.classList.toggle("active");
-    //     var content = this.nextElementSibling;
-    //     if (content.style.display === "block") {
-    //       content.style.display = "none";
-    //     } else {
-    //       content.style.display = "block";
-    //     }
-    //   });
-    // }
-}
 
 //function for adding a player to the recommendMonster page
 function addPlayer() {
@@ -160,10 +106,12 @@ async function getRecommendedMonster() {
     recMsg.innerHTML = "";
 
     const diff = difficultyOption.value;
+    console.log("Difficulty");
+    console.log(diff);
     if (diff == null || diff == "") {
         recMsg.innerHTML += "Please select a difficulty<br><br>";
+        return;
     }
-    console.log(diff);
 
     const monCount = document.getElementById("monCount").value;
 
@@ -236,26 +184,31 @@ async function getRecommendedMonster() {
             console.log("success!");
             console.log(results);
 
-            recMsg.innerHTML = "Result:<br>";
+            recMsg.innerHTML = "Monsters";
+            if (results.length != parseInt(monCount)) {
+                recMsg.innerHTML = "No results found for this search :(<br>" +
+                "We are working on increasing the flexibility of our algorithm, but for now you can try the following to get results:<br>" +
+                "1) Changing the number of monsters in the encounter<br>" +
+                "2) Changing the encounter difficulty<br>" +
+                "3) Check/unchecking the boss fight option";
+                return;
+            }
+
+            let ctr = 1;
             for (let mon of results) {
-                recMsg.innerHTML += mon + "<br>";
+                recMsg.innerHTML += `<br>${ctr}) ${mon.name}`;
+                ctr++;
+                loadJSONMonster(mon);
             }
         }
         else {
-            recMsg.innerHTML = "An error occurred. Try again?";
+            recMsg.innerHTML = "An error occurred. Make sure you filled in all search parameters (i.e. difficulty, player classes) and try again.";
             console.log("response.status error: " + response.status);
         }
     }
     catch (error) {
         console.error("ERROR! ", error);
     }
-
-    /*
-    fetch(url)
-    .then(response => response.json())  
-    .then(json => {
-        console.log(json);
-    })*/
 }
 
 window.addEventListener("load", addPlayer());
@@ -272,7 +225,6 @@ createMonsterButton.addEventListener("click", () => {
 });
 
 //make module functions globally accessible (createEncounter.html can access)
-window.addMonster = addMonster;
 window.addPlayer = addPlayer;
 window.removePlayer = removePlayer;
 window.toggleRemovePlayerButton = toggleRemovePlayerButton;
