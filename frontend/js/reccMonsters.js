@@ -165,7 +165,7 @@ async function getRecommendedMonster() {
     console.log(payload);
 
     //making our api call
-    const url = "https://zevce.pythonanywhere.com/getRecommendation/";
+    const url = "https://zevce.pythonanywhere.com/getRecommendation";
     //const url = "http://localhost:5000/getRecommendation";
     console.log(url);
 
